@@ -1,21 +1,24 @@
 {
   "env": {
     "browser": true,
-    "es2021": true
+    "es2021": true,
+    "jest": true
   },
   "overrides": [],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": "latest",
-    "sourceType": "module"
+    "sourceType": "module",
+    "project": "./tsconfig.json"
   },
-  "plugins": ["@typescript-eslint"],
-  "extends": ["airbnb-base", "plugin:@typescript-eslint/recommended"],
+  "plugins": ["@typescript-eslint","prettier"],
+  "extends": ["airbnb-base", "plugin:@typescript-eslint/recommended", "airbnb-typescript/base", "prettier"],
   "rules": {
     "arrow-parens": ["error", "as-needed"],
     "object-curly-newline": "off",
     "import/extensions": "off" //이상한 확장자 오류 꺼버림
   },
+  "ignorePatterns": ["./tsconfig.json", "./jest.config.json", ".eslintrc"],
   "settings": {
     "import/resolver": {
       "node": {
