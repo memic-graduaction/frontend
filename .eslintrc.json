@@ -12,7 +12,7 @@
     "project": "./tsconfig.json"
   },
   "plugins": ["@typescript-eslint","prettier"],
-  "extends": ["airbnb-base", "plugin:@typescript-eslint/recommended", "airbnb-typescript/base", "prettier"],
+  "extends": ["airbnb", "plugin:@typescript-eslint/recommended", "airbnb-typescript", "prettier"],
   "rules": {
     "arrow-parens": ["error", "as-needed"],
     "object-curly-newline": "off",
