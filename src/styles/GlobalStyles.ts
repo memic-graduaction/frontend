@@ -16,4 +16,20 @@ export default createGlobalStyle`
     ul{
         list-style: none;
     }
+    body{
+        padding: 0;
+        margin: 0;
+        font-family: 'Noto Sans KR', sans-serif;
+    };
+    button{
+        border: none;
+        outline: none;
+        background-color: inherit ;
+        cursor: pointer;
+    };
+    input{
+        display: flex;
+        outline: none;
+        padding-left: 10px;
+    }
 `;

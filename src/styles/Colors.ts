@@ -1,6 +1,5 @@
 const Colors = {
   // 배경색 - Bg
-  BgWhite: '#333',
   BgMain: '#433E49',
   BgMain2: '#BAAEA5',
   BgBookMark: '#F3E8EB',
@@ -8,5 +7,8 @@ const Colors = {
 
   // 컴포넌트 - Cp
   CpScript: '#494248',
+
+  // 폰트색 - Ft
+  FtDark: '#333',
 } as const;
 export default Colors;

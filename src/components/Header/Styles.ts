@@ -17,6 +17,7 @@ export const LogoLayout = styled.div`
   align-items: center;
   font-size: 1.4rem;
   font-weight: 500;
+  cursor: pointer;
 `;
 
 export const MenuLayout = styled.div`
@@ -31,6 +32,7 @@ export const MenuWrap = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  cursor: pointer;
 `;
 
 export const IconBox = styled.div`

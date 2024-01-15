@@ -1,1 +1,3 @@
 export { ReactComponent as Logo } from '../assets/Logo.svg';
+export { ReactComponent as Record } from '../assets/Record.svg';
+export { ReactComponent as Switch } from '../assets/Switch.svg';
