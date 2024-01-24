@@ -1,13 +1,18 @@
 import React from 'react';
 import { IoPowerOutline } from 'react-icons/io5';
 import { LuUser2 } from 'react-icons/lu';
+import { useNavigate } from 'react-router-dom';
 import * as S from './Styles';
 import { Logo } from '../../utils/Icons';
 
 function Header() {
+  const navigator = useNavigate();
+  const handleClick = () => {
+    navigator('/');
+  };
   return (
     <S.Layout>
-      <S.LogoLayout>
+      <S.LogoLayout onClick={handleClick}>
         <Logo />
         Me.Mic
       </S.LogoLayout>
