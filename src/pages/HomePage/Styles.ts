@@ -3,7 +3,7 @@ import Colors from 'src/styles/Colors';
 
 export const Layout = styled.div`
     background: ${Colors.BgMain};
-    height: 100%;
+    height: 100vh;
 `;
 
 export const SearchBar = styled.div`
@@ -19,7 +19,7 @@ export const SearchBar = styled.div`
 
 export const Title = styled.div`
     color: white;
-    font-size: 5vw;
+    font-size: 4vw;
     margin-top: 10vw;
     margin-left: 10vw;
     margin-bottom: 5vw;
@@ -42,3 +42,11 @@ export const Input = styled.input`
     width: 58vw;
 `;
 
+export const ScrollIcon = styled.img`
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2.5rem;
+    margin-bottom: 1rem;
+`;
