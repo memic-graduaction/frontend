@@ -15,7 +15,7 @@ function Script() {
   const [data, setData] = useState<Props[] | null>(null);
   const handleGetScript = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/script');
+      const response = await axios.get('http://localhost:3001/data');
       setData(response.data);
     } catch (e) {
       console.log(e);
