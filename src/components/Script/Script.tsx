@@ -4,21 +4,32 @@ import { useRecoilValue } from 'recoil';
 import { scriptExpendState } from 'src/recoil/states';
 import * as S from './Styles';
 
-interface Props {
+interface Sentence {
   id: number;
-  time: string;
-  script: string;
+  startPoint: string;
+  sentence: string;
+}
+
+interface ApiResponse {
+  id: number;
+  url: string;
+  sentences: Sentence[];
 }
 
 function Script() {
   const isExpanded = useRecoilValue(scriptExpendState);
-  const [data, setData] = useState<Props[] | null>(null);
+  const [data, setData] = useState<ApiResponse | null>(null);
+  const [inputUrl] = useState<string>('');
+
   const handleGetScript = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/data');
+      const response = await axios.post<ApiResponse>('http://localhost:3000/v1/transcription', {
+        url: inputUrl,
+      });
+
       setData(response.data);
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -29,20 +40,20 @@ function Script() {
   return isExpanded ? (
     <S.Layout style={{ height: `${90}%` }}>
       {data &&
-        data.map((v) => (
-          <S.TextLayout key={v.id}>
-            <S.FocusTime>{v.time}</S.FocusTime>
-            <S.FocusText>{v.script}</S.FocusText>
+        data.sentences.map((sentence) => (
+          <S.TextLayout key={sentence.id}>
+            <S.FocusTime>{sentence.startPoint}</S.FocusTime>
+            <S.FocusText>{sentence.sentence}</S.FocusText>
           </S.TextLayout>
         ))}
     </S.Layout>
   ) : (
     <S.Layout>
       {data &&
-        data.map((v) => (
-          <S.TextLayout key={v.id}>
-            <S.FocusTime>{v.time}</S.FocusTime>
-            <S.FocusText>{v.script}</S.FocusText>
+        data.sentences.map((sentence) => (
+          <S.TextLayout key={sentence.id}>
+            <S.FocusTime>{sentence.startPoint}</S.FocusTime>
+            <S.FocusText>{sentence.sentence}</S.FocusText>
           </S.TextLayout>
         ))}
     </S.Layout>
