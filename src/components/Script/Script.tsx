@@ -4,16 +4,10 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { scriptExpendState, youtubeLinkState } from 'src/recoil/states';
 import * as S from './Styles';
 
-interface Sentence {
+interface Props {
   id: number;
   startPoint: string;
   sentence: string;
-}
-
-interface ApiResponse {
-  id: number;
-  url: string;
-  sentences: Sentence[];
 }
 
 function Script() {
