@@ -23,10 +23,10 @@ export const Layout = styled.div`
 
 export const TextLayout = styled.div`
   width: 100%;
-  height: 3.25rem;
+  height: 4rem;
   display: flex;
   align-items: center;
-  margin: 1rem;
+  margin: 2rem 1rem;
   cursor: pointer;
 `;
 

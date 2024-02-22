@@ -1,7 +1,8 @@
 // HomePage.tsx
 import React, { useState } from 'react';
 import { useSetRecoilState } from 'recoil';
-import { youtubeLinkState } from 'src/recoil/states';
+import { youtubeIDstate, youtubeLinkState } from 'src/recoil/states';
+import { getUrlParam } from 'src/utils/getUrlParam';
 import Header from '../../components/Header/Header';
 import * as S from './Styles';
 import SearchButton from './SearchButton';
@@ -10,11 +11,16 @@ import mouseIcon from '../../assets/mouseIcon.png';
 function HomePage() {
   const setLink = useSetRecoilState(youtubeLinkState);
   const [inputValue, setInputValue] = useState('');
+  const setID = useSetRecoilState(youtubeIDstate);
   const [isValidUrl, setIsValidUrl] = useState(false);
   const [isYoutubeUrl, setIsYoutubeUrl] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
+      const url = e.target.value;
+      setLink(url);
+      const param = getUrlParam(url);
+      setID(param);
 
     // URL 및 YouTube 동영상 URL 형식 검사
     const url = new URL(e.target.value);
