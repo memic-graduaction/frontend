@@ -18,7 +18,10 @@
     "import/no-extraneous-dependencies": "off", // package.json에 없는 패키지를 import할 때 에러 무시
     "arrow-parens": ["error", "always"],
     "object-curly-newline": "off",
-    "import/extensions": "off" //이상한 확장자 오류 꺼버림
+    "import/extensions": "off", //이상한 확장자 오류 꺼버림
+    "consistent-return": "off",
+    "no-useless-escape":"off",
+    "no-console":"off"
   },
   "ignorePatterns": ["./tsconfig.json", "./jest.config.json", ".eslintrc"],
   "settings": {

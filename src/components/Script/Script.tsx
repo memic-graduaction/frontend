@@ -1,35 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useRecoilValue } from 'recoil';
-import { scriptExpendState } from 'src/recoil/states';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { scriptExpendState, youtubeLinkState } from 'src/recoil/states';
 import * as S from './Styles';
 
-interface Sentence {
+interface Props {
   id: number;
   startPoint: string;
   sentence: string;
 }
 
-interface ApiResponse {
-  id: number;
-  url: string;
-  sentences: Sentence[];
-}
-
 function Script() {
   const isExpanded = useRecoilValue(scriptExpendState);
-  const [data, setData] = useState<ApiResponse | null>(null);
-  const [inputUrl] = useState<string>('');
-
+  const url = useRecoilState(youtubeLinkState);
+  const [data, setData] = useState<Props[] | null>(null);
   const handleGetScript = async () => {
+    const formData = {
+      url: `${url}`,
+    };
     try {
-      const response = await axios.post<ApiResponse>('http://localhost:3000/v1/transcription', {
-        url: inputUrl,
-      });
-
-      setData(response.data);
-    } catch (error) {
-      console.log(error);
+      const response = await axios.post('http://13.125.213.188:8080/v1/transcriptions', formData);
+      setData(response.data.sentences);
+    } catch (e) {
+      console.log(e);
     }
   };
 
@@ -40,20 +33,20 @@ function Script() {
   return isExpanded ? (
     <S.Layout style={{ height: `${90}%` }}>
       {data &&
-        data.sentences.map((sentence) => (
-          <S.TextLayout key={sentence.id}>
-            <S.FocusTime>{sentence.startPoint}</S.FocusTime>
-            <S.FocusText>{sentence.sentence}</S.FocusText>
+        data.map((v) => (
+          <S.TextLayout key={v.id}>
+            <S.FocusTime>{v.startPoint}</S.FocusTime>
+            <S.FocusText>{v.sentence}</S.FocusText>
           </S.TextLayout>
         ))}
     </S.Layout>
   ) : (
     <S.Layout>
       {data &&
-        data.sentences.map((sentence) => (
-          <S.TextLayout key={sentence.id}>
-            <S.FocusTime>{sentence.startPoint}</S.FocusTime>
-            <S.FocusText>{sentence.sentence}</S.FocusText>
+        data.map((v) => (
+          <S.TextLayout key={v.id}>
+            <S.FocusTime>{v.startPoint}</S.FocusTime>
+            <S.FocusText>{v.sentence}</S.FocusText>
           </S.TextLayout>
         ))}
     </S.Layout>

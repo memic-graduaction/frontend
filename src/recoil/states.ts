@@ -17,6 +17,12 @@ export const youtubeLinkState = atom<string>({
   effects_UNSTABLE: [persistAtom],
 });
 
+export const youtubeIDstate = atom<string>({
+  key: 'youtubeIDState',
+  default: '',
+  effects_UNSTABLE: [persistAtom],
+});
+
 export const currentTimeState = atom<string>({
   key: 'currentTimeState',
   default: '',

@@ -1,11 +1,11 @@
 import React from 'react';
 import YouTube, { YouTubeProps } from 'react-youtube';
 import { useRecoilValue } from 'recoil';
-import { youtubeLinkState } from 'src/recoil/states';
+import { youtubeIDstate } from 'src/recoil/states';
 import * as S from './Styles';
 
 function YoutubePlayer() {
-  const link = useRecoilValue(youtubeLinkState);
+  const videoId = useRecoilValue(youtubeIDstate);
   const opts: YouTubeProps['opts'] = {
     width: '100%',
     height: '100%',
@@ -22,7 +22,7 @@ function YoutubePlayer() {
 
   return (
     <S.Layout>
-      <YouTube className="player" videoId={link} opts={opts} onReady={onPlay} />
+      <YouTube className="player" videoId={videoId} opts={opts} onReady={onPlay} />
     </S.Layout>
   );
 }
