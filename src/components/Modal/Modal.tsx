@@ -1,9 +1,11 @@
 import React from 'react';
 import { Close } from 'src/utils/Icons';
+import { useRecoilValue } from 'recoil';
+import { recordingState } from 'src/recoil/states';
 import * as S from './Styles';
 import { ModalPortal } from './ModalPortal';
+import ModalSpeech from './ModalSpeech';
 // import ModalLoading from './ModalLoading';
-// import ModalSpeech from './ModalSpeech';
 import ModalResult from './ModalResult';
 
 interface Props {
@@ -11,6 +13,7 @@ interface Props {
 }
 
 function Modal({ onClose }: Props) {
+  const recordingStatus = useRecoilValue(recordingState);
   return (
     <ModalPortal>
       <S.BackLayout onClick={() => onClose()} />
@@ -19,7 +22,7 @@ function Modal({ onClose }: Props) {
           <S.ExitBtn onClick={() => onClose()}>
             <Close />
           </S.ExitBtn>
-          <ModalResult />
+          {recordingStatus === 'completed' ? <ModalResult /> : <ModalSpeech />}
         </S.ModalBody>
       </S.ModalLayout>
     </ModalPortal>

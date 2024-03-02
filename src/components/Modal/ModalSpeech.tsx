@@ -1,15 +1,80 @@
-import React from 'react';
-import { Stop } from 'src/utils/Icons';
+/* eslint-disable jsx-a11y/media-has-caption */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { useEffect, useRef, useState } from 'react';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { audioUrlState, recordingState } from 'src/recoil/states';
+import { Microphone, Stop } from 'src/utils/Icons';
 import styled from 'styled-components';
 
 function ModalSpeech() {
+  const [permission, setPermission] = useState(false);
+  const mediaRecorder = useRef(null);
+  // recordingStatus : "inactive", "recording", "completed"
+  const [recordingStatus, setRecordingStatus] = useRecoilState(recordingState);
+  // getUserMedia 함수로부터 반환받는 MediaStream 변수
+  const [stream, setStream] = useState(null);
+  const [audioChunks, setAudioChunks] = useState([]);
+  // 레코딩된 음성 파일의 blob URL
+  const setAudioUrl = useSetRecoilState(audioUrlState);
+  const getMicrophonePermission = async () => {
+    if ('MediaRecorder' in window) {
+      try {
+        const streamData = await navigator.mediaDevices.getUserMedia({
+          audio: true,
+          video: false,
+        });
+        setPermission(true);
+        setStream(streamData);
+      } catch {
+        alert('Permission 에러');
+      }
+    } else {
+      alert('The MediaRecorder API is not supported in your browser.');
+    }
+  };
+
+  useEffect(() => {
+    getMicrophonePermission();
+  }, []);
+
+  const startRecording = async () => {
+    setRecordingStatus('recording');
+    const media = new MediaRecorder(stream, { mimeType: 'audio/webm' });
+    mediaRecorder.current = media;
+    mediaRecorder.current.start();
+    const localAudioChunks: React.SetStateAction<any[]> = [];
+    mediaRecorder.current.ondataavailable = (event: { data: { size: number } }) => {
+      if (typeof event.data === 'undefined') return;
+      if (event.data.size === 0) return;
+      localAudioChunks.push(event.data);
+    };
+    setAudioChunks(localAudioChunks);
+  };
+
+  const stopRecording = () => {
+    setRecordingStatus('completed');
+    mediaRecorder.current.stop();
+    mediaRecorder.current.onstop = () => {
+      const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+      const newAudioUrl = URL.createObjectURL(audioBlob);
+      setAudioUrl(newAudioUrl);
+      setAudioChunks([]);
+    };
+  };
   return (
     <Layout>
       <AdviceText>*문장을 발음해보세요</AdviceText>
       <TextLayout>that we’ve had this morning that in the last hour a very powerful earthquake has struck</TextLayout>
-      <IconLayout>
-        <Stop />
-      </IconLayout>
+      {permission && recordingStatus === 'inactive' ? (
+        <IconLayout onClick={startRecording}>
+          <Microphone />
+        </IconLayout>
+      ) : null}
+      {recordingStatus === 'recording' ? (
+        <IconLayout onClick={stopRecording}>
+          <Stop />
+        </IconLayout>
+      ) : null}
     </Layout>
   );
 }

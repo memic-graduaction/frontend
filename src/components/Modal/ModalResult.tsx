@@ -1,8 +1,14 @@
-import React from 'react';
+/* eslint-disable jsx-a11y/media-has-caption */
+import React, { useState } from 'react';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { audioUrlState, recordingState } from 'src/recoil/states';
 import { Microphone, PlayBtn } from 'src/utils/Icons';
 import styled from 'styled-components';
 
 function ModalResult() {
+  const audioUrl = useRecoilValue(audioUrlState);
+  const setRecordStatus = useSetRecoilState(recordingState);
+  const [isPlay, setIsPlay] = useState(false);
   return (
     <Layout>
       <div>
@@ -18,15 +24,24 @@ function ModalResult() {
         </RecognizedText>
       </div>
       <BtnLayout>
-        <BtnBox>
+        <BtnBox
+          onClick={() => {
+            setIsPlay(true);
+          }}
+        >
           <PlayBtn />
           나의 발음 듣기
         </BtnBox>
-        <BtnBox>
+        <BtnBox
+          onClick={() => {
+            setRecordStatus('inactive');
+          }}
+        >
           <Microphone width="27px" height="27px" />
           다시 녹음하기
         </BtnBox>
       </BtnLayout>
+      {audioUrl && isPlay ? <audio src={audioUrl} autoPlay /> : null}
     </Layout>
   );
 }
