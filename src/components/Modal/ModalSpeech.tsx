@@ -52,7 +52,7 @@ function ModalSpeech() {
   };
 
   const stopRecording = () => {
-    setRecordingStatus('completed');
+    setRecordingStatus('loading');
     mediaRecorder.current.stop();
     mediaRecorder.current.onstop = () => {
       const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });

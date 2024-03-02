@@ -5,8 +5,8 @@ import { recordingState } from 'src/recoil/states';
 import * as S from './Styles';
 import { ModalPortal } from './ModalPortal';
 import ModalSpeech from './ModalSpeech';
-// import ModalLoading from './ModalLoading';
 import ModalResult from './ModalResult';
+import ModalLoading from './ModalLoading';
 
 interface Props {
   onClose: () => void;
@@ -14,6 +14,16 @@ interface Props {
 
 function Modal({ onClose }: Props) {
   const recordingStatus = useRecoilValue(recordingState);
+  const chooseModal = () => {
+    switch (recordingStatus) {
+      case 'completed':
+        return <ModalResult />;
+      case 'loading':
+        return <ModalLoading />;
+      default:
+        return <ModalSpeech />;
+    }
+  };
   return (
     <ModalPortal>
       <S.BackLayout onClick={() => onClose()} />
@@ -22,7 +32,7 @@ function Modal({ onClose }: Props) {
           <S.ExitBtn onClick={() => onClose()}>
             <Close />
           </S.ExitBtn>
-          {recordingStatus === 'completed' ? <ModalResult /> : <ModalSpeech />}
+          <>{chooseModal()}</>
         </S.ModalBody>
       </S.ModalLayout>
     </ModalPortal>

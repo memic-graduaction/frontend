@@ -1,8 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { MoonLoader } from 'react-spinners';
+import { useSetRecoilState } from 'recoil';
+import { recordingState } from 'src/recoil/states';
 import styled from 'styled-components';
 
 function ModalLoading() {
+  const setRecordingStatus = useSetRecoilState(recordingState);
+  useEffect(() => {
+    setTimeout(() => {
+      setRecordingStatus('completed');
+    }, 3000);
+  }, []);
   return (
     <Layout>
       <MoonLoader color="#FF5C5C" size={80} />
