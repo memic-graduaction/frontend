@@ -2,6 +2,9 @@ import React from 'react';
 import { Close } from 'src/utils/Icons';
 import * as S from './Styles';
 import { ModalPortal } from './ModalPortal';
+// import ModalLoading from './ModalLoading';
+// import ModalSpeech from './ModalSpeech';
+import ModalResult from './ModalResult';
 
 interface Props {
   onClose: () => void;
@@ -16,7 +19,7 @@ function Modal({ onClose }: Props) {
           <S.ExitBtn onClick={() => onClose()}>
             <Close />
           </S.ExitBtn>
-          모달 바디
+          <ModalResult />
         </S.ModalBody>
       </S.ModalLayout>
     </ModalPortal>

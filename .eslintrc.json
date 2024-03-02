@@ -21,7 +21,9 @@
     "import/extensions": "off", //이상한 확장자 오류 꺼버림
     "consistent-return": "off",
     "no-useless-escape":"off",
-    "no-console":"off"
+    "no-console":"off",
+    "react/button-has-type":"off",
+    "@typescript-eslint/no-use-before-define": "off"
   },
   "ignorePatterns": ["./tsconfig.json", "./jest.config.json", ".eslintrc"],
   "settings": {

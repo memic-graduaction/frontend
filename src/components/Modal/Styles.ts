@@ -14,11 +14,12 @@ export const ModalLayout = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 52rem;
-  height: 30rem;
+  width: 48rem;
+  height: 27rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 0 2rem;
   background: white;
   border-radius: 1.5rem;
   box-shadow: 2rem 2rem 3rem 0 rgba(0, 0, 0, 0.25);
@@ -27,7 +28,6 @@ export const ModalLayout = styled.div`
 
 export const ModalBody = styled.div`
   padding: 2rem;
-  border: 1px solid red;
 `;
 
 export const ExitBtn = styled.button`

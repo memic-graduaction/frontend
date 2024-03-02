@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useRef, useState } from 'react';
-// import { MoonLoader } from 'react-spinners';
 // import * as S from './Styles';
 
 function RecordModal() {
