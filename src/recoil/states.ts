@@ -27,3 +27,13 @@ export const currentTimeState = atom<string>({
   key: 'currentTimeState',
   default: '',
 });
+
+export const audioUrlState = atom<string>({
+  key: 'audioUrlState',
+  default: null,
+});
+
+export const recordingState = atom<string>({
+  key: 'recordingState',
+  default: 'inactive',
+});
