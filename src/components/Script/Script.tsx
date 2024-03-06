@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { scriptExpendState, youtubeLinkState } from 'src/recoil/states';
+import { useRecoilState } from 'recoil';
+import { youtubeLinkState } from 'src/recoil/states';
 import * as S from './Styles';
 
 interface Props {
@@ -11,7 +11,6 @@ interface Props {
 }
 
 function Script() {
-  const isExpanded = useRecoilValue(scriptExpendState);
   const url = useRecoilState(youtubeLinkState);
   const [data, setData] = useState<Props[] | null>(null);
   const handleGetScript = async () => {
@@ -30,23 +29,22 @@ function Script() {
     handleGetScript();
   }, []);
 
-  return isExpanded ? (
-    <S.Layout style={{ height: `${90}%` }}>
-      {data &&
-        data.map((v) => (
-          <S.TextLayout key={v.id}>
-            <S.FocusTime>{v.startPoint}</S.FocusTime>
-            <S.FocusText>{v.sentence}</S.FocusText>
-          </S.TextLayout>
-        ))}
-    </S.Layout>
-  ) : (
+  return (
     <S.Layout>
+      <S.ButtonContainer>
+        <S.ScriptSmall>Script</S.ScriptSmall>
+        <S.DownLoadBtn>Download</S.DownLoadBtn>
+      </S.ButtonContainer>
+      <S.Border />
       {data &&
         data.map((v) => (
           <S.TextLayout key={v.id}>
             <S.FocusTime>{v.startPoint}</S.FocusTime>
             <S.FocusText>{v.sentence}</S.FocusText>
+            <S.RightLayout>
+              <S.RecordIcon />
+              <S.RecordText>Rec</S.RecordText>
+            </S.RightLayout>
           </S.TextLayout>
         ))}
     </S.Layout>

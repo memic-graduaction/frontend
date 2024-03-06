@@ -3,86 +3,41 @@ import Colors from 'src/styles/Colors';
 
 export const Layout = styled.div`
   background: ${Colors.BgScript};
+  height: 100%;
+  margin: 0;
+  padding: 0;
 `;
 
-export const Container = styled.div`
+export const MainLayout = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-top: 3rem;
+`;
+
+export const MainContainer = styled.div`
   background: white;
-  height: 80rem;
-  border-radius: 3rem 3rem 0 0;
+  height: 100%;
+  width: 46%;
+  border-radius: 2rem;
   box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.25) inset;
-  padding: 5rem;
+  padding: 3rem;
+  margin-left: 3%;
+  margin-right: 1%;
+`;
+
+export const SubContainer = styled.div`
+  height: 100%;
+  width: 46%;
 `;
 
 export const RightBox = styled.div`
   width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-`;
-
-export const TopContainer = styled.div`
-  height: 55%;
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  grid-column-gap: 2rem;
-  justify-content: space-between;
-  margin-bottom: 2rem;
+  height: auto;
 `;
 
 export const BtmContainer = styled.div`
-  height: 45%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-`;
-
-export const ButtonContainer = styled.div`
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 1rem 0;
-`;
-
-export const ScriptSmall = styled.div`
-  color: #6c6c6c;
-  font-size: 1.5625rem;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-`;
-
-export const ScriptBig = styled(ScriptSmall)`
-  font-size: 2.5rem;
-  font-weight: 700;
-`;
-
-export const StyledScrap = styled.div`
-  color: rgba(0, 0, 0, 0.6);
-  font-size: 1rem;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-  margin-left: 0.5rem;
-`;
-
-export const DownLoadBtn = styled.button`
-  color: #6c6c6c;
-  font-size: 1.25rem;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-  text-decoration-line: underline;
-`;
-
-export const Border = styled.div`
-  width: 100%;
-  height: 0.0625rem;
-  background: #c9c9c9;
-  margin: 1rem 0;
+  height: auto;
 `;
 
 export const PlayerContainer = styled.div`

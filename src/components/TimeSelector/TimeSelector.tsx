@@ -1,5 +1,5 @@
 import React from 'react';
-import { Record, Switch } from 'src/utils/Icons';
+import { Switch } from 'src/utils/Icons';
 import { SlLocationPin } from 'react-icons/sl';
 import * as S from './Styles';
 
@@ -8,20 +8,21 @@ function TimeSelector() {
     <S.Layout>
       <S.LeftLayout>
         <S.Title>RECORD</S.Title>
-        <Record />
       </S.LeftLayout>
       <S.MidLayout>
         <S.TimeContainer>
-          <SlLocationPin size={20} />
+          <SlLocationPin size={18} />
           <S.TimeBox />
         </S.TimeContainer>
+        <Switch />
         <S.TimeContainer>
-          <SlLocationPin size={20} />
+          <SlLocationPin size={18} />
           <S.TimeBox />
         </S.TimeContainer>
       </S.MidLayout>
       <S.RightLayout>
-        <Switch />
+        <S.RecordIcon />
+        <S.RecordText>Rec</S.RecordText>
       </S.RightLayout>
     </S.Layout>
   );

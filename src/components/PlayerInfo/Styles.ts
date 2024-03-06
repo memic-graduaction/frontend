@@ -1,85 +1,79 @@
 import styled from 'styled-components';
-import Colors from 'src/styles/Colors';
 
 export const Layout = styled.div`
-  width: 26.5625rem;
-  height: 25.3125rem;
+  width: 100%;
+  height: auto;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  background: ${Colors.CpScript};
-  border-radius: 0.625rem;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  color: white;
-`;
-
-export const StyledInfo = styled.div`
-  width: 100%;
-  height: 4rem;
-  border-bottom: 0.1px solid #c9c9c9;
-  color: white;
-  font-size: 1.8rem;
-  font-style: normal;
-  font-weight: 700;
-  padding-top: 1.2rem;
-  padding-left: 2.2rem;
+  align-items: flex-start;
 `;
 
 export const TitleLayout = styled.div`
   background: white;
-  width: 22.5rem;
-  height: 8.9375rem;
-  border-radius: 0.625rem;
-  color: black;
-  margin-top: 1.5rem;
-`;
-
-export const StyledTitle = styled.div`
+  display: flex;
   width: 100%;
-  height: 35%;
-  border-bottom: 1px solid #696969;
-  font-size: 1.8rem;
-  font-style: normal;
-  font-weight: 500;
-  padding: 0.8rem;
+  height: auto;
+  margin-top: 1.5rem;
+  font-weight: 700;
+  line-height: 1.5;
+  flex-direction: row;
 `;
 
-export const TitleContent = styled(StyledTitle)`
-  height: 60%;
-  font-size: 1.5rem;
-  padding: 1.3rem;
-  padding-left: 0.8rem;
+export const TitleContent = styled.div`
+  width: 90%;
+  height: auto;
+  font-size: 2rem;
   border: 0;
+  font-weight: 700;
 `;
 
 export const StyledTag = styled.div`
   width: 100%;
-  padding-left: 2.5rem;
+  margin: 1rem 1rem 2rem 0;
+  font-size: 1.7rem;
+  font-weight: 700;
+`;
+
+export const Border = styled.div`
+  width: 100%;
+  height: 0.0625rem;
+  background: #c9c9c9;
   margin: 1rem 0;
-  font-size: 1.8rem;
-  font-weight: 500;
 `;
 
 export const HashTagBox = styled.div`
-  width: 22.5rem;
+  width: 100%;
 `;
 
 export const HashTag = styled.button`
-  height: 2.0625rem;
-  border-radius: 0.625rem;
+  height: 2.5rem;
+  border-radius: 3rem;
   background: #707070;
   color: white;
-  font-size: 1.25rem;
-  font-style: normal;
-  font-weight: 500;
+  font-size: 1rem;
+  font-weight: 300;
   margin-right: 1.2rem;
   margin-bottom: 1rem;
 `;
 
 export const PlusBtn = styled.button`
-  width: 1rem;
-  height: 1rem;
-  position: absolute;
-  right: 2rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: #ff5c5c;
   color: white;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+`;
+
+export const ButtonContainer = styled.div`
+  width: 10%;
+  position: relative;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 1rem 0;
 `;
