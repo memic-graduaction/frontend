@@ -23,7 +23,9 @@
     "no-useless-escape":"off",
     "no-console":"off",
     "react/button-has-type":"off",
-    "@typescript-eslint/no-use-before-define": "off"
+    "@typescript-eslint/no-use-before-define": "off",
+    "@typescript-eslint/no-var-requires": "off",
+    "@typescript-eslint/naming-convention": "warn"
   },
   "ignorePatterns": ["./tsconfig.json", "./jest.config.json", ".eslintrc"],
   "settings": {
