@@ -1,6 +1,6 @@
 // HomePage.tsx
 import React, { useState } from 'react';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { youtubeIDstate, youtubeLinkState } from 'src/recoil/states';
 import { getUrlParam } from 'src/utils/getUrlParam';
 import Header from '../../components/Header/Header';

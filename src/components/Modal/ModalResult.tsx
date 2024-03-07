@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { incorrectWordsSelector } from 'src/recoil/selectors';
-import { audioUrlState, recognizedSentence, recordingState, speechSentence } from 'src/recoil/states';
+import { audioUrlState, recognizedSentence, recordingState, scriptSentencestate } from 'src/recoil/states';
 import { Microphone, PlayBtn } from 'src/utils/Icons';
 import styled from 'styled-components';
 
@@ -10,24 +10,24 @@ function ModalResult() {
   const [isPlay, setIsPlay] = useState(false);
   const audioUrl = useRecoilValue(audioUrlState);
   const setRecordStatus = useSetRecoilState(recordingState);
-  const originalStr = useRecoilValue(speechSentence);
+  const originalStr = useRecoilValue(scriptSentencestate);
   const recognizedStr = useRecoilValue(recognizedSentence);
   const incorrectIdx = useRecoilValue(incorrectWordsSelector);
 
   return (
     <Layout>
-      <div>
-        <GreyText>*기존 문장</GreyText>
+      <TextContainer>
+        <TextTitle>*&nbsp;기존 문장</TextTitle>
         <OriginalText>{originalStr}</OriginalText>
-      </div>
-      <div>
-        <RedText>*내가 말한 문장</RedText>
+      </TextContainer>
+      <TextContainer>
+        <TextTitle>*&nbsp;내가 말한 문장</TextTitle>
         <TextBox>
           {recognizedStr.map((v, i) =>
             incorrectIdx.includes(i) ? <WrongText>{v}&nbsp;</WrongText> : <ResultText>{v}&nbsp;</ResultText>,
           )}
         </TextBox>
-      </div>
+      </TextContainer>
       <BtnLayout>
         <BtnBox
           onClick={() => {
@@ -63,17 +63,17 @@ const Layout = styled.div`
   gap: 2.5rem;
 `;
 
-const RedText = styled.div`
-  width: 100%;
-  color: #ff5c5c;
-  font-size: 1rem;
-  font-style: normal;
-  font-weight: 300;
-  margin-bottom: 1rem;
+const TextContainer = styled.div`
+  width: 42rem;
 `;
 
-const GreyText = styled(RedText)`
-  color: #757575;
+const TextTitle = styled.div`
+  width: 100%;
+  color: #433e49;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  margin-bottom: 1rem;
 `;
 
 const TextBox = styled.div`

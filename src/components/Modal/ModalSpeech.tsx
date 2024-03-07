@@ -1,12 +1,13 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useRef, useState } from 'react';
-import { useRecoilState, useSetRecoilState } from 'recoil';
-import { audioUrlState, recordingState } from 'src/recoil/states';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { audioUrlState, recordingState, scriptSentencestate } from 'src/recoil/states';
 import { Microphone, Stop } from 'src/utils/Icons';
 import styled from 'styled-components';
 
 function ModalSpeech() {
+  const sentence = useRecoilValue(scriptSentencestate);
   const [permission, setPermission] = useState(false);
   const mediaRecorder = useRef(null);
   // recordingStatus : "inactive", "recording", "completed"
@@ -35,6 +36,7 @@ function ModalSpeech() {
 
   useEffect(() => {
     getMicrophonePermission();
+    setRecordingStatus('inactive');
   }, []);
 
   const startRecording = async () => {
@@ -63,8 +65,8 @@ function ModalSpeech() {
   };
   return (
     <Layout>
-      <AdviceText>*문장을 발음해보세요</AdviceText>
-      <TextLayout>that we’ve had this morning that in the last hour a very powerful earthquake has struck</TextLayout>
+      <TextTitle>*&nbsp;문장을 발음해보세요</TextTitle>
+      <TextLayout>{sentence}</TextLayout>
       {permission && recordingStatus === 'inactive' ? (
         <IconLayout onClick={startRecording}>
           <Microphone />
@@ -91,12 +93,12 @@ const Layout = styled.div`
   margin-bottom: 2rem;
 `;
 
-const AdviceText = styled.div`
+const TextTitle = styled.div`
   width: 100%;
   color: #ff5c5c;
   font-size: 1rem;
   font-style: normal;
-  font-weight: 300;
+  font-weight: 350;
   margin-bottom: 1rem;
 `;
 

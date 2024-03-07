@@ -1,8 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import { youtubeLinkState, scriptIDstate, scriptSentencestate } from 'src/recoil/states';
+import {
+  youtubeLinkState,
+  scriptIDstate,
+  scriptSentencestate,
+  modalActivationState,
+  recordingState,
+} from 'src/recoil/states';
 import * as S from './Styles';
+import Modal from '../Modal/Modal';
 
 interface Props {
   id: number;
@@ -13,9 +20,6 @@ interface Props {
 function Script() {
   const url = useRecoilState(youtubeLinkState);
   const [data, setData] = useState<Props[] | null>(null);
-  const setScriptIDState = useSetRecoilState(scriptIDstate);
-  const setScriptSentencestate = useSetRecoilState(scriptSentencestate);
-
   const handleGetScript = async () => {
     const formData = {
       url: `${url}`,
@@ -28,10 +32,19 @@ function Script() {
     }
   };
 
+  const setScriptIDState = useSetRecoilState(scriptIDstate);
+  const setScriptSentencestate = useSetRecoilState(scriptSentencestate);
   const handleRightLayoutClick = (id: number, sentence: string) => {
     setScriptIDState(id);
     setScriptSentencestate(sentence);
-    console.log(`Clicked on record button for ID: ${id}, Sentence: ${sentence}`);
+    setIsModalOpen(true);
+  };
+
+  const setRecordingState = useSetRecoilState(recordingState);
+  const [isModalOpen, setIsModalOpen] = useRecoilState(modalActivationState);
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setRecordingState('inactive');
   };
 
   useEffect(() => {
@@ -40,6 +53,7 @@ function Script() {
 
   return (
     <S.Layout>
+      {isModalOpen && <Modal onClose={() => handleCloseModal()} />}
       <S.ButtonContainer>
         <S.ScriptSmall>Script</S.ScriptSmall>
         <S.DownLoadBtn>Download</S.DownLoadBtn>

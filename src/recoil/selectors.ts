@@ -1,11 +1,11 @@
 import { selector } from 'recoil';
-import { recognizedSentence, speechSentence } from './states';
+import { recognizedSentence, scriptSentencestate } from './states';
 
 // selector
 export const incorrectWordsSelector = selector({
   key: 'incorrectWordsSelector',
   get: ({ get }) => {
-    const originalStr = get(speechSentence);
+    const originalStr = get(scriptSentencestate);
     const resultStr = get(recognizedSentence);
     const originalArr = originalStr.split(' ');
     const incorrectIdx = [];
