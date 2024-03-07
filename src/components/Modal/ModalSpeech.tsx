@@ -114,13 +114,13 @@ const TextLayout = styled.div`
 `;
 
 const IconLayout = styled.button`
-  width: 4.25rem;
-  height: 4.25rem;
+  width: 3.25rem;
+  height: 3.25rem;
   border-radius: 50rem;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
   display: flex;
   justify-content: center;
   align-items: center;
   position: absolute;
-  bottom: 2rem;
+  bottom: 2.5rem;
 `;

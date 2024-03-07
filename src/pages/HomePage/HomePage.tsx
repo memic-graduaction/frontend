@@ -1,6 +1,6 @@
 // HomePage.tsx
 import React, { useState } from 'react';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { youtubeIDstate, youtubeLinkState } from 'src/recoil/states';
 import { getUrlParam } from 'src/utils/getUrlParam';
 import Header from '../../components/Header/Header';
@@ -14,7 +14,6 @@ function HomePage() {
   const [inputValue, setInputValue] = useState('');
   const [isValidUrl, setIsValidUrl] = useState(false);
   const [isYoutubeUrl, setIsYoutubeUrl] = useState(false);
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
 
