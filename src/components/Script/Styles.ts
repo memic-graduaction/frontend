@@ -3,7 +3,7 @@ import Colors from 'src/styles/Colors';
 
 export const Layout = styled.div`
   width: 100%;
-  height: 60%;
+  height: 41.3rem;
   background: white;
   padding: 1rem;
   overflow-y: auto;
@@ -44,7 +44,6 @@ export const NormalText = styled.div`
 
 export const FocusText = styled(NormalText)`
   color: #222222;
-  text-decoration-line: underline;
 `;
 
 export const NormalTime = styled.div`

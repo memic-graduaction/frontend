@@ -5,34 +5,34 @@ export const Layout = styled.div`
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid white;
-  height: 4rem;
+  height: 5rem;
   padding: 0 3rem;
   color: white;
 `;
 
 export const LogoLayout = styled.div`
-  width: 7rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 1.4rem;
+  font-size: 2.5rem;
   font-weight: 500;
   cursor: pointer;
+  gap: 1rem;
 `;
 
 export const MenuLayout = styled.div`
-  width: 11rem;
+  width: 15rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 0.9rem;
+  font-size: 1.25rem;
 `;
 
 export const MenuWrap = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: center;
   cursor: pointer;
+  gap: 0.1rem;
 `;
 
 export const IconBox = styled.div`
