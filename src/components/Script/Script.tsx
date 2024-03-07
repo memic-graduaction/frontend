@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useRecoilState } from 'recoil';
-import { youtubeLinkState } from 'src/recoil/states';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { youtubeLinkState, scriptIDstate, scriptSentencestate } from 'src/recoil/states';
 import * as S from './Styles';
 
 interface Props {
@@ -13,6 +13,9 @@ interface Props {
 function Script() {
   const url = useRecoilState(youtubeLinkState);
   const [data, setData] = useState<Props[] | null>(null);
+  const setScriptIDState = useSetRecoilState(scriptIDstate);
+  const setScriptSentencestate = useSetRecoilState(scriptSentencestate);
+
   const handleGetScript = async () => {
     const formData = {
       url: `${url}`,
@@ -23,6 +26,12 @@ function Script() {
     } catch (e) {
       console.log(e);
     }
+  };
+
+  const handleRightLayoutClick = (id: number, sentence: string) => {
+    setScriptIDState(id);
+    setScriptSentencestate(sentence);
+    console.log(`Clicked on record button for ID: ${id}, Sentence: ${sentence}`);
   };
 
   useEffect(() => {
@@ -41,7 +50,7 @@ function Script() {
           <S.TextLayout key={v.id}>
             <S.FocusTime>{v.startPoint}</S.FocusTime>
             <S.FocusText>{v.sentence}</S.FocusText>
-            <S.RightLayout>
+            <S.RightLayout onClick={() => handleRightLayoutClick(v.id, v.sentence)}>
               <S.RecordIcon />
               <S.RecordText>Rec</S.RecordText>
             </S.RightLayout>

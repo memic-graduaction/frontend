@@ -24,6 +24,18 @@ export const youtubeIDstate = atom<string>({
   effects_UNSTABLE: [persistAtom],
 });
 
+export const scriptIDstate = atom<number>({
+  key: 'scriptIDstate',
+  default: 0,
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const scriptSentencestate = atom<string>({
+  key: 'scriptSentencestate',
+  default: '',
+  effects_UNSTABLE: [persistAtom],
+});
+
 export const currentTimeState = atom<string>({
   key: 'currentTimeState',
   default: '',
