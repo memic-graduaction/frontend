@@ -54,7 +54,7 @@ export const recordingState = atom<string>({
 });
 
 // 사용자 음성 인식으로부터 추출된 문장
-export const recognizedSentence = atom<string[]>({
+export const recognizedSentence = atom<string>({
   key: 'recognizedSentence',
-  default: ['sorry', 'about', 'that.', 'I', 'have', 'to', 'do', 'thing'],
+  default: '',
 });

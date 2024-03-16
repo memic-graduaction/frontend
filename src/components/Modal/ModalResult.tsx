@@ -11,7 +11,7 @@ function ModalResult() {
   const audioUrl = useRecoilValue(audioUrlState);
   const setRecordStatus = useSetRecoilState(recordingState);
   const originalStr = useRecoilValue(scriptSentencestate);
-  const recognizedStr = useRecoilValue(recognizedSentence);
+  const recognizedStr = useRecoilValue(recognizedSentence).split(' ');
   const incorrectIdx = useRecoilValue(incorrectWordsSelector);
 
   return (
