@@ -17,11 +17,11 @@ function ModalResult() {
   return (
     <Layout>
       <TextContainer>
-        <TextTitle>*&nbsp;기존 문장</TextTitle>
+        <OriginalTextTitle>*&nbsp;기존 문장</OriginalTextTitle>
         <OriginalText>{originalStr}</OriginalText>
       </TextContainer>
       <TextContainer>
-        <TextTitle>*&nbsp;내가 말한 문장</TextTitle>
+        <ResultTextTitle>*&nbsp;내가 말한 문장</ResultTextTitle>
         <TextBox>
           {recognizedStr.map((v, i) =>
             incorrectIdx.includes(i) ? <WrongText>{v}&nbsp;</WrongText> : <ResultText>{v}&nbsp;</ResultText>,
@@ -67,13 +67,17 @@ const TextContainer = styled.div`
   width: 42rem;
 `;
 
-const TextTitle = styled.div`
+const OriginalTextTitle = styled.div`
   width: 100%;
-  color: #433e49;
+  color: #6a6a6a;
   font-size: 1rem;
   font-style: normal;
   font-weight: 400;
   margin-bottom: 1rem;
+`;
+
+const ResultTextTitle = styled(OriginalTextTitle)`
+  color: #ff5c5c;
 `;
 
 const TextBox = styled.div`
@@ -90,18 +94,20 @@ const OriginalText = styled.div`
   padding-left: 1rem;
   font-size: 1.125rem;
   font-style: normal;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.3;
 `;
 
 const ResultText = styled(OriginalText)`
-  font-size: 1.3rem;
+  color: black;
+  font-size: 1.25rem;
   line-height: 1.5;
   padding: 0;
 `;
 
 const WrongText = styled(ResultText)`
   color: #ff5c5c;
+  font-weight: 500;
 `;
 
 const BtnLayout = styled.div`
