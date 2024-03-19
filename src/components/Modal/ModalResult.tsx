@@ -117,8 +117,8 @@ const BtnBox = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 0.94rem;
-  border: 1px solid #d5d5d5;
+  border-radius: 0.4375rem;
+  box-shadow: 1px 1px 5px 0px rgba(16, 16, 16, 0.25);
   gap: 0.5rem;
   font-size: 1.125rem;
   font-style: normal;
