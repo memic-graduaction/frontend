@@ -5,7 +5,7 @@ export const Layout = styled.div`
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid white;
-  height: 5rem;
+  height: 4.4rem;
   padding: 0 3rem;
   color: white;
 `;
@@ -14,10 +14,10 @@ export const LogoLayout = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 500;
   cursor: pointer;
-  gap: 1rem;
+  gap: 0.5rem;
 `;
 
 export const MenuLayout = styled.div`
