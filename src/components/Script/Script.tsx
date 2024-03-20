@@ -10,6 +10,7 @@ import {
 } from 'src/recoil/states';
 import * as S from './Styles';
 import Modal from '../Modal/Modal';
+import Loading from './Loading';
 
 interface Props {
   id: number;
@@ -18,15 +19,18 @@ interface Props {
 }
 
 function Script() {
+  const [loading, setLoading] = useState(false);
   const url = useRecoilState(youtubeLinkState);
   const [data, setData] = useState<Props[] | null>(null);
   const handleGetScript = async () => {
+    setLoading(true);
     const formData = {
       url: `${url}`,
     };
     try {
       const response = await axios.post('http://13.125.213.188:8080/v1/transcriptions', formData);
       setData(response.data.sentences);
+      setLoading(false);
     } catch (e) {
       console.log(e);
     }
@@ -59,6 +63,7 @@ function Script() {
         <S.DownLoadBtn>Download</S.DownLoadBtn>
       </S.ButtonContainer>
       <S.Border />
+      {loading ? <Loading /> : null}
       {data &&
         data.map((v) => (
           <S.TextLayout key={v.id}>
