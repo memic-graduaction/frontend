@@ -1,6 +1,5 @@
 import React from 'react';
 import YoutubePlayer from 'src/components/YoutubePlayer/YoutubePlayer';
-import TimeSelector from 'src/components/TimeSelector/TimeSelector';
 import PlayerInfo from 'src/components/PlayerInfo/PlayerInfo';
 import Script from 'src/components/Script/Script';
 import Header from '../../components/Header/Header';
@@ -16,12 +15,7 @@ function ScriptPage() {
           <PlayerInfo />
         </S.MainContainer>
         <S.SubContainer>
-          <S.RightBox>
-            <TimeSelector />
-          </S.RightBox>
-          <S.BtmContainer>
-            <Script />
-          </S.BtmContainer>
+          <Script />
         </S.SubContainer>
       </S.MainLayout>
     </S.Layout>

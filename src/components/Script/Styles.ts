@@ -3,11 +3,10 @@ import Colors from 'src/styles/Colors';
 
 export const Layout = styled.div`
   width: 100%;
-  height: 41.3rem;
+  height: 42.9rem;
   background: white;
   padding: 1rem;
   overflow-y: auto;
-  margin-top: 2%;
   border-radius: 1rem;
   box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.25);
   &::-webkit-scrollbar {

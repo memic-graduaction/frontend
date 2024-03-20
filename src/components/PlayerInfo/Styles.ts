@@ -13,8 +13,7 @@ export const TitleLayout = styled.div`
   display: flex;
   width: 100%;
   height: auto;
-  margin-top: 1.5rem;
-  font-weight: 700;
+  margin-top: 1rem;
   line-height: 1.5;
   flex-direction: row;
 `;
@@ -22,16 +21,16 @@ export const TitleLayout = styled.div`
 export const TitleContent = styled.div`
   width: 90%;
   height: auto;
-  font-size: 2rem;
+  font-size: 1.6rem;
   border: 0;
-  font-weight: 700;
+  font-weight: 600;
 `;
 
 export const StyledTag = styled.div`
   width: 100%;
   margin: 1rem 1rem 2rem 0;
-  font-size: 1.7rem;
-  font-weight: 700;
+  font-size: 1.4rem;
+  font-weight: 600;
 `;
 
 export const Border = styled.div`
@@ -46,19 +45,18 @@ export const HashTagBox = styled.div`
 `;
 
 export const HashTag = styled.button`
-  height: 2.5rem;
+  height: 2.2rem;
   border-radius: 3rem;
   background: #707070;
   color: white;
   font-size: 1rem;
   font-weight: 300;
-  margin-right: 1.2rem;
-  margin-bottom: 1rem;
+  margin-right: 1rem;
 `;
 
 export const PlusBtn = styled.button`
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2rem;
+  height: 2rem;
   border-radius: 50%;
   background: #ff5c5c;
   color: white;
