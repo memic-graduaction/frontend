@@ -1,8 +1,7 @@
 // HomePage.tsx
 import React, { useState } from 'react';
 import { useSetRecoilState } from 'recoil';
-import { youtubeIDstate, youtubeLinkState } from 'src/recoil/states';
-import { getUrlParam } from 'src/utils/getUrlParam';
+import { youtubeLinkState } from 'src/recoil/states';
 import Header from '../../components/Header/Header';
 import * as S from './Styles';
 import SearchButton from './SearchButton';
@@ -10,7 +9,6 @@ import mouseIcon from '../../assets/mouseIcon.png';
 
 function HomePage() {
   const setLink = useSetRecoilState(youtubeLinkState);
-  const setID = useSetRecoilState(youtubeIDstate);
   const [inputValue, setInputValue] = useState('');
   const [isValidUrl, setIsValidUrl] = useState(false);
   const [isYoutubeUrl, setIsYoutubeUrl] = useState(false);
@@ -31,8 +29,6 @@ function HomePage() {
     if (isValidUrl && isYoutubeUrl) {
       // recoil에 링크 및 video id 저장
       setLink(inputValue);
-      const param = getUrlParam(inputValue);
-      setID(param);
     } else {
       alert('유효한 YouTube 동영상 URL이 아닙니다.');
     }

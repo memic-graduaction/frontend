@@ -1,30 +1,11 @@
 import React from 'react';
-import YouTube, { YouTubeProps } from 'react-youtube';
+import ReactPlayer from 'react-player';
 import { useRecoilValue } from 'recoil';
-import { youtubeIDstate } from 'src/recoil/states';
-import * as S from './Styles';
+import { youtubeLinkState } from 'src/recoil/states';
 
 function YoutubePlayer() {
-  const videoId = useRecoilValue(youtubeIDstate);
-  const opts: YouTubeProps['opts'] = {
-    width: '100%',
-    height: '100%',
-    playerVars: {
-      rel: 0,
-      modestbranding: 1,
-      loop: 1,
-    },
-  };
-
-  const onPlay: YouTubeProps['onPlay'] = (event) => {
-    event.target.playVideo();
-  };
-
-  return (
-    <S.Layout>
-      <YouTube className="player" videoId={videoId} opts={opts} onReady={onPlay} />
-    </S.Layout>
-  );
+  const url = useRecoilValue(youtubeLinkState);
+  return <ReactPlayer url={url} playing controls width="100%" height="62%" />;
 }
 
 export default YoutubePlayer;
