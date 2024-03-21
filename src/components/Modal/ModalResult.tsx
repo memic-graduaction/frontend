@@ -22,11 +22,19 @@ function ModalResult() {
       </TextContainer>
       <TextContainer>
         <ResultTextTitle>*&nbsp;내가 말한 문장</ResultTextTitle>
-        <TextBox>
-          {recognizedStr.map((v, i) =>
-            incorrectIdx.includes(i) ? <WrongText>{v}&nbsp;</WrongText> : <ResultText>{v}&nbsp;</ResultText>,
-          )}
-        </TextBox>
+        {!incorrectIdx.length ? (
+          <TextBox>
+            {recognizedStr.map((v) => (
+              <RightText>{v}&nbsp;</RightText>
+            ))}
+          </TextBox>
+        ) : (
+          <TextBox>
+            {recognizedStr.map((v, i) =>
+              incorrectIdx.includes(i) ? <WrongText>{v}&nbsp;</WrongText> : <ResultText>{v}&nbsp;</ResultText>,
+            )}
+          </TextBox>
+        )}
       </TextContainer>
       <BtnLayout>
         <BtnBox
@@ -108,6 +116,10 @@ const ResultText = styled(OriginalText)`
 const WrongText = styled(ResultText)`
   color: #ff5c5c;
   font-weight: 500;
+`;
+
+const RightText = styled(ResultText)`
+  color: #4fb45f;
 `;
 
 const BtnLayout = styled.div`
