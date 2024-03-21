@@ -9,18 +9,18 @@ export const Layout = styled.div`
 `;
 
 export const MainLayout = styled.div`
+  height: 42.9rem;
   display: flex;
   flex-direction: row;
-  margin-top: 3rem;
+  margin-top: 2.5rem;
 `;
 
 export const MainContainer = styled.div`
   background: white;
   height: 100%;
   width: 46%;
-  border-radius: 2rem;
-  box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.25) inset;
-  padding: 3rem;
+  border-radius: 1rem;
+  padding: 2rem;
   margin-left: 3%;
   margin-right: 1%;
 `;
@@ -28,21 +28,4 @@ export const MainContainer = styled.div`
 export const SubContainer = styled.div`
   height: 100%;
   width: 46%;
-`;
-
-export const RightBox = styled.div`
-  width: 100%;
-  height: auto;
-`;
-
-export const BtmContainer = styled.div`
-  width: 100%;
-  height: auto;
-`;
-
-export const PlayerContainer = styled.div`
-  width: 30rem;
-  position: fixed;
-  right: 2rem;
-  bottom: 2rem;
 `;

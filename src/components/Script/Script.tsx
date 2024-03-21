@@ -1,8 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import { youtubeLinkState, scriptIDstate, scriptSentencestate } from 'src/recoil/states';
+import {
+  youtubeLinkState,
+  scriptIDstate,
+  scriptSentencestate,
+  modalActivationState,
+  recordingState,
+} from 'src/recoil/states';
 import * as S from './Styles';
+import Modal from '../Modal/Modal';
+import Loading from './Loading';
 
 interface Props {
   id: number;
@@ -10,28 +18,42 @@ interface Props {
   sentence: string;
 }
 
+const BaseUrl = process.env.REACT_APP_BASE_URL;
+
 function Script() {
+  const [loading, setLoading] = useState(false);
   const url = useRecoilState(youtubeLinkState);
   const [data, setData] = useState<Props[] | null>(null);
-  const setScriptIDState = useSetRecoilState(scriptIDstate);
-  const setScriptSentencestate = useSetRecoilState(scriptSentencestate);
+  const serverUrl = `${BaseUrl}/v1/transcriptions`;
+  console.log(serverUrl);
 
   const handleGetScript = async () => {
+    setLoading(true);
     const formData = {
       url: `${url}`,
     };
     try {
-      const response = await axios.post('http://13.125.213.188:8080/v1/transcriptions', formData);
+      const response = await axios.post(serverUrl, formData);
       setData(response.data.sentences);
+      setLoading(false);
     } catch (e) {
       console.log(e);
     }
   };
 
+  const setScriptIDState = useSetRecoilState(scriptIDstate);
+  const setScriptSentencestate = useSetRecoilState(scriptSentencestate);
   const handleRightLayoutClick = (id: number, sentence: string) => {
     setScriptIDState(id);
     setScriptSentencestate(sentence);
-    console.log(`Clicked on record button for ID: ${id}, Sentence: ${sentence}`);
+    setIsModalOpen(true);
+  };
+
+  const setRecordingState = useSetRecoilState(recordingState);
+  const [isModalOpen, setIsModalOpen] = useRecoilState(modalActivationState);
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setRecordingState('inactive');
   };
 
   useEffect(() => {
@@ -40,11 +62,13 @@ function Script() {
 
   return (
     <S.Layout>
+      {isModalOpen && <Modal onClose={() => handleCloseModal()} />}
       <S.ButtonContainer>
         <S.ScriptSmall>Script</S.ScriptSmall>
         <S.DownLoadBtn>Download</S.DownLoadBtn>
       </S.ButtonContainer>
       <S.Border />
+      {loading ? <Loading /> : null}
       {data &&
         data.map((v) => (
           <S.TextLayout key={v.id}>

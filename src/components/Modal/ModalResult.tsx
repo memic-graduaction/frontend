@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { incorrectWordsSelector } from 'src/recoil/selectors';
-import { audioUrlState, recognizedSentence, recordingState, speechSentence } from 'src/recoil/states';
+import { audioUrlState, recognizedSentence, recordingState, scriptSentencestate } from 'src/recoil/states';
 import { Microphone, PlayBtn } from 'src/utils/Icons';
 import styled from 'styled-components';
 
@@ -10,24 +10,32 @@ function ModalResult() {
   const [isPlay, setIsPlay] = useState(false);
   const audioUrl = useRecoilValue(audioUrlState);
   const setRecordStatus = useSetRecoilState(recordingState);
-  const originalStr = useRecoilValue(speechSentence);
-  const recognizedStr = useRecoilValue(recognizedSentence);
+  const originalStr = useRecoilValue(scriptSentencestate);
+  const recognizedStr = useRecoilValue(recognizedSentence).split(' ');
   const incorrectIdx = useRecoilValue(incorrectWordsSelector);
 
   return (
     <Layout>
-      <div>
-        <GreyText>*기존 문장</GreyText>
+      <TextContainer>
+        <OriginalTextTitle>*&nbsp;기존 문장</OriginalTextTitle>
         <OriginalText>{originalStr}</OriginalText>
-      </div>
-      <div>
-        <RedText>*내가 말한 문장</RedText>
-        <TextBox>
-          {recognizedStr.map((v, i) =>
-            incorrectIdx.includes(i) ? <WrongText>{v}&nbsp;</WrongText> : <ResultText>{v}&nbsp;</ResultText>,
-          )}
-        </TextBox>
-      </div>
+      </TextContainer>
+      <TextContainer>
+        <ResultTextTitle>*&nbsp;내가 말한 문장</ResultTextTitle>
+        {!incorrectIdx.length ? (
+          <TextBox>
+            {recognizedStr.map((v) => (
+              <RightText>{v}&nbsp;</RightText>
+            ))}
+          </TextBox>
+        ) : (
+          <TextBox>
+            {recognizedStr.map((v, i) =>
+              incorrectIdx.includes(i) ? <WrongText>{v}&nbsp;</WrongText> : <ResultText>{v}&nbsp;</ResultText>,
+            )}
+          </TextBox>
+        )}
+      </TextContainer>
       <BtnLayout>
         <BtnBox
           onClick={() => {
@@ -63,17 +71,21 @@ const Layout = styled.div`
   gap: 2.5rem;
 `;
 
-const RedText = styled.div`
+const TextContainer = styled.div`
+  width: 42rem;
+`;
+
+const OriginalTextTitle = styled.div`
   width: 100%;
-  color: #ff5c5c;
+  color: #6a6a6a;
   font-size: 1rem;
   font-style: normal;
-  font-weight: 300;
+  font-weight: 400;
   margin-bottom: 1rem;
 `;
 
-const GreyText = styled(RedText)`
-  color: #757575;
+const ResultTextTitle = styled(OriginalTextTitle)`
+  color: #ff5c5c;
 `;
 
 const TextBox = styled.div`
@@ -90,18 +102,24 @@ const OriginalText = styled.div`
   padding-left: 1rem;
   font-size: 1.125rem;
   font-style: normal;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.3;
 `;
 
 const ResultText = styled(OriginalText)`
-  font-size: 1.3rem;
+  color: black;
+  font-size: 1.25rem;
   line-height: 1.5;
   padding: 0;
 `;
 
 const WrongText = styled(ResultText)`
   color: #ff5c5c;
+  font-weight: 500;
+`;
+
+const RightText = styled(ResultText)`
+  color: #4690ff;
 `;
 
 const BtnLayout = styled.div`
@@ -117,8 +135,8 @@ const BtnBox = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 0.94rem;
-  border: 1px solid #d5d5d5;
+  border-radius: 0.4375rem;
+  box-shadow: 1px 1px 5px 0px rgba(16, 16, 16, 0.25);
   gap: 0.5rem;
   font-size: 1.125rem;
   font-style: normal;

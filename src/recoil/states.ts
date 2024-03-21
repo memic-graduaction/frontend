@@ -6,8 +6,8 @@ const { persistAtom } = recoilPersist({
   storage: localStorage,
 });
 
-export const scriptExpendState = atom<boolean>({
-  key: 'scriptExpendState',
+export const modalActivationState = atom<boolean>({
+  key: 'modalActivationState',
   default: false,
 });
 
@@ -53,31 +53,8 @@ export const recordingState = atom<string>({
   default: 'inactive',
 });
 
-// 사용자가 녹음하기를 선택한 문장
-export const speechSentence = atom<string>({
-  key: 'speechSentence',
-  default: 'that we’ve had this morning that in the last hour a very powerful earthquake has struck',
-});
-
-// 사용자 음성 인식으루부터 추출된 문장
-export const recognizedSentence = atom<string[]>({
+// 사용자 음성 인식으로부터 추출된 문장
+export const recognizedSentence = atom<string>({
   key: 'recognizedSentence',
-  default: [
-    'this',
-    'we’ve',
-    'had',
-    'this',
-    'money',
-    'that',
-    'in',
-    'the',
-    'last',
-    'owl',
-    'a',
-    'very',
-    'powerful',
-    'earthquick',
-    'has',
-    'struck',
-  ],
+  default: '',
 });

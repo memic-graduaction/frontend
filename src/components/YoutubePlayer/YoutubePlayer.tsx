@@ -1,30 +1,16 @@
 import React from 'react';
-import YouTube, { YouTubeProps } from 'react-youtube';
+import ReactPlayer from 'react-player';
 import { useRecoilValue } from 'recoil';
-import { youtubeIDstate } from 'src/recoil/states';
-import * as S from './Styles';
+import { modalActivationState, youtubeLinkState } from 'src/recoil/states';
 
 function YoutubePlayer() {
-  const videoId = useRecoilValue(youtubeIDstate);
-  const opts: YouTubeProps['opts'] = {
-    width: '100%',
-    height: '100%',
-    playerVars: {
-      rel: 0,
-      modestbranding: 1,
-      loop: 1,
-    },
-  };
-
-  const onPlay: YouTubeProps['onPlay'] = (event) => {
-    event.target.playVideo();
-  };
-
-  return (
-    <S.Layout>
-      <YouTube className="player" videoId={videoId} opts={opts} onReady={onPlay} />
-    </S.Layout>
-  );
+  const isModalOpen = useRecoilValue(modalActivationState);
+  if (isModalOpen) {
+    const video = document.querySelector('iframe');
+    video.setAttribute('autoplay', 'false');
+  }
+  const url = useRecoilValue(youtubeLinkState);
+  return <ReactPlayer className="video" url={url} playing={!isModalOpen} controls width="100%" height="62%" />;
 }
 
 export default YoutubePlayer;
