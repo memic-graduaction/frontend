@@ -119,7 +119,7 @@ const WrongText = styled(ResultText)`
 `;
 
 const RightText = styled(ResultText)`
-  color: #4fb45f;
+  color: #4690ff;
 `;
 
 const BtnLayout = styled.div`
