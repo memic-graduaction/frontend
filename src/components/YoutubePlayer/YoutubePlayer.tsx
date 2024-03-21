@@ -1,11 +1,16 @@
 import React from 'react';
 import ReactPlayer from 'react-player';
 import { useRecoilValue } from 'recoil';
-import { youtubeLinkState } from 'src/recoil/states';
+import { modalActivationState, youtubeLinkState } from 'src/recoil/states';
 
 function YoutubePlayer() {
+  const isModalOpen = useRecoilValue(modalActivationState);
+  if (isModalOpen) {
+    const video = document.querySelector('iframe');
+    video.setAttribute('autoplay', 'false');
+  }
   const url = useRecoilValue(youtubeLinkState);
-  return <ReactPlayer url={url} playing controls width="100%" height="62%" />;
+  return <ReactPlayer className="video" url={url} playing={!isModalOpen} controls width="100%" height="62%" />;
 }
 
 export default YoutubePlayer;
