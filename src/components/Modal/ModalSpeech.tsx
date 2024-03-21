@@ -16,16 +16,16 @@ import axios from 'axios';
 
 const MicRecorder = require('mic-recorder-to-mp3');
 
+const BaseUrl = process.env.REACT_APP_BASE_URL;
+
 function ModalSpeech() {
   const sentence = useRecoilValue(scriptSentencestate);
   const scriptId = useRecoilValue(scriptIDstate);
-  // recordingStatus : "inactive", "recording", "completed"
   const [recordingStatus, setRecordingStatus] = useRecoilState(recordingState);
-  // getUserMedia 함수로부터 반환받는 MediaStream 변수
-  // 레코딩된 음성 파일의 blob URL
   const setAudioUrl = useSetRecoilState(audioUrlState);
   const [recorder, setRecorder] = useState(null);
   const setResultStr = useSetRecoilState(recognizedSentence);
+  const serverUrl = `${BaseUrl}/v1/recognized-sentences`;
 
   useEffect(() => {
     setRecordingStatus('inactive');
@@ -33,7 +33,7 @@ function ModalSpeech() {
 
   const startRecording = async () => {
     setRecordingStatus('recording');
-    const mp3Recorder = new MicRecorder({ bitRate: 128 });
+    const mp3Recorder = new MicRecorder({ bitRate: 128, encoder: 'mp3' });
     try {
       await mp3Recorder.start();
       setRecorder(mp3Recorder);
@@ -44,35 +44,46 @@ function ModalSpeech() {
 
   const stopRecording = async () => {
     try {
-      setRecordingStatus('loading');
-      const [buffer, blob] = await recorder.stop().getMp3();
-      const file = new File(buffer, 'recordedFile.mp3', {
-        type: blob.type,
+      // 음성 녹음을 blob형태의 파일로 만든 후 url을 audioUrl 변수에 저장
+      const buffer = await recorder.stop().getMp3();
+      const webmFile = new File(buffer, 'speech.webm', {
+        type: 'audio/mpeg',
       });
-      const newAudioUrl = URL.createObjectURL(file);
+      const newAudioUrl = URL.createObjectURL(webmFile);
       setAudioUrl(newAudioUrl);
-      const IdObject = { sentenceId: scriptId };
+      setRecordingStatus('loading'); // 로딩중으로 녹음 상태 변환
+
+      const response = await fetch(newAudioUrl);
+      const blob = await response.blob();
+      const IdObject = { id: scriptId };
+
       const formData = new FormData();
-      formData.append('speech', file);
-      formData.append('request', JSON.stringify(IdObject));
+      formData.append('speech', blob, 'speech.mp3');
+      const jsonStr = JSON.stringify(IdObject);
+      formData.append('sentence', new Blob([jsonStr], { type: 'application/json' }));
+
       for (const x of formData.entries()) {
-        console.log(x[0], ' / ', x[1]);
+        console.log(x[0], '/', x[1]);
       }
 
       axios
-        .post('http://13.125.213.188:8080/v1/recognized-sentences', formData, {
+        .post(serverUrl, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
         })
-        .then((response) => {
-          console.log('음성파일 업로드 성공', response.data);
-          setResultStr(response.data.recognizedSentence);
+        .then((res) => {
+          console.log('음성파일 업로드 성공', res.data);
+          setResultStr(res.data.recognizedSentence);
+        })
+        .then((error) => {
+          console.log(error);
         });
-    } catch (error) {
-      alert('녹음 결과 반환 도중 오류가 발생했습니다');
+    } catch (error: any) {
+      alert(error.message);
     }
   };
+
   return (
     <Layout>
       <TextTitle>*&nbsp;문장을 발음해보세요</TextTitle>

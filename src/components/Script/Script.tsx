@@ -18,17 +18,22 @@ interface Props {
   sentence: string;
 }
 
+const BaseUrl = process.env.REACT_APP_BASE_URL;
+
 function Script() {
   const [loading, setLoading] = useState(false);
   const url = useRecoilState(youtubeLinkState);
   const [data, setData] = useState<Props[] | null>(null);
+  const serverUrl = `${BaseUrl}/v1/transcriptions`;
+  console.log(serverUrl);
+
   const handleGetScript = async () => {
     setLoading(true);
     const formData = {
       url: `${url}`,
     };
     try {
-      const response = await axios.post('http://13.125.213.188:8080/v1/transcriptions', formData);
+      const response = await axios.post(serverUrl, formData);
       setData(response.data.sentences);
       setLoading(false);
     } catch (e) {

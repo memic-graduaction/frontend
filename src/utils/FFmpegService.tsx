@@ -1,22 +1,19 @@
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable jsx-a11y/media-has-caption */
 import React, { useState } from 'react';
-import { createFFmpeg, fetchFile } from '@ffmpeg/ffmpeg';
 import { useRecoilState } from 'recoil';
 import { audioUrlState } from 'src/recoil/states';
+import axios from 'axios';
 
 const MicRecorder = require('mic-recorder-to-mp3');
 
 function FFmpegService() {
-  const ffmpeg = createFFmpeg({
-    log: true,
-  });
-
   const [audioUrl, setAudioUrl] = useRecoilState(audioUrlState);
   const [recorder, setRecorder] = useState(null);
   const [isAudioPlay, setIsAudioPlay] = useState(false);
 
   const startRecording = async () => {
-    const mp3Recorder = new MicRecorder({ bitRate: 128 });
+    const mp3Recorder = new MicRecorder({ bitRate: 128, encoder: 'mp3' });
     try {
       await mp3Recorder.start();
       setRecorder(mp3Recorder);
@@ -28,8 +25,9 @@ function FFmpegService() {
   const stopRecording = async () => {
     try {
       const [buffer, blob] = await recorder.stop().getMp3();
+      console.log(blob.type);
       const webmFile = new File(buffer, 'speech.webm', {
-        type: blob.type,
+        type: 'audio/mpeg',
       });
       const newAudioUrl = URL.createObjectURL(webmFile);
       setAudioUrl(newAudioUrl);
@@ -38,21 +36,35 @@ function FFmpegService() {
     }
   };
 
-  const convertWebmToMP3 = async () => {
-    await ffmpeg.load();
-    ffmpeg.FS('writeFile', 'speech.webm', await fetchFile(audioUrl));
-    await ffmpeg.run('-i', 'speech.webm', 'speech.mp3');
-    const mp3File = ffmpeg.FS('readFile', 'speech.mp3');
-    const mp3Blob = new Blob([mp3File.buffer], { type: 'audio/mpeg' });
-    const mp3Url = URL.createObjectURL(mp3Blob);
-    setAudioUrl(mp3Url);
+  const handlePost = async () => {
+    // api post body 구성
+    const IdObject = { id: 1 };
 
-    // mp3 파일 다운로드
-    const a = document.createElement('a');
-    a.href = mp3Url;
-    document.body.appendChild(a);
-    a.download = 'speech.mp3';
-    a.click();
+    fetch(audioUrl)
+      .then((response) => response.blob())
+      .then((blob) => {
+        const formData = new FormData();
+        formData.append('speech', blob, 'speech.mp3');
+        const jsonStr = JSON.stringify(IdObject);
+        formData.append('sentence', new Blob([jsonStr], { type: 'application/json' }));
+
+        for (const x of formData.entries()) {
+          console.log(x[0], '/', x[1]);
+        }
+
+        axios
+          .post('http://13.125.213.188:8080/v1/recognized-sentences', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          })
+          .then((response) => {
+            console.log('음성파일 업로드 성공', response.data);
+          })
+          .then((error) => {
+            console.log(error);
+          });
+      });
   };
 
   return (
@@ -63,9 +75,7 @@ function FFmpegService() {
       <button onClick={stopRecording} style={{ color: 'white' }}>
         녹음 중지
       </button>
-      <button onClick={convertWebmToMP3} style={{ color: 'white' }}>
-        변환 시작
-      </button>
+      <button onClick={handlePost}>api보내기</button>
       <button onClick={() => setIsAudioPlay(true)}>녹음 재생</button>
       {isAudioPlay ? <audio src={audioUrl} autoPlay /> : null}
     </>
