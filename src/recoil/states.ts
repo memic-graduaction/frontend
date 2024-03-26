@@ -41,6 +41,14 @@ export const currentTimeState = atom<string>({
   default: '',
 });
 
+export const youtubePlayerState = atom({
+  key: 'youtubePlayerState',
+  default: {
+    startPoint: '',
+    sentence: ''
+  }
+});
+
 // audio blob 객체에 넣을 url
 export const audioUrlState = atom<string>({
   key: 'audioUrlState',

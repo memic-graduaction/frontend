@@ -5,7 +5,7 @@ export const Layout = styled.div`
   width: 100%;
   height: 42.9rem;
   background: white;
-  padding: 1rem;
+  padding: 1.5rem;
   overflow-y: auto;
   border-radius: 1rem;
   box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.25);
@@ -35,10 +35,11 @@ export const NormalText = styled.div`
   width: 73%;
   height: auto;
   color: #696565;
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   font-style: normal;
   font-weight: 500;
   margin-left: 3%;
+  line-height: 1.5;
 `;
 
 export const FocusText = styled(NormalText)`
@@ -46,12 +47,11 @@ export const FocusText = styled(NormalText)`
 `;
 
 export const NormalTime = styled.div`
-  width: 10%;
+  width: 12%;
   color: rgba(255, 92, 92, 0.5);
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-style: normal;
   font-weight: 500;
-  margin-right: 1rem;
 `;
 
 export const FocusTime = styled(NormalTime)`
