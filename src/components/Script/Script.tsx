@@ -7,6 +7,7 @@ import {
   scriptSentencestate,
   modalActivationState,
   recordingState,
+  youtubePlayerState
 } from 'src/recoil/states';
 import * as S from './Styles';
 import Modal from '../Modal/Modal';
@@ -43,6 +44,12 @@ function Script() {
 
   const setScriptIDState = useSetRecoilState(scriptIDstate);
   const setScriptSentencestate = useSetRecoilState(scriptSentencestate);
+  const handleLeftLayoutClick = (id: number, sentence: string, startPoint: string) => {
+    setScriptIDState(id);
+    setScriptSentencestate(sentence);
+    setSelectedStartPointAndSentence({ startPoint, sentence });
+  };
+
   const handleRightLayoutClick = (id: number, sentence: string) => {
     setScriptIDState(id);
     setScriptSentencestate(sentence);
@@ -51,6 +58,8 @@ function Script() {
 
   const setRecordingState = useSetRecoilState(recordingState);
   const [isModalOpen, setIsModalOpen] = useRecoilState(modalActivationState);
+  const setSelectedStartPointAndSentence = useSetRecoilState(youtubePlayerState);
+
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setRecordingState('inactive');
@@ -72,8 +81,8 @@ function Script() {
       {data &&
         data.map((v) => (
           <S.TextLayout key={v.id}>
-            <S.FocusTime>{v.startPoint}</S.FocusTime>
-            <S.FocusText>{v.sentence}</S.FocusText>
+            <S.FocusTime onClick={() => handleLeftLayoutClick(v.id, v.sentence, v.startPoint)}>{v.startPoint}</S.FocusTime>
+            <S.FocusText onClick={() => handleLeftLayoutClick(v.id, v.sentence, v.startPoint)}>{v.sentence}</S.FocusText>
             <S.RightLayout onClick={() => handleRightLayoutClick(v.id, v.sentence)}>
               <S.RecordIcon />
               <S.RecordText>Rec</S.RecordText>
