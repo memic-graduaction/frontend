@@ -96,6 +96,14 @@ export const RightLayout = styled.div`
   border-radius: 1.5rem;
   padding: 2px;
   margin-left: auto;
+
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+
+  &:hover {
+    opacity: 1;
+  }
+  
 `;
 
 export const RecordIcon = styled.div`

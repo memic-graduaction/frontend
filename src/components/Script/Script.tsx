@@ -105,7 +105,7 @@ function Script() {
                 {v.startPoint}
               </S.NormalTime>
               <S.NormalText
-                style={isBetween(v.startPoint, current, getNextStartTime(v.startPoint)) ? { color: '#222222' } : { color: '#696565' }}
+                style={isBetween(v.startPoint, current, getNextStartTime(v.startPoint)) ? { color: '#222222' } : { color: '#CFCFCF' }}
                 onClick={() => handleLeftLayoutClick(v.id, v.sentence, v.startPoint)}
               >
                 {v.sentence}
@@ -121,3 +121,4 @@ function Script() {
 }
 
 export default Script;
+
