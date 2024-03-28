@@ -42,10 +42,6 @@ export const NormalText = styled.div`
   line-height: 1.5;
 `;
 
-export const FocusText = styled(NormalText)`
-  color: #222222;
-`;
-
 export const NormalTime = styled.div`
   width: 12%;
   color: rgba(255, 92, 92, 0.5);
@@ -54,9 +50,6 @@ export const NormalTime = styled.div`
   font-weight: 500;
 `;
 
-export const FocusTime = styled(NormalTime)`
-  color: #ff5c5c;
-`;
 
 export const ButtonContainer = styled.div`
   width: 100%;

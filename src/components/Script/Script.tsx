@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
 import {
   youtubeLinkState,
   scriptIDstate,
   scriptSentencestate,
   modalActivationState,
   recordingState,
-  youtubePlayerState
+  youtubePlayerState,
+  currentTimeState
 } from 'src/recoil/states';
 import * as S from './Styles';
 import Modal from '../Modal/Modal';
@@ -26,7 +27,6 @@ function Script() {
   const url = useRecoilState(youtubeLinkState);
   const [data, setData] = useState<Props[] | null>(null);
   const serverUrl = `${BaseUrl}/v1/transcriptions`;
-  console.log(serverUrl);
 
   const handleGetScript = async () => {
     setLoading(true);
@@ -44,25 +44,42 @@ function Script() {
 
   const setScriptIDState = useSetRecoilState(scriptIDstate);
   const setScriptSentencestate = useSetRecoilState(scriptSentencestate);
+  const setRecordingState = useSetRecoilState(recordingState);
+  const [isModalOpen, setIsModalOpen] = useRecoilState(modalActivationState);
+  const setSelectedStartPointAndSentence = useSetRecoilState(youtubePlayerState);
+  const current = useRecoilValue(currentTimeState);
+
+  // 해당 행으로 재생포인트 이동
   const handleLeftLayoutClick = (id: number, sentence: string, startPoint: string) => {
     setScriptIDState(id);
     setScriptSentencestate(sentence);
     setSelectedStartPointAndSentence({ startPoint, sentence });
   };
 
+  // 해당 행의 녹음 모달창
   const handleRightLayoutClick = (id: number, sentence: string) => {
     setScriptIDState(id);
     setScriptSentencestate(sentence);
     setIsModalOpen(true);
   };
 
-  const setRecordingState = useSetRecoilState(recordingState);
-  const [isModalOpen, setIsModalOpen] = useRecoilState(modalActivationState);
-  const setSelectedStartPointAndSentence = useSetRecoilState(youtubePlayerState);
-
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setRecordingState('inactive');
+  };
+
+  const isBetween = (startTime: string, currentTime: string, nextStartTime: string): boolean => 
+  startTime <= currentTime && currentTime < nextStartTime;
+  
+  const getNextStartTime = (currentStartTime: string): string => {
+    if (!data) return ''; // 데이터가 없으면 빈 문자열 반환
+
+    for (let i = 0; i < data.length; i += 1) {
+      if (data[i].startPoint > currentStartTime) {
+        return data[i].startPoint;
+      }
+    }
+    return '';
   };
 
   useEffect(() => {
@@ -81,8 +98,18 @@ function Script() {
       {data &&
         data.map((v) => (
           <S.TextLayout key={v.id}>
-            <S.FocusTime onClick={() => handleLeftLayoutClick(v.id, v.sentence, v.startPoint)}>{v.startPoint}</S.FocusTime>
-            <S.FocusText onClick={() => handleLeftLayoutClick(v.id, v.sentence, v.startPoint)}>{v.sentence}</S.FocusText>
+             <S.NormalTime
+                style={isBetween(v.startPoint, current, getNextStartTime(v.startPoint)) ? { color: 'rgba(255, 92, 92, 1)' } : { color: 'rgba(255, 92, 92, 0.5)' }}
+                onClick={() => handleLeftLayoutClick(v.id, v.sentence, v.startPoint)}
+              >
+                {v.startPoint}
+              </S.NormalTime>
+              <S.NormalText
+                style={isBetween(v.startPoint, current, getNextStartTime(v.startPoint)) ? { color: '#222222' } : { color: '#696565' }}
+                onClick={() => handleLeftLayoutClick(v.id, v.sentence, v.startPoint)}
+              >
+                {v.sentence}
+              </S.NormalText>
             <S.RightLayout onClick={() => handleRightLayoutClick(v.id, v.sentence)}>
               <S.RecordIcon />
               <S.RecordText>Rec</S.RecordText>

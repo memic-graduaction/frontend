@@ -36,15 +36,15 @@ export const scriptSentencestate = atom<string>({
   effects_UNSTABLE: [persistAtom],
 });
 
-export const currentTimeState = atom<string>({
+export const currentTimeState = atom({
   key: 'currentTimeState',
-  default: '',
+  default: '00:00:00',
 });
 
 export const youtubePlayerState = atom({
   key: 'youtubePlayerState',
   default: {
-    startPoint: '',
+    startPoint: '00:00:00',
     sentence: ''
   }
 });
