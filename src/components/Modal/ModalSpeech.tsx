@@ -10,9 +10,10 @@ import {
   scriptIDstate,
   scriptSentencestate,
 } from 'src/recoil/states';
-import { Microphone, Stop } from 'src/utils/Icons';
 import styled from 'styled-components';
 import axios from 'axios';
+import SpeechBtn from './SpeechBtn';
+import StopSpeechBtn from './StopSpeechBtn';
 
 const MicRecorder = require('mic-recorder-to-mp3');
 
@@ -88,16 +89,8 @@ function ModalSpeech() {
     <Layout>
       <TextTitle>*&nbsp;문장을 발음해보세요</TextTitle>
       <TextLayout>{sentence}</TextLayout>
-      {recordingStatus === 'inactive' ? (
-        <IconLayout onClick={startRecording}>
-          <Microphone />
-        </IconLayout>
-      ) : null}
-      {recordingStatus === 'recording' ? (
-        <IconLayout onClick={stopRecording}>
-          <Stop />
-        </IconLayout>
-      ) : null}
+      {recordingStatus === 'inactive' ? <SpeechBtn onClick={startRecording} /> : null}
+      {recordingStatus === 'recording' ? <StopSpeechBtn onClick={stopRecording} /> : null}
     </Layout>
   );
 }
@@ -134,16 +127,4 @@ const TextLayout = styled.div`
   font-style: normal;
   font-weight: 300;
   line-height: 1.3;
-`;
-
-const IconLayout = styled.button`
-  width: 3.25rem;
-  height: 3.25rem;
-  border-radius: 50rem;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  bottom: 2.5rem;
 `;

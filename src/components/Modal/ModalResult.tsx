@@ -3,8 +3,9 @@ import React, { useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { incorrectWordsSelector } from 'src/recoil/selectors';
 import { audioUrlState, recognizedSentence, recordingState, scriptSentencestate } from 'src/recoil/states';
-import { Microphone, PlayBtn } from 'src/utils/Icons';
 import styled from 'styled-components';
+import PlaySpeechBtn from './PlaySpeechBtn';
+import ReSpeechBtn from './ReSpeechBtn';
 
 function ModalResult() {
   const [isPlay, setIsPlay] = useState(false);
@@ -37,22 +38,8 @@ function ModalResult() {
         )}
       </TextContainer>
       <BtnLayout>
-        <BtnBox
-          onClick={() => {
-            setIsPlay(true);
-          }}
-        >
-          <PlayBtn />
-          나의 발음 듣기
-        </BtnBox>
-        <BtnBox
-          onClick={() => {
-            setRecordStatus('inactive');
-          }}
-        >
-          <Microphone width="27px" height="27px" />
-          다시 녹음하기
-        </BtnBox>
+        <PlaySpeechBtn onClick={() => setIsPlay(true)} />
+        <ReSpeechBtn onClick={() => setRecordStatus('inactive')} />
       </BtnLayout>
       {audioUrl && isPlay ? <audio src={audioUrl} autoPlay /> : null}
     </Layout>
@@ -127,18 +114,4 @@ const BtnLayout = styled.div`
   justify-content: center;
   display: flex;
   gap: 2rem;
-`;
-
-const BtnBox = styled.button`
-  width: 11.25rem;
-  height: 2.25rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 0.4375rem;
-  box-shadow: 1px 1px 5px 0px rgba(16, 16, 16, 0.25);
-  gap: 0.5rem;
-  font-size: 1.125rem;
-  font-style: normal;
-  font-weight: 350;
 `;
