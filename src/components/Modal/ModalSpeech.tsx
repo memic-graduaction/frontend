@@ -87,7 +87,7 @@ function ModalSpeech() {
 
   return (
     <Layout>
-      <TextTitle>*&nbsp;문장을 발음해보세요</TextTitle>
+      <TextTitle>* 문장을 발음해보세요</TextTitle>
       <TextLayout>{sentence}</TextLayout>
       {recordingStatus === 'inactive' ? <SpeechBtn onClick={startRecording} /> : null}
       {recordingStatus === 'recording' ? <StopSpeechBtn onClick={stopRecording} /> : null}

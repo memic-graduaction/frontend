@@ -4,6 +4,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { incorrectWordsSelector } from 'src/recoil/selectors';
 import { audioUrlState, recognizedSentence, recordingState, scriptSentencestate } from 'src/recoil/states';
 import styled from 'styled-components';
+import { Checkmark } from 'react-checkmark';
 import PlaySpeechBtn from './PlaySpeechBtn';
 import ReSpeechBtn from './ReSpeechBtn';
 
@@ -18,15 +19,18 @@ function ModalResult() {
   return (
     <Layout>
       <TextContainer>
-        <OriginalTextTitle>*&nbsp;기존 문장</OriginalTextTitle>
+        <OriginalTextTitle>* 기존 문장</OriginalTextTitle>
         <OriginalText>{originalStr}</OriginalText>
       </TextContainer>
       <TextContainer>
-        <ResultTextTitle>*&nbsp;내가 말한 문장</ResultTextTitle>
+        <ResultTextTitle>* 내가 말한 문장</ResultTextTitle>
         {!incorrectIdx.length ? (
           <TextBox>
+            <IconBox>
+              <Checkmark size="small" color="#0AC78E" />
+            </IconBox>
             {recognizedStr.map((v) => (
-              <RightText>{v}&nbsp;</RightText>
+              <CorrectText>{v}&nbsp;</CorrectText>
             ))}
           </TextBox>
         ) : (
@@ -105,8 +109,8 @@ const WrongText = styled(ResultText)`
   font-weight: 500;
 `;
 
-const RightText = styled(ResultText)`
-  color: #4690ff;
+const CorrectText = styled(ResultText)`
+  color: #0ac78e;
 `;
 
 const BtnLayout = styled.div`
@@ -114,4 +118,8 @@ const BtnLayout = styled.div`
   justify-content: center;
   display: flex;
   gap: 2rem;
+`;
+
+const IconBox = styled.div`
+  margin-right: 0.5rem;
 `;
