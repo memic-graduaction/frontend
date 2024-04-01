@@ -5,6 +5,8 @@ import { RecoilRoot } from 'recoil';
 import ScriptPage from './pages/ScriptPage/ScriptPage';
 import HomePage from './pages/FullPage';
 import RankPage from './pages/RankPage/RankPage';
+import LoginPage from './pages/LoginPage/LoginPage';
+import MyPage from './pages/MyPage/Mypage';
 
 function App() {
   return (
@@ -13,6 +15,8 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/script" element={<ScriptPage />} />
         <Route path="/rank" element={<RankPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/mypage" element={<MyPage />} />
       </Routes>
     </RecoilRoot>
   );
