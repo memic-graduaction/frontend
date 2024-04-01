@@ -33,10 +33,6 @@ export const useStopRecording = () => {
       const jsonStr = JSON.stringify(IdObject);
       formData.append('sentence', new Blob([jsonStr], { type: 'application/json' }));
 
-      for (const x of formData.entries()) {
-        console.log(x[0], '/', x[1]);
-      }
-
       axios
         .post(serverUrl, formData, {
           headers: {
@@ -44,7 +40,6 @@ export const useStopRecording = () => {
           },
         })
         .then((res) => {
-          console.log('음성파일 업로드 성공', res.data);
           setResultStr(res.data.recognizedSentence);
         })
         .then((error) => {
