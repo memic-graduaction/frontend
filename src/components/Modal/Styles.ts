@@ -35,3 +35,36 @@ export const ExitBtn = styled.button`
   top: 1rem;
   right: 1rem;
 `;
+
+export const RoundBtn = styled.button`
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 50rem;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 2.5rem;
+`;
+
+export const SquareBtnLayout = styled.div`
+  width: 100%;
+  justify-content: center;
+  display: flex;
+  gap: 2rem;
+`;
+
+export const SquareBtnBox = styled.button`
+  width: 11.25rem;
+  height: 2.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.4375rem;
+  box-shadow: 1px 1px 5px 0px rgba(16, 16, 16, 0.25);
+  gap: 0.5rem;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 350;
+`;
