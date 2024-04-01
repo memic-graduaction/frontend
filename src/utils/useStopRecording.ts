@@ -1,16 +1,11 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import axios from 'axios';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { audioUrlState, recognizedSentence, recordingState, scriptIDstate } from 'src/recoil/states';
-
-const BaseUrl = process.env.REACT_APP_BASE_URL;
+import { audioUrlState, recordingState, scriptIDstate } from 'src/recoil/states';
 
 export const useStopRecording = () => {
-  const serverUrl = `${BaseUrl}/v1/recognized-sentences`;
   const scriptId = useRecoilValue(scriptIDstate);
   const setAudioUrl = useSetRecoilState(audioUrlState);
-  const setResultStr = useSetRecoilState(recognizedSentence);
   const setRecordingStatus = useSetRecoilState(recordingState);
 
   const stopRecording = async (recorder) => {
@@ -28,23 +23,7 @@ export const useStopRecording = () => {
       const blob = await response.blob();
       const IdObject = { id: scriptId };
 
-      const formData = new FormData();
-      formData.append('speech', blob, 'speech.mp3');
-      const jsonStr = JSON.stringify(IdObject);
-      formData.append('sentence', new Blob([jsonStr], { type: 'application/json' }));
-
-      axios
-        .post(serverUrl, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        })
-        .then((res) => {
-          setResultStr(res.data.recognizedSentence);
-        })
-        .then((error) => {
-          console.log(error);
-        });
+      return { blob, IdObject };
     } catch (error: any) {
       alert(error.message);
     }
