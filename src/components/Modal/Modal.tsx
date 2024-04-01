@@ -4,6 +4,8 @@ import { useRecoilValue } from 'recoil';
 import { recordingState } from 'src/recoil/states';
 import * as S from './Styles';
 import { ModalPortal } from './ModalPortal';
+// import ModalReResult from './ModalReResult';
+// import ModalReSpeech from './ModalReSpeech';
 import ModalSpeech from './ModalSpeech';
 import ModalResult from './ModalResult';
 import ModalLoading from './ModalLoading';
