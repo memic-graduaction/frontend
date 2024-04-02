@@ -10,7 +10,6 @@ import {
 } from 'src/recoil/states';
 import * as S from './Styles';
 import Loading from './Loading';
-import { ModalStack } from '../Modal/Modal';
 import RecButton from './RecButton';
 
 interface Props {
@@ -73,7 +72,6 @@ function Script() {
 
   return (
     <S.Layout>
-      <ModalStack />
       <S.ButtonContainer>
         <S.ScriptSmall>Script</S.ScriptSmall>
         <S.DownLoadBtn>Download</S.DownLoadBtn>

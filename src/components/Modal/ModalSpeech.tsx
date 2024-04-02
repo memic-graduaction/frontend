@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { recognizedSentence, recordingState, scriptSentencestate } from 'src/recoil/states';
 import styled from 'styled-components';
 import { useStartRecording } from 'src/utils/useStartRecording';
 import { useStopRecording } from 'src/utils/useStopRecording';
 import axios from 'axios';
+import { useModalStack } from 'src/utils/useModalStack';
 import SpeechBtn from './ModalButtons/SpeechBtn';
 import StopSpeechBtn from './ModalButtons/StopSpeechBtn';
+import ModalResult from './ModalResult';
+import ModalLoading from './ModalLoading';
 
 const BaseUrl = process.env.REACT_APP_BASE_URL;
 
@@ -17,15 +20,16 @@ function ModalSpeech() {
   const startRecording = useStartRecording();
   const stopRecording = useStopRecording();
   const setResultStr = useSetRecoilState(recognizedSentence);
+  const modalStack = useModalStack();
 
   const handleStopBtnClick = async () => {
+    modalStack.push({ key: 'modal-loading', Component: ModalLoading });
     const serverUrl = `${BaseUrl}/v1/recognized-sentences`;
     const { blob, IdObject } = await stopRecording(recorder);
     const formData = new FormData();
     formData.append('speech', blob, 'speech.mp3');
     const jsonStr = JSON.stringify(IdObject);
     formData.append('sentence', new Blob([jsonStr], { type: 'application/json' }));
-
     axios
       .post(serverUrl, formData, {
         headers: {
@@ -34,15 +38,13 @@ function ModalSpeech() {
       })
       .then((res) => {
         setResultStr(res.data.recognizedSentence);
+        modalStack.push({ key: 'modal-result', Component: ModalResult });
+        setRecordingStatus('inactive');
       })
       .then((error) => {
         console.log(error);
       });
   };
-
-  useEffect(() => {
-    setRecordingStatus('inactive');
-  }, []);
 
   return (
     <Layout>

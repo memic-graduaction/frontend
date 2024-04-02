@@ -5,6 +5,7 @@ import { incorrectWordsSelector } from 'src/recoil/selectors';
 import { audioUrlState, recognizedSentence, recordingState, scriptSentencestate } from 'src/recoil/states';
 import styled from 'styled-components';
 import { Checkmark } from 'react-checkmark';
+import { useModalStack } from 'src/utils/useModalStack';
 import PlaySpeechBtn from './ModalButtons/PlaySpeechBtn';
 import ReSpeechBtn from './ModalButtons/ReSpeechBtn';
 
@@ -15,6 +16,13 @@ function ModalResult() {
   const originalStr = useRecoilValue(scriptSentencestate);
   const recognizedStr = useRecoilValue(recognizedSentence).split(' ');
   const incorrectIdx = useRecoilValue(incorrectWordsSelector);
+  const modalStack = useModalStack();
+
+  const handleClickReSpeech = () => {
+    setRecordStatus('inactive');
+    modalStack.pop();
+    modalStack.pop();
+  };
 
   return (
     <Layout>
@@ -43,7 +51,7 @@ function ModalResult() {
       </TextContainer>
       <BtnLayout>
         <PlaySpeechBtn onClick={() => setIsPlay(true)} />
-        <ReSpeechBtn onClick={() => setRecordStatus('inactive')} />
+        <ReSpeechBtn onClick={handleClickReSpeech} />
       </BtnLayout>
       {audioUrl && isPlay ? <audio src={audioUrl} autoPlay /> : null}
     </Layout>
