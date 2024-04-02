@@ -12,13 +12,14 @@ export const Layout = styled.div`
 
 export const Container = styled.div`
     background: #DBDBDB;
+    display: flex;
     width: 95%;
     height: 90vh;
     border-radius: 20px;
     padding: 10px;
 `
 
-export const ContentsContainer = styled.div`
+export const IndexContainer = styled.div`
     display: flex;
     flex-direction: column;
     background: #FFFFFF;
@@ -38,25 +39,12 @@ export const LogoLayout = styled.div`
   margin-top: 30px;
 `;
 
-
-export const IndexLayout = styled.div`
+export const ContentsContainer = styled.div`
   display: flex;
-  flex-direction: column; 
-  gap: 15px;
-  padding: 10px;
-  margin-top: 30px;
-`;
-
-export const MenuItem = styled.div<{ isActive?: boolean }>`
-  padding: 15px;
-  background-color: ${(props) => props.isActive ? '#80C0F2' : 'transparent'}; /* 활성화된 아이템에 배경색 적용 */
-  color: ${(props) => props.isActive ? '#FFFFFF' : '#000000'}; /* 활성화된 아이템에 텍스트 색상 변경 */
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1.5rem;
-  font-weight: 500;
-`;
-
-export const MenuItemText = styled.span`
-  margin-left: 30px;
-`;
+  flex-direction: column;
+  background: yellow;
+  width: 75%;
+  height: 100%;
+  border-radius: 20px;
+  margin-left: 10px;
+`

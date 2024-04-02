@@ -6,7 +6,7 @@ import ScriptPage from './pages/ScriptPage/ScriptPage';
 import HomePage from './pages/FullPage';
 import RankPage from './pages/RankPage/RankPage';
 import LoginPage from './pages/LoginPage/LoginPage';
-import MyPage from './pages/MyPage/Mypage';
+import MyPage from './pages/MyPage/DashBoard';
 
 function App() {
   return (

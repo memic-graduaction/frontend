@@ -66,3 +66,8 @@ export const recognizedSentence = atom<string>({
   key: 'recognizedSentence',
   default: '',
 });
+
+export const menuState = atom<string>({
+  key: 'menuState',
+  default: 'Dashboard', 
+});
