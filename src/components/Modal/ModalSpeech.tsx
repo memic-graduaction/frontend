@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/media-has-caption */
 import React, { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { recognizedSentence, recordingState, scriptSentencestate } from 'src/recoil/states';
@@ -6,8 +5,8 @@ import styled from 'styled-components';
 import { useStartRecording } from 'src/utils/useStartRecording';
 import { useStopRecording } from 'src/utils/useStopRecording';
 import axios from 'axios';
-import SpeechBtn from './SpeechBtn';
-import StopSpeechBtn from './StopSpeechBtn';
+import SpeechBtn from './ModalButtons/SpeechBtn';
+import StopSpeechBtn from './ModalButtons/StopSpeechBtn';
 
 const BaseUrl = process.env.REACT_APP_BASE_URL;
 

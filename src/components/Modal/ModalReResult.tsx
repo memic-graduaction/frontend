@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Checkmark } from 'react-checkmark';
-import PlaySpeechBtn from './PlaySpeechBtn';
-import ReSpeechBtn from './ReSpeechBtn';
+import PlaySpeechBtn from './ModalButtons/PlaySpeechBtn';
+import ReSpeechBtn from './ModalButtons/ReSpeechBtn';
 
 interface Prop {
   word: string;

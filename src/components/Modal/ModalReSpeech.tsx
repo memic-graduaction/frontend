@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import SpeechBtn from './SpeechBtn';
+import SpeechBtn from './ModalButtons/SpeechBtn';
 
 interface Prop {
   word: string;
