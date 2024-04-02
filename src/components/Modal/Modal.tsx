@@ -7,14 +7,15 @@ import { ModalStateType } from 'src/recoil/types';
 import { ModalPortal } from './ModalPortal';
 import * as S from './Styles';
 
-type modalProps = {
+type ModalProps = {
   modal: ModalStateType;
 };
 
-function Modal({ modal }: modalProps) {
-  const { Component } = modal;
+function Modal({ modal }: ModalProps) {
+  const { Component, Props } = modal;
   const { clear } = useModalStack();
   const close = () => clear();
+  console.log(modal);
   return (
     <ModalPortal>
       <S.BackLayout onClick={close} />
@@ -23,7 +24,7 @@ function Modal({ modal }: modalProps) {
           <S.ExitBtn onClick={close}>
             <Close />
           </S.ExitBtn>
-          <Component />
+          <Component {...Props} />
         </S.ModalBody>
       </S.ModalLayout>
     </ModalPortal>

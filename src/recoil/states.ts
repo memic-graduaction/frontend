@@ -56,6 +56,11 @@ export const audioUrlState = atom<string>({
   default: null,
 });
 
+export const secondAudioUrl = atom<string>({
+  key: 'secondAudioUrl',
+  default: null,
+});
+
 // 사용자 음성 녹음 상태 'inactive' 'recording' 'loading' 'completed'
 export const recordingState = atom<string>({
   key: 'recordingState',

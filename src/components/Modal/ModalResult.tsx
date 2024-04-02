@@ -8,6 +8,7 @@ import { Checkmark } from 'react-checkmark';
 import { useModalStack } from 'src/utils/useModalStack';
 import PlaySpeechBtn from './ModalButtons/PlaySpeechBtn';
 import ReSpeechBtn from './ModalButtons/ReSpeechBtn';
+import ModalReSpeech from './ModalReSpeech';
 
 function ModalResult() {
   const [isPlay, setIsPlay] = useState(false);
@@ -22,6 +23,11 @@ function ModalResult() {
     setRecordStatus('inactive');
     modalStack.pop();
     modalStack.pop();
+  };
+
+  const handleClickWrongText = (id) => {
+    const word = recognizedStr[id];
+    modalStack.push({ key: 'modal-respeech', Component: ModalReSpeech, Props: { word } });
   };
 
   return (
@@ -44,7 +50,17 @@ function ModalResult() {
         ) : (
           <TextBox>
             {recognizedStr.map((v, i) =>
-              incorrectIdx.includes(i) ? <WrongText>{v}&nbsp;</WrongText> : <ResultText>{v}&nbsp;</ResultText>,
+              incorrectIdx.includes(i) ? (
+                <WrongText
+                  onClick={() => {
+                    handleClickWrongText(i);
+                  }}
+                >
+                  {v}&nbsp;
+                </WrongText>
+              ) : (
+                <ResultText>{v}&nbsp;</ResultText>
+              ),
             )}
           </TextBox>
         )}
@@ -115,6 +131,7 @@ const ResultText = styled(OriginalText)`
 const WrongText = styled(ResultText)`
   color: #ff5c5c;
   font-weight: 500;
+  cursor: pointer;
 `;
 
 const CorrectText = styled(ResultText)`
