@@ -1,43 +1,43 @@
 import React from 'react';
 import { Close } from 'src/utils/Icons';
 import { useRecoilValue } from 'recoil';
-import { recordingState } from 'src/recoil/states';
-import * as S from './Styles';
+import { modalStackState } from 'src/recoil/states';
+import { useModalStack } from 'src/utils/useModalStack';
+import { ModalStateType } from 'src/recoil/types';
 import { ModalPortal } from './ModalPortal';
-// import ModalReResult from './ModalReResult';
-// import ModalReSpeech from './ModalReSpeech';
-import ModalSpeech from './ModalSpeech';
-import ModalResult from './ModalResult';
-import ModalLoading from './ModalLoading';
+import * as S from './Styles';
 
-interface Props {
-  onClose: () => void;
-}
+type modalProps = {
+  modal: ModalStateType;
+};
 
-function Modal({ onClose }: Props) {
-  const recordingStatus = useRecoilValue(recordingState);
-  const chooseModal = () => {
-    switch (recordingStatus) {
-      case 'completed':
-        return <ModalResult />;
-      case 'loading':
-        return <ModalLoading />;
-      default:
-        return <ModalSpeech />;
-    }
-  };
+function Modal({ modal }: modalProps) {
+  const { Component } = modal;
+  const { clear } = useModalStack();
+  const close = () => clear();
   return (
     <ModalPortal>
-      <S.BackLayout onClick={() => onClose()} />
+      <S.BackLayout onClick={close} />
       <S.ModalLayout>
         <S.ModalBody>
-          <S.ExitBtn onClick={() => onClose()}>
+          <S.ExitBtn onClick={close}>
             <Close />
           </S.ExitBtn>
-          <>{chooseModal()}</>
+          <Component />
         </S.ModalBody>
       </S.ModalLayout>
     </ModalPortal>
+  );
+}
+
+export function ModalStack() {
+  const modalStack = useRecoilValue(modalStackState);
+  return (
+    <>
+      {modalStack.map((modal) => (
+        <Modal modal={modal} />
+      ))}
+    </>
   );
 }
 

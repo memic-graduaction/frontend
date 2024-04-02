@@ -1,5 +1,6 @@
 import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
+import { ModalStateType } from './types';
 
 const { persistAtom } = recoilPersist({
   key: 'localStorage',
@@ -45,8 +46,8 @@ export const youtubePlayerState = atom({
   key: 'youtubePlayerState',
   default: {
     startPoint: '00:00:00',
-    sentence: ''
-  }
+    sentence: '',
+  },
 });
 
 // audio blob 객체에 넣을 url
@@ -65,4 +66,10 @@ export const recordingState = atom<string>({
 export const recognizedSentence = atom<string>({
   key: 'recognizedSentence',
   default: '',
+});
+
+// 모달 상태
+export const modalStackState = atom<ModalStateType[]>({
+  key: 'modalStackState',
+  default: [],
 });
