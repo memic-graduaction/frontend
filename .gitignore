@@ -24,3 +24,5 @@ yarn-error.log*
 
 fake-server/
 .env
+
+*storybook.log
