@@ -1,10 +1,9 @@
 import React from 'react';
 import { useSetRecoilState } from 'recoil';
-import { scriptIDstate, scriptSentencestate } from 'src/recoil/states';
+import { modalActivationState, scriptIDstate, scriptSentencestate } from 'src/recoil/states';
 import { useModalStack } from 'src/utils/useModalStack';
 import * as S from './Styles';
 import ModalSpeech from '../Modal/ModalSpeech';
-import { ModalStack } from '../Modal/Modal';
 
 type Props = {
   id: number;
@@ -14,25 +13,24 @@ type Props = {
 function RecButton({ id, sentence }: Props) {
   const setScriptIDState = useSetRecoilState(scriptIDstate);
   const setScriptSentencestate = useSetRecoilState(scriptSentencestate);
-  const modalStack = useModalStack();
+  const setIsModalOpen = useSetRecoilState(modalActivationState);
+  const { push } = useModalStack();
 
-  const handleRightLayoutClick = () => {
+  const handleButtonClick = () => {
     setScriptIDState(id);
     setScriptSentencestate(sentence);
-    modalStack.push({
+    setIsModalOpen(true);
+    push({
       key: 'modal-speech',
       Component: ModalSpeech,
     });
   };
 
   return (
-    <>
-      <ModalStack />
-      <S.RightLayout onClick={() => handleRightLayoutClick()}>
-        <S.RecordIcon />
-        <S.RecordText>Rec</S.RecordText>
-      </S.RightLayout>
-    </>
+    <S.RecBtnLayout onClick={() => handleButtonClick()}>
+      <S.RecordIcon />
+      <S.RecordText>Rec</S.RecordText>
+    </S.RecBtnLayout>
   );
 }
 

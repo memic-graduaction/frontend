@@ -50,7 +50,6 @@ export const NormalTime = styled.div`
   font-weight: 500;
 `;
 
-
 export const ButtonContainer = styled.div`
   width: 100%;
   display: flex;
@@ -85,7 +84,7 @@ export const Border = styled.div`
 `;
 
 // 녹음버튼 레이아웃
-export const RightLayout = styled.div`
+export const RecBtnLayout = styled.div`
   width: 9%;
   right: 0;
   height: 1.875rem;
@@ -103,7 +102,6 @@ export const RightLayout = styled.div`
   &:hover {
     opacity: 1;
   }
-  
 `;
 
 export const RecordIcon = styled.div`

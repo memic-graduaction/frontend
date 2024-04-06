@@ -17,17 +17,17 @@ function ModalResult() {
   const originalStr = useRecoilValue(scriptSentencestate);
   const recognizedStr = useRecoilValue(recognizedSentence).split(' ');
   const incorrectIdx = useRecoilValue(incorrectWordsSelector);
-  const modalStack = useModalStack();
+  const { push, pop } = useModalStack();
 
   const handleClickReSpeech = () => {
     setRecordStatus('inactive');
-    modalStack.pop();
-    modalStack.pop();
+    pop();
+    pop();
   };
 
   const handleClickWrongText = (id) => {
     const word = recognizedStr[id];
-    modalStack.push({ key: 'modal-respeech', Component: ModalReSpeech, Props: { word } });
+    push({ key: 'modal-respeech', Component: ModalReSpeech, Props: { word }, popOnce: true });
   };
 
   return (

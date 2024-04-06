@@ -14,13 +14,13 @@ interface Prop {
 
 function ModalReResult({ word }: Prop) {
   const setRecordStatus = useSetRecoilState(recordingState);
-  const modalStack = useModalStack();
+  const { pop } = useModalStack();
   const audioUrl = useRecoilValue(secondAudioUrl);
   const [isPlay, setIsPlay] = useState(false);
 
   const handleClickReSpeech = () => {
     setRecordStatus('inactive');
-    modalStack.pop();
+    pop();
   };
   return (
     <Layout>
