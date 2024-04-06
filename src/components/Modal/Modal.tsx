@@ -1,43 +1,64 @@
 import React from 'react';
 import { Close } from 'src/utils/Icons';
-import { useRecoilValue } from 'recoil';
-import { recordingState } from 'src/recoil/states';
-import * as S from './Styles';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { modalActivationState, modalStackState, recordingState } from 'src/recoil/states';
+import { useModalStack } from 'src/utils/useModalStack';
+import { ModalStateType } from 'src/recoil/types';
 import { ModalPortal } from './ModalPortal';
-// import ModalReResult from './ModalReResult';
-// import ModalReSpeech from './ModalReSpeech';
-import ModalSpeech from './ModalSpeech';
-import ModalResult from './ModalResult';
-import ModalLoading from './ModalLoading';
+import * as S from './Styles';
 
-interface Props {
-  onClose: () => void;
-}
+type ModalProps = {
+  modal: ModalStateType;
+};
 
-function Modal({ onClose }: Props) {
-  const recordingStatus = useRecoilValue(recordingState);
-  const chooseModal = () => {
-    switch (recordingStatus) {
-      case 'completed':
-        return <ModalResult />;
-      case 'loading':
-        return <ModalLoading />;
-      default:
-        return <ModalSpeech />;
+function Modal({ modal }: ModalProps) {
+  const { Component, Props, popOnce, popTwice } = modal;
+  const { pop, clear } = useModalStack();
+  const setIsModalOpen = useSetRecoilState(modalActivationState);
+  const setRecordingStatus = useSetRecoilState(recordingState);
+  const close = () => {
+    if (popOnce) pop();
+    else if (popTwice) {
+      pop();
+      pop();
+    } else {
+      clear();
+      setIsModalOpen(false);
     }
+    setRecordingStatus('inactive');
   };
+
   return (
     <ModalPortal>
-      <S.BackLayout onClick={() => onClose()} />
       <S.ModalLayout>
         <S.ModalBody>
-          <S.ExitBtn onClick={() => onClose()}>
+          <S.ExitBtn onClick={close}>
             <Close />
           </S.ExitBtn>
-          <>{chooseModal()}</>
+          <Component {...Props} />
         </S.ModalBody>
       </S.ModalLayout>
     </ModalPortal>
+  );
+}
+
+export function ModalStack() {
+  const modalStack = useRecoilValue(modalStackState);
+  const [isModalOpen, setIsModalOpen] = useRecoilState(modalActivationState);
+  const setRecordingStatus = useSetRecoilState(recordingState);
+  const { clear } = useModalStack();
+  const close = () => {
+    setIsModalOpen(false);
+    setRecordingStatus('inactive');
+    clear();
+  };
+  return (
+    <>
+      {isModalOpen ? <S.BackLayout onClick={close} /> : null}
+      {modalStack.map((modal) => (
+        <Modal modal={modal} />
+      ))}
+    </>
   );
 }
 

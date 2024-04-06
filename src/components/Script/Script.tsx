@@ -5,14 +5,12 @@ import {
   youtubeLinkState,
   scriptIDstate,
   scriptSentencestate,
-  modalActivationState,
-  recordingState,
   youtubePlayerState,
-  currentTimeState
+  currentTimeState,
 } from 'src/recoil/states';
 import * as S from './Styles';
-import Modal from '../Modal/Modal';
 import Loading from './Loading';
+import RecButton from './RecButton';
 
 interface Props {
   id: number;
@@ -44,8 +42,6 @@ function Script() {
 
   const setScriptIDState = useSetRecoilState(scriptIDstate);
   const setScriptSentencestate = useSetRecoilState(scriptSentencestate);
-  const setRecordingState = useSetRecoilState(recordingState);
-  const [isModalOpen, setIsModalOpen] = useRecoilState(modalActivationState);
   const setSelectedStartPointAndSentence = useSetRecoilState(youtubePlayerState);
   const current = useRecoilValue(currentTimeState);
 
@@ -56,21 +52,9 @@ function Script() {
     setSelectedStartPointAndSentence({ startPoint, sentence });
   };
 
-  // 해당 행의 녹음 모달창
-  const handleRightLayoutClick = (id: number, sentence: string) => {
-    setScriptIDState(id);
-    setScriptSentencestate(sentence);
-    setIsModalOpen(true);
-  };
+  const isBetween = (startTime: string, currentTime: string, nextStartTime: string): boolean =>
+    startTime <= currentTime && currentTime < nextStartTime;
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setRecordingState('inactive');
-  };
-
-  const isBetween = (startTime: string, currentTime: string, nextStartTime: string): boolean => 
-  startTime <= currentTime && currentTime < nextStartTime;
-  
   const getNextStartTime = (currentStartTime: string): string => {
     if (!data) return ''; // 데이터가 없으면 빈 문자열 반환
 
@@ -88,7 +72,6 @@ function Script() {
 
   return (
     <S.Layout>
-      {isModalOpen && <Modal onClose={() => handleCloseModal()} />}
       <S.ButtonContainer>
         <S.ScriptSmall>Script</S.ScriptSmall>
         <S.DownLoadBtn>Download</S.DownLoadBtn>
@@ -98,22 +81,27 @@ function Script() {
       {data &&
         data.map((v) => (
           <S.TextLayout key={v.id}>
-             <S.NormalTime
-                style={isBetween(v.startPoint, current, getNextStartTime(v.startPoint)) ? { color: 'rgba(255, 92, 92, 1)' } : { color: 'rgba(255, 92, 92, 0.5)' }}
-                onClick={() => handleLeftLayoutClick(v.id, v.sentence, v.startPoint)}
-              >
-                {v.startPoint}
-              </S.NormalTime>
-              <S.NormalText
-                style={isBetween(v.startPoint, current, getNextStartTime(v.startPoint)) ? { color: '#222222' } : { color: '#CFCFCF' }}
-                onClick={() => handleLeftLayoutClick(v.id, v.sentence, v.startPoint)}
-              >
-                {v.sentence}
-              </S.NormalText>
-            <S.RightLayout onClick={() => handleRightLayoutClick(v.id, v.sentence)}>
-              <S.RecordIcon />
-              <S.RecordText>Rec</S.RecordText>
-            </S.RightLayout>
+            <S.NormalTime
+              style={
+                isBetween(v.startPoint, current, getNextStartTime(v.startPoint))
+                  ? { color: 'rgba(255, 92, 92, 1)' }
+                  : { color: 'rgba(255, 92, 92, 0.5)' }
+              }
+              onClick={() => handleLeftLayoutClick(v.id, v.sentence, v.startPoint)}
+            >
+              {v.startPoint}
+            </S.NormalTime>
+            <S.NormalText
+              style={
+                isBetween(v.startPoint, current, getNextStartTime(v.startPoint))
+                  ? { color: '#222222' }
+                  : { color: '#CFCFCF' }
+              }
+              onClick={() => handleLeftLayoutClick(v.id, v.sentence, v.startPoint)}
+            >
+              {v.sentence}
+            </S.NormalText>
+            <RecButton id={v.id} sentence={v.sentence} />
           </S.TextLayout>
         ))}
     </S.Layout>
@@ -121,4 +109,3 @@ function Script() {
 }
 
 export default Script;
-

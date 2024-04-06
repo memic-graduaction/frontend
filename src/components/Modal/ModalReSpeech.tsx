@@ -1,17 +1,41 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import SpeechBtn from './SpeechBtn';
+import { recordingState } from 'src/recoil/states';
+import { useStartRecording } from 'src/utils/useStartRecording';
+import { useStopRecording } from 'src/utils/useStopRecording';
+import { useModalStack } from 'src/utils/useModalStack';
+import { useRecoilValue } from 'recoil';
+import StopSpeechBtn from './ModalButtons/StopSpeechBtn';
+import SpeechBtn from './ModalButtons/SpeechBtn';
+import ModalReResult from './ModalReResult';
 
 interface Prop {
   word: string;
 }
 
 function ModalReSpeech({ word }: Prop) {
+  const recordingStatus = useRecoilValue(recordingState);
+  const [recorder, setRecorder] = useState(null);
+  const startRecording = useStartRecording();
+  const stopRecording = useStopRecording();
+  const { push } = useModalStack();
+
+  const handleStopBtnClick = async () => {
+    stopRecording(recorder);
+    push({
+      key: 'modal-reresult',
+      Component: ModalReResult,
+      Props: { word },
+      popTwice: true,
+    });
+  };
+
   return (
     <Layout>
       <TextTitle>* 단어를 다시 한 번 발음해 보세요</TextTitle>
       <TextLayout>{word}</TextLayout>
-      <SpeechBtn onClick={() => {}} />
+      {recordingStatus === 'inactive' ? <SpeechBtn onClick={() => startRecording(setRecorder)} /> : null}
+      {recordingStatus === 'recording' ? <StopSpeechBtn onClick={handleStopBtnClick} /> : null}
     </Layout>
   );
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { PlayBtn } from 'src/utils/Icons';
-import * as S from './Styles';
+import * as S from '../Styles';
 
 interface Props {
   onClick: () => void;

@@ -22,7 +22,6 @@ export const ModalLayout = styled.div`
   padding: 0 2rem;
   background: white;
   border-radius: 1.5rem;
-  box-shadow: 2rem 2rem 3rem 0 rgba(0, 0, 0, 0.25);
   z-index: 0;
 `;
 

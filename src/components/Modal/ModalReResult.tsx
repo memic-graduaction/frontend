@@ -1,14 +1,27 @@
-import React from 'react';
+/* eslint-disable jsx-a11y/media-has-caption */
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Checkmark } from 'react-checkmark';
-import PlaySpeechBtn from './PlaySpeechBtn';
-import ReSpeechBtn from './ReSpeechBtn';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { recordingState, secondAudioUrl } from 'src/recoil/states';
+import { useModalStack } from 'src/utils/useModalStack';
+import ReSpeechBtn from './ModalButtons/ReSpeechBtn';
+import PlaySpeechBtn from './ModalButtons/PlaySpeechBtn';
 
 interface Prop {
   word: string;
 }
 
 function ModalReResult({ word }: Prop) {
+  const setRecordStatus = useSetRecoilState(recordingState);
+  const { pop } = useModalStack();
+  const audioUrl = useRecoilValue(secondAudioUrl);
+  const [isPlay, setIsPlay] = useState(false);
+
+  const handleClickReSpeech = () => {
+    setRecordStatus('inactive');
+    pop();
+  };
   return (
     <Layout>
       <TextLayout>
@@ -18,9 +31,14 @@ function ModalReResult({ word }: Prop) {
         </IconLayout>
       </TextLayout>
       <BtnLayout>
-        <PlaySpeechBtn onClick={() => {}} />
-        <ReSpeechBtn onClick={() => {}} />
+        <PlaySpeechBtn
+          onClick={() => {
+            setIsPlay(true);
+          }}
+        />
+        <ReSpeechBtn onClick={handleClickReSpeech} />
       </BtnLayout>
+      {audioUrl && isPlay ? <audio src={audioUrl} autoPlay /> : null}
     </Layout>
   );
 }

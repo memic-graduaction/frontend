@@ -1,12 +1,11 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { audioUrlState, recordingState, scriptIDstate } from 'src/recoil/states';
+import { audioUrlState, scriptIDstate } from 'src/recoil/states';
 
 export const useStopRecording = () => {
   const scriptId = useRecoilValue(scriptIDstate);
   const setAudioUrl = useSetRecoilState(audioUrlState);
-  const setRecordingStatus = useSetRecoilState(recordingState);
 
   const stopRecording = async (recorder) => {
     try {
@@ -17,7 +16,6 @@ export const useStopRecording = () => {
       });
       const newAudioUrl = URL.createObjectURL(webmFile);
       setAudioUrl(newAudioUrl);
-      setRecordingStatus('loading'); // 로딩중으로 녹음 상태 변환
 
       const response = await fetch(newAudioUrl);
       const blob = await response.blob();
