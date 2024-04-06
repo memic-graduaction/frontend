@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/media-has-caption */
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Checkmark } from 'react-checkmark';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -16,7 +16,6 @@ function ModalReResult({ word }: Prop) {
   const setRecordStatus = useSetRecoilState(recordingState);
   const { pop } = useModalStack();
   const audioUrl = useRecoilValue(secondAudioUrl);
-  const [isPlay, setIsPlay] = useState(false);
 
   const handleClickReSpeech = () => {
     setRecordStatus('inactive');
@@ -31,14 +30,9 @@ function ModalReResult({ word }: Prop) {
         </IconLayout>
       </TextLayout>
       <BtnLayout>
-        <PlaySpeechBtn
-          onClick={() => {
-            setIsPlay(true);
-          }}
-        />
+        <PlaySpeechBtn url={audioUrl} />
         <ReSpeechBtn onClick={handleClickReSpeech} />
       </BtnLayout>
-      {audioUrl && isPlay ? <audio src={audioUrl} autoPlay /> : null}
     </Layout>
   );
 }

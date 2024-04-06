@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/media-has-caption */
-import React, { useState } from 'react';
+import React from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { incorrectWordsSelector } from 'src/recoil/selectors';
 import { audioUrlState, recognizedSentence, recordingState, scriptSentencestate } from 'src/recoil/states';
@@ -11,13 +11,12 @@ import ReSpeechBtn from './ModalButtons/ReSpeechBtn';
 import ModalReSpeech from './ModalReSpeech';
 
 function ModalResult() {
-  const [isPlay, setIsPlay] = useState(false);
-  const audioUrl = useRecoilValue(audioUrlState);
   const setRecordStatus = useSetRecoilState(recordingState);
   const originalStr = useRecoilValue(scriptSentencestate);
   const recognizedStr = useRecoilValue(recognizedSentence).split(' ');
   const incorrectIdx = useRecoilValue(incorrectWordsSelector);
   const { push, pop } = useModalStack();
+  const audioUrl = useRecoilValue(audioUrlState);
 
   const handleClickReSpeech = () => {
     setRecordStatus('inactive');
@@ -66,10 +65,9 @@ function ModalResult() {
         )}
       </TextContainer>
       <BtnLayout>
-        <PlaySpeechBtn onClick={() => setIsPlay(true)} />
+        <PlaySpeechBtn url={audioUrl} />
         <ReSpeechBtn onClick={handleClickReSpeech} />
       </BtnLayout>
-      {audioUrl && isPlay ? <audio src={audioUrl} autoPlay /> : null}
     </Layout>
   );
 }

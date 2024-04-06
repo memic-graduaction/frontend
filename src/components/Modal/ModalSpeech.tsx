@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { recognizedSentence, recordingState, scriptSentencestate } from 'src/recoil/states';
+import { audioUrlState, recognizedSentence, recordingState, scriptSentencestate } from 'src/recoil/states';
 import styled from 'styled-components';
 import { useStartRecording } from 'src/utils/useStartRecording';
 import { useStopRecording } from 'src/utils/useStopRecording';
@@ -17,6 +17,7 @@ function ModalSpeech() {
   const sentence = useRecoilValue(scriptSentencestate);
   const [recordingStatus, setRecordingStatus] = useRecoilState(recordingState);
   const [recorder, setRecorder] = useState(null);
+  const setAudioUrl = useSetRecoilState(audioUrlState);
   const startRecording = useStartRecording();
   const stopRecording = useStopRecording();
   const setResultStr = useSetRecoilState(recognizedSentence);
@@ -25,7 +26,7 @@ function ModalSpeech() {
   const handleStopBtnClick = async () => {
     modalStack.push({ key: 'modal-loading', Component: ModalLoading });
     const serverUrl = `${BaseUrl}/v1/recognized-sentences`;
-    const { blob, IdObject } = await stopRecording(recorder);
+    const { blob, IdObject } = await stopRecording(recorder, setAudioUrl);
     const formData = new FormData();
     formData.append('speech', blob, 'speech.mp3');
     const jsonStr = JSON.stringify(IdObject);

@@ -1,13 +1,12 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { audioUrlState, scriptIDstate } from 'src/recoil/states';
+import { useRecoilValue } from 'recoil';
+import { scriptIDstate } from 'src/recoil/states';
 
 export const useStopRecording = () => {
   const scriptId = useRecoilValue(scriptIDstate);
-  const setAudioUrl = useSetRecoilState(audioUrlState);
 
-  const stopRecording = async (recorder) => {
+  const stopRecording = async (recorder, setAudioUrl) => {
     try {
       // 음성 녹음을 blob형태의 파일로 만든 후 url을 audioUrl 변수에 저장
       const buffer = await recorder.stop().getMp3();

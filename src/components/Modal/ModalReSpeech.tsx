@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { recordingState } from 'src/recoil/states';
+import { recordingState, secondAudioUrl } from 'src/recoil/states';
 import { useStartRecording } from 'src/utils/useStartRecording';
 import { useStopRecording } from 'src/utils/useStopRecording';
 import { useModalStack } from 'src/utils/useModalStack';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import StopSpeechBtn from './ModalButtons/StopSpeechBtn';
 import SpeechBtn from './ModalButtons/SpeechBtn';
 import ModalReResult from './ModalReResult';
@@ -16,12 +16,13 @@ interface Prop {
 function ModalReSpeech({ word }: Prop) {
   const recordingStatus = useRecoilValue(recordingState);
   const [recorder, setRecorder] = useState(null);
+  const setAudioUrl = useSetRecoilState(secondAudioUrl);
   const startRecording = useStartRecording();
   const stopRecording = useStopRecording();
   const { push } = useModalStack();
 
   const handleStopBtnClick = async () => {
-    stopRecording(recorder);
+    stopRecording(recorder, setAudioUrl);
     push({
       key: 'modal-reresult',
       Component: ModalReResult,
