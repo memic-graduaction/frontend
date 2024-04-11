@@ -10,6 +10,9 @@ function Header() {
   const handleClick = () => {
     navigator('/');
   };
+  const handleloginClick = () => {
+    navigator('/login');
+  };
   return (
     <S.Layout>
       <S.LogoLayout onClick={handleClick}>
@@ -17,13 +20,13 @@ function Header() {
         Me.Mic
       </S.LogoLayout>
       <S.MenuLayout>
-        <S.MenuWrap>
+        <S.MenuWrap onClick={handleloginClick}>
           <S.IconBox>
             <IoPowerOutline />
           </S.IconBox>
           로그인
         </S.MenuWrap>
-        <S.MenuWrap>
+        <S.MenuWrap onClick={handleloginClick}>
           <S.IconBox>
             <LuUser2 />
           </S.IconBox>

@@ -78,3 +78,8 @@ export const modalStackState = atom<ModalStateType[]>({
   key: 'modalStackState',
   default: [],
 });
+
+export const menuState = atom<string>({
+  key: 'menuState',
+  default: 'Dashboard', 
+});
