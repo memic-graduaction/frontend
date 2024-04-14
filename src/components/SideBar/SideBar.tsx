@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { SideBarBtn, Write } from 'src/assets/Icons';
+import { useRecoilState } from 'recoil';
+import { sideBarOpenState } from 'src/recoil/states';
 import ToggleBtn from './ToggleBtn/ToggleBtn';
 import PhraseCard from './PhraseCard/PhraseCard';
 
@@ -9,7 +11,7 @@ type Props = {
 };
 
 const SideBar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useRecoilState(sideBarOpenState);
   return (
     <>
       {isOpen ? <BackLayout onClick={() => setIsOpen(false)} /> : null}

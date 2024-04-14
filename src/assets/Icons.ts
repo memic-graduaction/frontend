@@ -8,3 +8,4 @@ export { ReactComponent as PlayBtn } from './PlayBtn.svg';
 export { ReactComponent as Edit } from './Edit.svg';
 export { ReactComponent as Write } from './Write.svg';
 export { ReactComponent as SideBarBtn } from './SideBarBtn.svg';
+export { ReactComponent as Pin } from './Pin.svg';

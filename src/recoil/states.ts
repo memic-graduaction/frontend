@@ -12,6 +12,11 @@ export const modalActivationState = atom<boolean>({
   default: false,
 });
 
+export const sideBarOpenState = atom<boolean>({
+  key: 'sideBarOpenState',
+  default: false,
+});
+
 // 유튜브 url 링크
 export const youtubeLinkState = atom<string>({
   key: 'youtubeLinkState',
@@ -81,5 +86,5 @@ export const modalStackState = atom<ModalStateType[]>({
 
 export const menuState = atom<string>({
   key: 'menuState',
-  default: 'Dashboard', 
+  default: 'Dashboard',
 });
