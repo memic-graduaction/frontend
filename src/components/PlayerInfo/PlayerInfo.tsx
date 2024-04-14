@@ -1,5 +1,5 @@
 import React from 'react';
-import { BookMark } from 'src/utils/Icons';
+import { BookMark } from 'src/assets/Icons';
 import * as S from './Styles';
 
 function PlayerInfo() {

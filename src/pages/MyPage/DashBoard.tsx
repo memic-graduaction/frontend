@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import MenuBar from '../../components/MyPage/MenuBar';
-import { Logo } from '../../utils/Icons';
+import { Logo } from '../../assets/Icons';
 import TopTitle from '../../components/MyPage/TopTitleIndex';
 // import Dashboard from '../../components/MyPage/Dashboard/Dashboard';
 // import Records from '../../components/MyPage/Records';
@@ -35,4 +35,3 @@ function MyPage() {
 }
 
 export default MyPage;
-

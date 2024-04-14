@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 import React, { useEffect, useRef, useState } from 'react';
-import { PlayBtn } from 'src/utils/Icons';
+import { PlayBtn } from 'src/assets/Icons';
 import * as S from '../Styles';
 
 interface Props {

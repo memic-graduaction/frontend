@@ -1,5 +1,5 @@
 import React from 'react';
-import { Microphone } from 'src/utils/Icons';
+import { Microphone } from 'src/assets/Icons';
 import * as S from '../Styles';
 
 interface Props {

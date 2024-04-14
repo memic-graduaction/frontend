@@ -1,5 +1,5 @@
 import React from 'react';
-import { Stop } from 'src/utils/Icons';
+import { Stop } from 'src/assets/Icons';
 import * as S from '../Styles';
 
 interface Props {

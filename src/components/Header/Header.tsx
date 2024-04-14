@@ -3,7 +3,7 @@ import { IoPowerOutline } from 'react-icons/io5';
 import { LuUser2 } from 'react-icons/lu';
 import { useNavigate } from 'react-router-dom';
 import * as S from './Styles';
-import { Logo } from '../../utils/Icons';
+import { Logo } from '../../assets/Icons';
 
 function Header() {
   const navigator = useNavigate();
