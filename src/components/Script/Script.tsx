@@ -105,10 +105,6 @@ function Script() {
         data &&
         data.map((v) => (
           <S.TextLayout key={v.id}>
-            <S.ScrapButton isSelected={isSelected} xy={xy} onClick={handleScrapClick}>
-              <Pin />
-              표현 저장
-            </S.ScrapButton>
             <S.NormalTime
               style={
                 isBetween(v.startPoint, current, getNextStartTime(v.startPoint))
@@ -132,6 +128,10 @@ function Script() {
             <RecButton id={v.id} sentence={v.sentence} />
           </S.TextLayout>
         ))}
+      <S.ScrapButton isSelected={isSelected} xy={xy} onClick={handleScrapClick}>
+        <Pin />
+        표현 저장
+      </S.ScrapButton>
     </S.Layout>
   );
 }

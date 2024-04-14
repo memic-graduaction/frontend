@@ -70,6 +70,7 @@ export const ScrapButton = styled.button<buttonProps>`
   font-weight: 500;
   animation: ${fadeIn} 0.1s ease-in-out;
   gap: 0.5rem;
+  z-index: 1;
 `;
 
 export const NormalTime = styled.div`

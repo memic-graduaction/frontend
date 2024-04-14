@@ -7,6 +7,7 @@ export const BackLayout = styled.div`
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
+  z-index: 3;
 `;
 
 export const ModalLayout = styled.div`
@@ -22,7 +23,7 @@ export const ModalLayout = styled.div`
   padding: 0 2rem;
   background: white;
   border-radius: 1.5rem;
-  z-index: 0;
+  z-index: 3;
 `;
 
 export const ModalBody = styled.div`

@@ -44,6 +44,7 @@ export const BackLayout = styled.div`
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
+  z-index: 2;
 `;
 
 const Layout = styled.div<Props>`
@@ -60,6 +61,7 @@ const Layout = styled.div<Props>`
   padding: 1.5rem;
   padding-right: 0.5rem;
   transition: all 0.2s ease-in;
+  z-index: 3;
 `;
 
 const Header = styled.div`
