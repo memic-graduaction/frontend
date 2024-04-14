@@ -5,6 +5,7 @@ import { useRecoilState } from 'recoil';
 import { sideBarOpenState } from 'src/recoil/states';
 import ToggleBtn from './ToggleBtn/ToggleBtn';
 import PhraseCard from './PhraseCard/PhraseCard';
+import PhraseEditCard from './PhraseCard/PhraseEditCard';
 
 type Props = {
   isOpen: boolean;
@@ -30,6 +31,7 @@ const SideBar = () => {
         </Header>
         <ToggleBtn />
         <PhraseCard phrase="this is first phrase" meaning="이것은 뜻입니다" hashTags={['tag1', 'tag2', 'tag3']} />
+        <PhraseEditCard phrase="this is new phrase" />
       </Layout>
     </>
   );
