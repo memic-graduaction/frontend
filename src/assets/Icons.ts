@@ -6,3 +6,5 @@ export { ReactComponent as Microphone } from './Microphone.svg';
 export { ReactComponent as Stop } from './Stop.svg';
 export { ReactComponent as PlayBtn } from './PlayBtn.svg';
 export { ReactComponent as Edit } from './Edit.svg';
+export { ReactComponent as Write } from './Write.svg';
+export { ReactComponent as SideBarBtn } from './SideBarBtn.svg';
