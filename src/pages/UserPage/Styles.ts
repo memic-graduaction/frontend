@@ -33,7 +33,7 @@ export const IndexContainer = styled.div`
     display: flex;
     background: ${Colors.BgMain};
     flex-direction: column;
-    width: 40%;
+    width: 35%;
     padding: 50px;
     border-radius: 30px 0 0 30px;
 `
@@ -48,59 +48,20 @@ export const IndexText = styled.div`
 
 export const LoginContainer = styled.div`
     display: flex;
-    width: calc(100% - 40%);
+    width: 65%;
     background: none;
+    padding: 10% 13%;
     flex-direction: column;
-    padding: 10%;
 `
 
-export const TitleText = styled.div`
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 10%;
+export const SignUpContainer = styled.div`
+    color: #B5B5B5; 
+    font-size: 0.8rem;
+    margin-top: 10px; 
 `
 
-export const IdBox = styled.div`
-    display: flex;
-    height: 15%;
-    border-radius: 20px;
-    border: 1px solid #C5C5C5;
-    margin-bottom: 15px;
-    padding: 5px 10px;
-`
-
-export const PwBox = styled.div`
-    display: flex;
-    position: relative;
-    height: 15%;
-    border-radius: 20px;
-    border: 1px solid #C5C5C5;
-    margin-bottom: 15px;
-    padding: 5px 10px;
-`
-
-export const LoginBtn = styled.button`
-    display: flex;
-    height: 15%;
-    border-radius: 20px;
-    background: #6C6C6C;
-    font-size: 1.3rem;
-    font-weight: bold;
-    align-items: center;
-    justify-content: center;
-    color: #FFFFFF;
-    margin-top: 50px;
-`
-
-export const Input = styled.input`
-    width: 95%;
-    height: auto;
-    border: none;
-    outline: none;
-    font-size: 1rem;
-`;
-
-export const PwBtn = styled.button`
-    color: #CDCDCD;
-    cursor: pointer;
+export const SignUpLink = styled.span`
+    color: #6C6C6C;
+    cursor: pointer; 
+    margin-left: 5px; 
 `

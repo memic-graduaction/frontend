@@ -5,7 +5,7 @@ import { RecoilRoot } from 'recoil';
 import ScriptPage from './pages/ScriptPage/ScriptPage';
 import HomePage from './pages/FullPage';
 import RankPage from './pages/RankPage/RankPage';
-import LoginPage from './pages/LoginPage/LoginPage';
+import LoginPage from './pages/UserPage/LoginPage';
 import MyPage from './pages/MyPage/DashBoard';
 
 function App() {
