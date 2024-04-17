@@ -6,3 +6,9 @@ export type ModalStateType = {
   popOnce?: boolean;
   popTwice?: boolean;
 };
+
+export type phraseListType = {
+  sentence: string;
+  meaning: string;
+  tags: string[];
+};

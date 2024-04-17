@@ -1,6 +1,6 @@
 import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
-import { ModalStateType } from './types';
+import { ModalStateType, phraseListType } from './types';
 
 const { persistAtom } = recoilPersist({
   key: 'localStorage',
@@ -87,4 +87,22 @@ export const modalStackState = atom<ModalStateType[]>({
 export const menuState = atom<string>({
   key: 'menuState',
   default: 'Dashboard',
+});
+
+// 표현 저장에 선택된 문장
+export const selectedPhrase = atom<string>({
+  key: 'selectedPhrase',
+  default: 'new phrase',
+});
+
+export const selectedTags = atom<string[]>({
+  key: 'selectedTags',
+  default: [],
+});
+
+export const phraseList = atom<phraseListType[]>({
+  key: 'phraseList',
+  default: [
+    { sentence: 'this is a test phrase', meaning: '테스트 문장입니다', tags: ['test', 'new', 'phrase', 'english'] },
+  ],
 });
