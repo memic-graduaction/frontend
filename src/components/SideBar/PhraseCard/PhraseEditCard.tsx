@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Close } from 'src/assets/Icons';
 import { phraseList, selectedPhrase, selectedTags } from 'src/recoil/states';
 import { useRecoilState, useSetRecoilState } from 'recoil';
@@ -35,6 +35,10 @@ const PhraseEditCard = ({ phrase }: Props) => {
     setList(newList);
     setPhrase('');
   };
+
+  useEffect(() => {
+    setTags([]);
+  }, []);
 
   return (
     <form onSubmit={handleSubmit}>

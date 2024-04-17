@@ -4,12 +4,12 @@ export const Layout = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  width: 27.125rem;
+  width: 25rem;
   border-radius: 0.625rem;
   background: white;
   position: relative;
   padding: 1rem;
-  box-shadow: 0 0 10px 1px rgba(0 0 0 / 15%);
+  box-shadow: 1px 1px 10px rgba(0 0 0 / 15%);
 `;
 
 export const IconBox = styled.button`

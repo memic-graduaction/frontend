@@ -30,7 +30,7 @@ const ToggleSwitch = styled.label<Props>`
   align-items: center;
   position: relative;
   background: white;
-  box-shadow: 0 0 10px 1px rgba(0 0 0 / 15%);
+  box-shadow: 1px 1px 10px rgba(0 0 0 / 15%);
   cursor: pointer;
   transition: all 0.2s ease-in;
 `;
