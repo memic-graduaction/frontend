@@ -1,5 +1,21 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import Colors from 'src/styles/Colors';
+
+type buttonProps = {
+  isSelected: boolean;
+  xy: { x: number; y: number };
+};
+
+export const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to{
+    opacity: 3;
+    transform: none;
+  }
+`;
 
 export const Layout = styled.div`
   width: 100%;
@@ -40,6 +56,21 @@ export const NormalText = styled.div`
   font-weight: 500;
   margin-left: 3%;
   line-height: 1.5;
+`;
+
+export const ScrapButton = styled.button<buttonProps>`
+  display: ${(props) => (props.isSelected ? 'block' : 'none')};
+  position: absolute;
+  left: ${(props) => `${props.xy.x}px`};
+  top: ${(props) => `${props.xy.y}px`};
+  border-radius: 1rem;
+  color: white;
+  background: #b8a0ff;
+  padding: 0.3rem 0.5rem;
+  font-weight: 500;
+  animation: ${fadeIn} 0.1s ease-in-out;
+  gap: 0.5rem;
+  z-index: 1;
 `;
 
 export const NormalTime = styled.div`

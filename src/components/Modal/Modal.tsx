@@ -1,5 +1,5 @@
 import React from 'react';
-import { Close } from 'src/utils/Icons';
+import { Close } from 'src/assets/Icons';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { modalActivationState, modalStackState, recordingState } from 'src/recoil/states';
 import { useModalStack } from 'src/utils/useModalStack';
@@ -56,7 +56,7 @@ export function ModalStack() {
     <>
       {isModalOpen ? <S.BackLayout onClick={close} /> : null}
       {modalStack.map((modal) => (
-        <Modal modal={modal} />
+        <Modal key={modal.key} modal={modal} />
       ))}
     </>
   );
