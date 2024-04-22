@@ -50,7 +50,7 @@ export const LoginContainer = styled.div`
     display: flex;
     width: 65%;
     background: none;
-    padding: 10% 13%;
+    padding: 7% 10%;
     flex-direction: column;
 `
 

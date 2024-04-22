@@ -1,35 +1,36 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { TextField } from '@mui/material';
 import InputAdornment from '@mui/material/InputAdornment';
 import { FaEye, FaEyeSlash, FaCheck } from 'react-icons/fa';
 import axios from 'axios';
 import * as S from './Styles';
-  
-const BaseUrl = process.env.REACT_APP_BASE_URL;
 
+const BaseUrl = process.env.REACT_APP_BASE_URL;
 const pattern = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-za-z0-9\-]+/;
 
 function emailValidChk(email) {
     return pattern.test(email);
 }
-  
+
 function SignupForm() {
-    const navigator = useNavigate();
-    const handleClick = async () => {
+    const signupUrl = `${BaseUrl}/v1/members/sign-up`
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleSubmit = async () => {
         try {
-            await axios.post(`${BaseUrl}/v1/members`, { email, password });
-            alert('회원 가입이 완료되었습니다. <br/> 다시 로그인해주세요.');
-            navigator('/login');
+            const response = await axios.post(signupUrl, { email, password });
+            console.log(response.data);
+            alert('회원 가입이 완료되었습니다. \n 다시 로그인해주세요.');
+            window.location.reload();
         } catch (e) {
-            console.log(e);
+            console.error('회원가입 실패:', e);
+            alert('회원가입에 실패했습니다. 다시 시도해주세요.');
         }
     };
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
-    const [emailChecked, setEmailChecked] = useState(false); 
+    const [emailChecked, setEmailChecked] = useState(false);
     const [emailError, setEmailError] = useState('');
 
     const handleMailChange = (event) => {
@@ -49,7 +50,6 @@ function SignupForm() {
         setPassword(event.target.value);
     };
 
-
     return (
         <S.Container>
             <S.TitleText>Create Account</S.TitleText>
@@ -59,8 +59,8 @@ function SignupForm() {
                 variant="standard"
                 value={email}
                 onChange={handleMailChange}
-                error={!!emailError} 
-                helperText={emailError} 
+                error={!!emailError}
+                helperText={emailError}
                 InputProps={{
                     endAdornment: (
                         <InputAdornment position="end">
@@ -71,7 +71,7 @@ function SignupForm() {
                     )
                 }}
             />
-            <br/>
+            <br />
             <TextField
                 id="standard-basic-password"
                 label="Password"
@@ -89,8 +89,8 @@ function SignupForm() {
                     )
                 }}
             />
-            <br/><br/>
-            <S.LoginBtn onClick={handleClick}>Submit</S.LoginBtn>
+            <br /><br />
+            <S.LoginBtn onClick={handleSubmit}>Submit</S.LoginBtn>
         </S.Container>
     );
 }

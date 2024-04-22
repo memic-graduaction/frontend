@@ -6,3 +6,8 @@ export type ModalStateType = {
   popOnce?: boolean;
   popTwice?: boolean;
 };
+
+export interface User {
+  id: number;
+  accessToken: string;
+}

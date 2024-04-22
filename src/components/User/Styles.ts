@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 export const Container = styled.div`
     display: flex;
@@ -52,44 +52,6 @@ export const Input = styled.input`
     border: none;
     outline: none;
     font-size: 1rem;
-`;
-
-interface SignInputProps {
-    hasValue: boolean;
-}
-
-export const SignInput = styled.input<SignInputProps>`
-    width: 100%;
-    height: 15%;
-    border: none;
-    outline: none;
-    font-size: 1rem;
-    position: relative;
-
-    &::placeholder {
-        font-size: 1rem;
-        opacity: 0.7;
-        position: absolute;
-        transform: translateY(0);
-        transition: all 0.3s ease; 
-    }
-
-    &:focus::placeholder,
-    &:not(:placeholder-shown)::placeholder {
-        font-size: 10px;
-        transform: translateY(-8px);
-        margin-bottom: 3px;
-    }
-
-    ${(props) =>
-        props.hasValue &&
-        css`
-            &::placeholder {
-                font-size: 10px;
-                transform: translateY(-8px);
-                margin-bottom: 3px;
-            }
-        `}
 `;
 
 

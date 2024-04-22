@@ -1,10 +1,19 @@
 import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
-import { ModalStateType } from './types';
+import { ModalStateType, User } from './types';
 
 const { persistAtom } = recoilPersist({
   key: 'localStorage',
   storage: localStorage,
+});
+
+export const UUid = atom<User>({
+  key: 'user',
+  default: {
+    id: 0,
+    accessToken: "",
+  },
+  effects_UNSTABLE: [persistAtom],
 });
 
 export const modalActivationState = atom<boolean>({
