@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Logo } from '../../utils/Icons';
+import { Logo } from '../../assets/Icons';
 import * as S from './Styles';
 import LoginForm from '../../components/User/LoginForm';
 import SignupForm from '../../components/User/SignUpForm';
@@ -10,12 +10,12 @@ function LoginPage() {
     const handleClick = () => {
         navigator('/');
     };
-    
+
     const [isSignUp, setIsSignUp] = useState(false);
     const handleSignUpClick = () => {
         setIsSignUp(true);
     };
-    
+
     return (
         <S.Layout>
             <S.Container>
@@ -35,7 +35,7 @@ function LoginPage() {
                         </S.SignUpContainer>
                     )}
                 </S.LoginContainer>
-                
+
             </S.Container>
         </S.Layout>
     );
