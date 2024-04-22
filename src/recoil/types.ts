@@ -12,3 +12,8 @@ export type phraseListType = {
   meaning: string;
   tags: string[];
 };
+
+export interface User {
+  id: number;
+  accessToken: string;
+}
