@@ -65,7 +65,7 @@ export const ScrapButton = styled.button<buttonProps>`
   top: ${(props) => `${props.xy.y}px`};
   border-radius: 1rem;
   color: white;
-  background: #b8a0ff;
+  background: #ff5c5c;
   padding: 0.3rem 0.5rem;
   font-weight: 500;
   animation: ${fadeIn} 0.1s ease-in-out;
