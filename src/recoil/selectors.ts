@@ -1,25 +1,14 @@
 import { selector } from 'recoil';
-import { recognizedSentence, scriptSentencestate } from './states';
+import { recognizedWords } from './states';
 
 // selector
-export const incorrectWordsSelector = selector({
-  key: 'incorrectWordsSelector',
+export const isAllMatched = selector({
+  key: 'isAllMatched',
   get: ({ get }) => {
-    const originalStr = get(scriptSentencestate);
-    const resultStr = get(recognizedSentence);
-
-    const cleanOriginalStr = originalStr.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '');
-    const cleanResultStr = resultStr.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '');
-
-    const originalArr = cleanOriginalStr.split(' ');
-    const resultArr = cleanResultStr.split(' ');
-    const incorrectIdx = [];
-
-    for (let i = 0; i < originalArr.length; i += 1) {
-      if (originalArr[i] !== resultArr[i]) {
-        incorrectIdx.push(i);
-      }
-    }
-    return incorrectIdx;
+    const wordList = get(recognizedWords);
+    wordList.forEach((v) => {
+      if (v.isMatchedWithTranscription === false) return false;
+    });
+    return true;
   },
 });

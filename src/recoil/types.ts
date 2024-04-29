@@ -7,6 +7,12 @@ export type ModalStateType = {
   popTwice?: boolean;
 };
 
+export type recognizedWordsType = {
+  id: number;
+  word: string;
+  isMatchedWithTranscription: boolean;
+};
+
 export type phraseListType = {
   sentence: string;
   meaning: string;

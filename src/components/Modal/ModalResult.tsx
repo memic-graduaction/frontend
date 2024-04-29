@@ -1,11 +1,11 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 import React from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { incorrectWordsSelector } from 'src/recoil/selectors';
-import { audioUrlState, recognizedSentence, recordingState, scriptSentencestate } from 'src/recoil/states';
+import { audioUrlState, recognizedWords, recordingState, scriptSentencestate } from 'src/recoil/states';
 import styled from 'styled-components';
 import { Checkmark } from 'react-checkmark';
 import { useModalStack } from 'src/utils/useModalStack';
+import { isAllMatched } from 'src/recoil/selectors';
 import PlaySpeechBtn from './ModalButtons/PlaySpeechBtn';
 import ReSpeechBtn from './ModalButtons/ReSpeechBtn';
 import ModalReSpeech from './ModalReSpeech';
@@ -13,10 +13,10 @@ import ModalReSpeech from './ModalReSpeech';
 function ModalResult() {
   const setRecordStatus = useSetRecoilState(recordingState);
   const originalStr = useRecoilValue(scriptSentencestate);
-  const recognizedStr = useRecoilValue(recognizedSentence).split(' ');
-  const incorrectIdx = useRecoilValue(incorrectWordsSelector);
+  const wordList = useRecoilValue(recognizedWords);
   const { push, pop } = useModalStack();
   const audioUrl = useRecoilValue(audioUrlState);
+  const allMatched = useRecoilValue(isAllMatched);
 
   const handleClickReSpeech = () => {
     setRecordStatus('inactive');
@@ -24,8 +24,8 @@ function ModalResult() {
     pop();
   };
 
-  const handleClickWrongText = (id) => {
-    const word = recognizedStr[id];
+  const handleClickWrongText = () => {
+    const word = 'test test';
     push({ key: 'modal-respeech', Component: ModalReSpeech, Props: { word }, popOnce: true });
   };
 
@@ -37,28 +37,28 @@ function ModalResult() {
       </TextContainer>
       <TextContainer>
         <ResultTextTitle>* 내가 말한 문장</ResultTextTitle>
-        {!incorrectIdx.length ? (
+        {!allMatched ? (
           <TextBox>
             <IconBox>
               <Checkmark size="small" color="#0AC78E" />
             </IconBox>
-            {recognizedStr.map((v) => (
-              <CorrectText>{v}&nbsp;</CorrectText>
+            {wordList.map((v) => (
+              <CorrectText>{v.word}&nbsp;</CorrectText>
             ))}
           </TextBox>
         ) : (
           <TextBox>
-            {recognizedStr.map((v, i) =>
-              incorrectIdx.includes(i) ? (
-                <WrongText
+            {wordList.map((v) =>
+              v.isMatchedWithTranscription ? (
+                <ResultText
                   onClick={() => {
-                    handleClickWrongText(i);
+                    handleClickWrongText();
                   }}
                 >
-                  {v}&nbsp;
-                </WrongText>
+                  {v.word}&nbsp;
+                </ResultText>
               ) : (
-                <ResultText>{v}&nbsp;</ResultText>
+                <WrongText>{v.word}&nbsp;</WrongText>
               ),
             )}
           </TextBox>
