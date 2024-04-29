@@ -1,6 +1,6 @@
 import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
-import { ModalStateType, User, phraseListType } from './types';
+import { ModalStateType, User, phraseListType, recognizedWordsType } from './types';
 
 const { persistAtom } = recoilPersist({
   key: 'localStorage',
@@ -11,7 +11,7 @@ export const UUid = atom<User>({
   key: 'user',
   default: {
     id: 0,
-    accessToken: "",
+    accessToken: '',
   },
   effects_UNSTABLE: [persistAtom],
 });
@@ -81,10 +81,10 @@ export const recordingState = atom<string>({
   default: 'inactive',
 });
 
-// 사용자 음성 인식으로부터 추출된 문장
-export const recognizedSentence = atom<string>({
-  key: 'recognizedSentence',
-  default: '',
+// 사용자 음성 인식으로부터 추출된 단어 목록
+export const recognizedWords = atom<recognizedWordsType[]>({
+  key: 'recognizedWords',
+  default: [],
 });
 
 // 모달 상태

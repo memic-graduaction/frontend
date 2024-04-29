@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { audioUrlState, recognizedSentence, recordingState, scriptSentencestate } from 'src/recoil/states';
+import { audioUrlState, recognizedWords, recordingState, scriptSentencestate } from 'src/recoil/states';
 import styled from 'styled-components';
 import { useStartRecording } from 'src/utils/useStartRecording';
 import { useStopRecording } from 'src/utils/useStopRecording';
@@ -20,7 +20,7 @@ function ModalSpeech() {
   const setAudioUrl = useSetRecoilState(audioUrlState);
   const startRecording = useStartRecording();
   const stopRecording = useStopRecording();
-  const setResultStr = useSetRecoilState(recognizedSentence);
+  const setResultStr = useSetRecoilState(recognizedWords);
   const modalStack = useModalStack();
 
   const handleStopBtnClick = async () => {
@@ -38,7 +38,7 @@ function ModalSpeech() {
         },
       })
       .then((res) => {
-        setResultStr(res.data.recognizedSentence);
+        setResultStr(res.data.recognizedWords);
         modalStack.push({ key: 'modal-result', Component: ModalResult });
         setRecordingStatus('inactive');
       })
