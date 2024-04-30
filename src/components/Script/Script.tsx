@@ -1,14 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
-import {
-  youtubeLinkState,
-  scriptIDstate,
-  scriptSentencestate,
-  youtubePlayerState,
-  currentTimeState,
-  sideBarOpenState,
-} from 'src/recoil/states';
+import * as state from 'src/recoil/states';
 import { getSelectedPhrase } from 'src/utils/getSelectedPhrase';
 import { Pin } from 'src/assets/Icons';
 import * as S from './Styles';
@@ -26,13 +19,14 @@ const BaseUrl = process.env.REACT_APP_BASE_URL;
 function Script() {
   const [xy, setXY] = useState({ x: -1000, y: -1000 });
   const [isSelected, setIsSelected] = useState(false);
-  const [isSideBarOpen, setIsSideBarOpen] = useRecoilState(sideBarOpenState);
+  const [isSideBarOpen, setIsSideBarOpen] = useRecoilState(state.sideBarOpenState);
+  const setSelectedPhrase = useSetRecoilState(state.selectedPhrase);
 
   const [loading, setLoading] = useState(false);
-  const url = useRecoilState(youtubeLinkState);
+  const url = useRecoilState(state.youtubeLinkState);
   const [data, setData] = useState<Props[] | null>(null);
   const serverUrl = `${BaseUrl}/v1/transcriptions`;
-  const handleGetScript = useCallback(async () => {
+  const handleGetScript = async () => {
     setLoading(true);
     const formData = {
       url: `${url}`,
@@ -44,12 +38,12 @@ function Script() {
     } catch (e) {
       console.log(e);
     }
-  }, [url]);
+  };
 
-  const setScriptIDState = useSetRecoilState(scriptIDstate);
-  const setScriptSentencestate = useSetRecoilState(scriptSentencestate);
-  const setSelectedStartPointAndSentence = useSetRecoilState(youtubePlayerState);
-  const current = useRecoilValue(currentTimeState);
+  const setScriptIDState = useSetRecoilState(state.scriptIDstate);
+  const setScriptSentencestate = useSetRecoilState(state.scriptSentencestate);
+  const setSelectedStartPointAndSentence = useSetRecoilState(state.youtubePlayerState);
+  const current = useRecoilValue(state.currentTimeState);
 
   // 해당 행으로 재생포인트 이동
   const handleSentenceClick = (
@@ -62,13 +56,15 @@ function Script() {
     setScriptIDState(id);
     setScriptSentencestate(sentence);
     setSelectedStartPointAndSentence({ startPoint, sentence });
-    const { startIndex, endIndex } = getSelectedPhrase();
-    if (endIndex !== startIndex && !isSideBarOpen) {
-      setXY({ x: e.clientX - 100, y: e.clientY - 35 });
+    const { phrase, startIndex, endIndex } = getSelectedPhrase();
+    if (startIndex !== endIndex && !isSideBarOpen) {
+      setXY({ x: e.pageX, y: e.pageY });
       setIsSelected(true);
+      setSelectedPhrase(phrase);
     }
   };
 
+  // 표현 저장 버튼 눌렀을 때
   const handleScrapClick = () => {
     setIsSideBarOpen(true);
     setIsSelected(false);

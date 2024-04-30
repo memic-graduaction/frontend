@@ -4,7 +4,8 @@ import { recordingState, secondAudioUrl } from 'src/recoil/states';
 import { useStartRecording } from 'src/utils/useStartRecording';
 import { useStopRecording } from 'src/utils/useStopRecording';
 import { useModalStack } from 'src/utils/useModalStack';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import axios from 'axios';
 import StopSpeechBtn from './ModalButtons/StopSpeechBtn';
 import SpeechBtn from './ModalButtons/SpeechBtn';
 import ModalReResult from './ModalReResult';
@@ -13,22 +14,42 @@ interface Prop {
   word: string;
 }
 
+const BaseUrl = process.env.REACT_APP_BASE_URL;
+
 function ModalReSpeech({ word }: Prop) {
-  const recordingStatus = useRecoilValue(recordingState);
+  const [recordingStatus, setRecordingStatus] = useRecoilState(recordingState);
   const [recorder, setRecorder] = useState(null);
   const setAudioUrl = useSetRecoilState(secondAudioUrl);
   const startRecording = useStartRecording();
   const stopRecording = useStopRecording();
   const { push } = useModalStack();
+  const wordObj = JSON.stringify({ originalWord: word });
+  const serverUrl = `${BaseUrl}/v1/speeches/words`;
 
   const handleStopBtnClick = async () => {
-    stopRecording(recorder, setAudioUrl);
-    push({
-      key: 'modal-reresult',
-      Component: ModalReResult,
-      Props: { word },
-      popTwice: true,
-    });
+    const { blob } = await stopRecording(recorder, setAudioUrl);
+    const formData = new FormData();
+    formData.append('speech', blob, 'speech.mp3');
+    formData.append('word', new Blob([wordObj], { type: 'application/json' }));
+    axios
+      .post(serverUrl, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      .then((res) => {
+        const { data } = res;
+        setRecordingStatus('inactive');
+        push({
+          key: 'modal-reresult',
+          Component: ModalReResult,
+          Props: { word: data.recognizedWord, isMatched: data.wordMatched },
+          popTwice: true,
+        });
+      })
+      .then((error) => {
+        console.log(error);
+      });
   };
 
   return (

@@ -1,15 +1,19 @@
-import { useSetRecoilState } from 'recoil';
-import { selectedPhrase } from 'src/recoil/states';
-
 export const getSelectedPhrase = () => {
-  const setSelectedPhrase = useSetRecoilState(selectedPhrase);
+  const obj = window.getSelection();
+  const phrase = obj.toString();
+  const startIndex = obj.anchorOffset;
+  const endIndex = obj.focusOffset;
+  const range = obj.getRangeAt(0);
+  const content = range.extractContents();
+  console.log(`${startIndex}: 스타트`);
+  console.log(`${endIndex}:앤드`);
+  console.log(`${phrase}: 문장`);
 
-  const selectedObj = window.getSelection();
-  const phrase = selectedObj.toString();
+  // 선택된 텍스트 스타일 변경
+  const span = document.createElement('span');
+  span.appendChild(content);
+  span.style.background = '#FFE9B0';
+  range.insertNode(span);
 
-  setSelectedPhrase(phrase);
-
-  const startIndex = selectedObj.anchorOffset;
-  const endIndex = selectedObj.focusOffset;
   return { phrase, startIndex, endIndex };
 };
