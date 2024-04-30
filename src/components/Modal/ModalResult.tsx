@@ -13,6 +13,7 @@ import ModalReSpeech from './ModalReSpeech';
 function ModalResult() {
   const setRecordStatus = useSetRecoilState(recordingState);
   const originalStr = useRecoilValue(scriptSentencestate);
+  const originalWords = originalStr.split(' ');
   const wordList = useRecoilValue(recognizedWords);
   const { push, pop } = useModalStack();
   const audioUrl = useRecoilValue(audioUrlState);
@@ -24,8 +25,8 @@ function ModalResult() {
     pop();
   };
 
-  const handleClickWrongText = () => {
-    const word = 'test test';
+  const handleClickWrongText = (id: number) => {
+    const word = originalWords[id];
     push({ key: 'modal-respeech', Component: ModalReSpeech, Props: { word }, popOnce: true });
   };
 
@@ -48,17 +49,17 @@ function ModalResult() {
           </TextBox>
         ) : (
           <TextBox>
-            {wordList.map((v) =>
+            {wordList.map((v, i) =>
               v.isMatchedWithTranscription ? (
-                <ResultText
+                <ResultText>{v.word}&nbsp;</ResultText>
+              ) : (
+                <WrongText
                   onClick={() => {
-                    handleClickWrongText();
+                    handleClickWrongText(i);
                   }}
                 >
                   {v.word}&nbsp;
-                </ResultText>
-              ) : (
-                <WrongText>{v.word}&nbsp;</WrongText>
+                </WrongText>
               ),
             )}
           </TextBox>

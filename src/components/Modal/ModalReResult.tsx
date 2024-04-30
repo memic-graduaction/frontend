@@ -10,9 +10,10 @@ import PlaySpeechBtn from './ModalButtons/PlaySpeechBtn';
 
 interface Prop {
   word: string;
+  isMatched: boolean;
 }
 
-function ModalReResult({ word }: Prop) {
+function ModalReResult({ word, isMatched }: Prop) {
   const setRecordStatus = useSetRecoilState(recordingState);
   const { pop } = useModalStack();
   const audioUrl = useRecoilValue(secondAudioUrl);
@@ -23,12 +24,16 @@ function ModalReResult({ word }: Prop) {
   };
   return (
     <Layout>
-      <TextLayout>
-        {word}
-        <IconLayout>
-          <Checkmark size="large" color="#0AC78E" />
-        </IconLayout>
-      </TextLayout>
+      {isMatched ? (
+        <TextLayout>
+          {word}
+          <IconLayout>
+            <Checkmark size="large" color="#0AC78E" />
+          </IconLayout>
+        </TextLayout>
+      ) : (
+        <MisMatchText>{word}</MisMatchText>
+      )}
       <BtnLayout>
         <PlaySpeechBtn url={audioUrl} />
         <ReSpeechBtn onClick={handleClickReSpeech} />
@@ -64,6 +69,10 @@ const TextLayout = styled.div`
   line-height: 1.3;
   color: #0ac78e;
   gap: 1.5rem;
+`;
+
+const MisMatchText = styled(TextLayout)`
+  color: #ff5c5c;
 `;
 
 const IconLayout = styled.div`
