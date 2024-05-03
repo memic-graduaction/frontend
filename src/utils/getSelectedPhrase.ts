@@ -1,28 +1,37 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 export const getSelectedPhrase = () => {
   // 선택된 범위에 selection 객체 생성
   const sel = window.getSelection();
-  // 범위 객체
-  const range = sel.getRangeAt(0);
-  // 선택된 텍스트
-  const phrase = sel.toString();
-  // 시작 지점 인덱스
-  const startIndex = sel.anchorOffset;
-  // 끝나는 지점의 인덱스
-  const endIndex = sel.focusOffset;
 
+  // 시작 요소 & 인덱스
+  const startNode = sel.anchorNode;
+  const startIndex = sel.anchorOffset;
+  // 끝 요소 & 인덱스
+  const endNode = sel.focusNode;
+  const endIndex = endNode.nodeValue?.length ?? 0;
+  const focusIndex = sel.focusOffset;
+
+  let range = null;
+  let phrase = null;
   let content = null;
 
-  if (startIndex > endIndex) sel.removeAllRanges();
-  else content = range.extractContents();
-
-  // 범위를 startIndex부터 endIndex로 설정해야함
+  // 한 지점 클릭한 경우는 예외 처리
+  if (startNode === endNode && startIndex === focusIndex) {
+    sel.setPosition(startNode, 0);
+  } else {
+    // 자동 단어 전체 선택
+    sel.setBaseAndExtent(startNode, 0, endNode, endIndex);
+    range = sel.getRangeAt(0);
+    phrase = sel.toString();
+    content = range.extractContents();
+  }
 
   // 선택된 텍스트 스타일 변경
-  if (content) {
-    const span = document.createElement('span');
-    span.appendChild(content);
-    span.style.background = '#FFE9B0';
-    range.insertNode(span);
+  if (content !== null) {
+    const div = document.createElement('div');
+    div.className = 'selected';
+    div.appendChild(content);
+    range.insertNode(div);
   }
 
   return { phrase, startIndex, endIndex };
