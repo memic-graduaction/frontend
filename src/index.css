@@ -30,6 +30,5 @@ body,
 .selected{
   background-color: #FFE9B0;
   display: flex;
-  gap: 1rem;
   user-select: none;
 }
