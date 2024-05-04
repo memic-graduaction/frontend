@@ -25,7 +25,7 @@ const Layout = styled.div`
   flex-direction: column;
   gap: 2rem;
   width: 100%;
-  height: 40rem;
+  height: 85%;
   padding-left: 0.5rem;
   padding-top: 1rem;
   overflow-y: auto;
