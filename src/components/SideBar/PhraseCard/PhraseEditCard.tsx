@@ -3,6 +3,7 @@ import { Close } from 'src/assets/Icons';
 import { phraseList, selectedPhrase, selectedTags } from 'src/recoil/states';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { getTagColor } from 'src/utils/getTagColor';
+import axios from 'axios';
 import * as S from './Styles';
 import TagSelector from '../TagSelector/TagSelector';
 
@@ -10,12 +11,24 @@ interface Props {
   phrase: string;
 }
 
+const BaseUrl = process.env.REACT_APP_BASE_URL;
+
 const PhraseEditCard = ({ phrase }: Props) => {
   const [list, setList] = useRecoilState(phraseList);
   const setPhrase = useSetRecoilState(selectedPhrase);
-  const defaultMean = '자동으로 추천된 뜻입니다';
-  const [meaning, setMeaning] = useState(defaultMean);
+  const [meaning, setMeaning] = useState('');
+  const [defaultMean, setDefaultMean] = useState('');
   const [tags, setTags] = useRecoilState(selectedTags);
+  const serverUrl = `${BaseUrl}/v1/translate`;
+
+  const handleGetMeaning = async () => {
+    try {
+      const response = await axios.post(serverUrl, { phrase });
+      setDefaultMean(response.data.meaningInKorean);
+    } catch (e) {
+      alert(e);
+    }
+  };
 
   const saveInputValue = (e) => {
     setMeaning(e.target.value);
@@ -38,6 +51,7 @@ const PhraseEditCard = ({ phrase }: Props) => {
 
   useEffect(() => {
     setTags([]);
+    handleGetMeaning();
   }, []);
 
   return (
