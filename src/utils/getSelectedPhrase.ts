@@ -23,18 +23,21 @@ export const getSelectedPhrase = () => {
     sel.setBaseAndExtent(startNode, 0, endNode, endIndex);
     range = sel.getRangeAt(0);
     phrase = sel.toString().replace(/\n/g, ' ');
-    content = range.extractContents();
+    content = range.cloneContents();
   }
 
-  // 선택된 텍스트 스타일 변경
-  if (content !== null) {
-    const div = document.createElement('div');
-    div.className = 'selected';
-    div.appendChild(content);
-    range.insertNode(div);
+  function changeTextStyle() {
+    if (content !== null) {
+      sel.deleteFromDocument();
+      const clonedContent = content;
+      const div = document.createElement('div');
+      div.className = 'selected';
+      div.appendChild(clonedContent);
+      range.insertNode(div);
+    }
   }
 
-  return { phrase, startIndex, endIndex };
+  return { phrase, startIndex, endIndex, changeTextStyle };
 };
 
 //

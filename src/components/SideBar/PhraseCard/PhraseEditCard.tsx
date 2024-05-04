@@ -4,6 +4,7 @@ import { phraseList, selectedPhrase, selectedTags } from 'src/recoil/states';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { getTagColor } from 'src/utils/getTagColor';
 import axios from 'axios';
+import { getSelectedPhrase } from 'src/utils/getSelectedPhrase';
 import * as S from './Styles';
 import TagSelector from '../TagSelector/TagSelector';
 
@@ -47,6 +48,9 @@ const PhraseEditCard = ({ phrase }: Props) => {
     newList.unshift(obj);
     setList(newList);
     setPhrase('');
+    // 스크립트의 저장된 부분 하이라이팅
+    const { changeTextStyle } = getSelectedPhrase();
+    changeTextStyle();
   };
 
   useEffect(() => {
