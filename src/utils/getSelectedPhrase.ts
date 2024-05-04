@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 export const getSelectedPhrase = () => {
   // 선택된 범위에 selection 객체 생성
   const sel = window.getSelection();
@@ -15,9 +14,13 @@ export const getSelectedPhrase = () => {
   let phrase = null;
   let content = null;
 
+  function resetSelection() {
+    sel.setPosition(startNode, 0);
+  }
+
   // 한 지점 클릭한 경우는 예외 처리
   if (startNode === endNode && startIndex === focusIndex) {
-    sel.setPosition(startNode, 0);
+    resetSelection();
   } else {
     // 자동 단어 전체 선택
     sel.setBaseAndExtent(startNode, 0, endNode, endIndex);
@@ -37,7 +40,7 @@ export const getSelectedPhrase = () => {
     }
   }
 
-  return { phrase, startIndex, endIndex, changeTextStyle };
+  return { phrase, startIndex, endIndex, changeTextStyle, resetSelection };
 };
 
 //

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Close } from 'src/assets/Icons';
-import { phraseList, selectedPhrase, selectedTags } from 'src/recoil/states';
+import { phraseList, selectedPhrase, selectedTags, sideBarOpenState } from 'src/recoil/states';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { getTagColor } from 'src/utils/getTagColor';
 import axios from 'axios';
@@ -20,6 +20,8 @@ const PhraseEditCard = ({ phrase }: Props) => {
   const [meaning, setMeaning] = useState('');
   const [defaultMean, setDefaultMean] = useState('');
   const [tags, setTags] = useRecoilState(selectedTags);
+  const setSideBarOpen = useSetRecoilState(sideBarOpenState);
+  const { changeTextStyle, resetSelection } = getSelectedPhrase();
   const serverUrl = `${BaseUrl}/v1/translate`;
 
   const handleGetMeaning = async () => {
@@ -49,8 +51,13 @@ const PhraseEditCard = ({ phrase }: Props) => {
     setList(newList);
     setPhrase('');
     // 스크립트의 저장된 부분 하이라이팅
-    const { changeTextStyle } = getSelectedPhrase();
     changeTextStyle();
+  };
+
+  const handleClose = () => {
+    resetSelection();
+    setPhrase('');
+    setSideBarOpen(false);
   };
 
   useEffect(() => {
@@ -62,7 +69,7 @@ const PhraseEditCard = ({ phrase }: Props) => {
     <form onSubmit={handleSubmit}>
       <S.Layout>
         <S.IconBox>
-          <Close width={15} height={15} onClick={() => setPhrase('')} />
+          <Close width={15} height={15} onClick={handleClose} />
         </S.IconBox>
         <S.PhraseBox>{phrase}</S.PhraseBox>
         <input placeholder={defaultMean} onChange={saveInputValue} />

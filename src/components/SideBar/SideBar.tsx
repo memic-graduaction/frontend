@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { SideBarBtn, Write } from 'src/assets/Icons';
-import { useRecoilState } from 'recoil';
-import { sideBarOpenState } from 'src/recoil/states';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { selectedPhrase, sideBarOpenState } from 'src/recoil/states';
 import ToggleBtn from './ToggleBtn/ToggleBtn';
 import PhraseList from './PhraseList/PhraseList';
 
@@ -12,9 +12,15 @@ type Props = {
 
 const SideBar = () => {
   const [isOpen, setIsOpen] = useRecoilState(sideBarOpenState);
+  const setPhrase = useSetRecoilState(selectedPhrase);
+
+  const handleBackGroundClick = () => {
+    setIsOpen(false);
+    setPhrase('');
+  };
   return (
     <>
-      {isOpen ? <BackLayout onClick={() => setIsOpen(false)} /> : null}
+      {isOpen ? <BackLayout onClick={handleBackGroundClick} /> : null}
       <Layout isOpen={isOpen}>
         {!isOpen ? (
           <IconBox onClick={() => setIsOpen(!isOpen)}>
