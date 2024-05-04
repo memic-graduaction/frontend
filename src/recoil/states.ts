@@ -101,7 +101,7 @@ export const menuState = atom<string>({
 // 표현 저장에 선택된 문장
 export const selectedPhrase = atom<string>({
   key: 'selectedPhrase',
-  default: 'new phrase',
+  default: '',
 });
 
 export const selectedTags = atom<string[]>({

@@ -22,7 +22,7 @@ export const getSelectedPhrase = () => {
     // 자동 단어 전체 선택
     sel.setBaseAndExtent(startNode, 0, endNode, endIndex);
     range = sel.getRangeAt(0);
-    phrase = sel.toString();
+    phrase = sel.toString().replace(/\n/g, ' ');
     content = range.extractContents();
   }
 

@@ -20,7 +20,7 @@ function Script() {
   const [xy, setXY] = useState({ x: -1000, y: -1000 });
   const [isSelected, setIsSelected] = useState(false);
   const [isSideBarOpen, setIsSideBarOpen] = useRecoilState(state.sideBarOpenState);
-  const setSelectedPhrase = useSetRecoilState(state.selectedPhrase);
+  const setPhrase = useSetRecoilState(state.selectedPhrase);
 
   const [loading, setLoading] = useState(false);
   const url = useRecoilState(state.youtubeLinkState);
@@ -57,10 +57,10 @@ function Script() {
     setScriptSentencestate(sentence);
     setSelectedStartPointAndSentence({ startPoint, sentence });
     const { phrase } = getSelectedPhrase();
-    if (!isSideBarOpen) {
+    if (phrase !== null && !isSideBarOpen) {
       setXY({ x: e.pageX, y: e.pageY });
       setIsSelected(true);
-      setSelectedPhrase(phrase);
+      setPhrase(phrase);
     }
   };
 
