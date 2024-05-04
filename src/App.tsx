@@ -5,17 +5,8 @@ import { RecoilRoot } from 'recoil';
 import ScriptPage from './pages/ScriptPage/ScriptPage';
 import HomePage from './pages/FullPage';
 import RankPage from './pages/RankPage/RankPage';
-<<<<<<< HEAD
-import LoginPage from './pages/UserPage/LoginPage';
-=======
-<<<<<<< Updated upstream
-import LoginPage from './pages/LoginPage/LoginPage';
->>>>>>> feat/#20
-import MyPage from './pages/MyPage/DashBoard';
-=======
 import LoginPage from './pages/UserPage/LoginPage';
 import MyPage from './pages/MyPage/MyPage';
->>>>>>> Stashed changes
 
 function App() {
   return (
