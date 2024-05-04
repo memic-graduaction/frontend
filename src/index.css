@@ -26,3 +26,9 @@ body,
   height: 100%;
   background-color: #433E49;
 }
+
+.selected{
+  background-color: #FFE9B0;
+  display: flex;
+  user-select: none;
+}

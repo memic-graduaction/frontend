@@ -24,7 +24,7 @@ function Script() {
 
   const [loading, setLoading] = useState(false);
   const url = useRecoilState(state.youtubeLinkState);
-  const [data, setData] = useState<Props[] | null>(null);
+  const [datas, setDatas] = useState<Props[] | null>(null);
   const serverUrl = `${BaseUrl}/v1/transcriptions`;
   const handleGetScript = async () => {
     setLoading(true);
@@ -33,7 +33,7 @@ function Script() {
     };
     try {
       const response = await axios.post(serverUrl, formData);
-      setData(response.data.sentences);
+      setDatas(response.data.sentences);
       setLoading(false);
     } catch (e) {
       console.log(e);
@@ -56,8 +56,8 @@ function Script() {
     setScriptIDState(id);
     setScriptSentencestate(sentence);
     setSelectedStartPointAndSentence({ startPoint, sentence });
-    const { phrase, startIndex, endIndex } = getSelectedPhrase();
-    if (startIndex !== endIndex && !isSideBarOpen) {
+    const { phrase } = getSelectedPhrase();
+    if (!isSideBarOpen) {
       setXY({ x: e.pageX, y: e.pageY });
       setIsSelected(true);
       setSelectedPhrase(phrase);
@@ -74,11 +74,11 @@ function Script() {
     startTime <= currentTime && currentTime < nextStartTime;
 
   const getNextStartTime = (currentStartTime: string): string => {
-    if (!data) return ''; // 데이터가 없으면 빈 문자열 반환
+    if (!datas) return ''; // 데이터가 없으면 빈 문자열 반환
 
-    for (let i = 0; i < data.length; i += 1) {
-      if (data[i].startPoint > currentStartTime) {
-        return data[i].startPoint;
+    for (let i = 0; i < datas.length; i += 1) {
+      if (datas[i].startPoint > currentStartTime) {
+        return datas[i].startPoint;
       }
     }
     return '';
@@ -98,30 +98,32 @@ function Script() {
       <S.Border />
       {loading ? <Loading /> : null}
       {!loading &&
-        data &&
-        data.map((v) => (
-          <S.TextLayout key={v.id}>
-            <S.NormalTime
+        datas &&
+        datas.map((data) => (
+          <S.TextLayout key={data.id}>
+            <S.TimeBox
               style={
-                isBetween(v.startPoint, current, getNextStartTime(v.startPoint))
+                isBetween(data.startPoint, current, getNextStartTime(data.startPoint))
                   ? { color: 'rgba(255, 92, 92, 1)' }
                   : { color: 'rgba(255, 92, 92, 0.5)' }
               }
-              onClick={() => handleSentenceClick(v.id, v.sentence, v.startPoint)}
+              onClick={() => handleSentenceClick(data.id, data.sentence, data.startPoint)}
             >
-              {v.startPoint}
-            </S.NormalTime>
-            <S.NormalText
+              {data.startPoint}
+            </S.TimeBox>
+            <S.TextBox
               style={
-                isBetween(v.startPoint, current, getNextStartTime(v.startPoint))
+                isBetween(data.startPoint, current, getNextStartTime(data.startPoint))
                   ? { color: '#222222' }
                   : { color: '#CFCFCF' }
               }
-              onClick={(e) => handleSentenceClick(v.id, v.sentence, v.startPoint, e)}
+              onClick={(e) => handleSentenceClick(data.id, data.sentence, data.startPoint, e)}
             >
-              {v.sentence}
-            </S.NormalText>
-            <RecButton id={v.id} sentence={v.sentence} />
+              {data.sentence.split(' ').map((d) => (
+                <S.StyledText>{d}</S.StyledText>
+              ))}
+            </S.TextBox>
+            <RecButton id={data.id} sentence={data.sentence} />
           </S.TextLayout>
         ))}
       <S.ScrapButton isSelected={isSelected} xy={xy} onClick={handleScrapClick}>
