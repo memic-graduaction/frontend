@@ -4,7 +4,7 @@ import { getTagColor } from 'src/utils/getTagColor';
 import * as S from './Styles';
 
 interface Props {
-  phrase: string;
+  phrase: number;
   meaning: string;
   hashTags: string[];
 }

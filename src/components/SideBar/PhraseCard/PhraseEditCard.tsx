@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Close } from 'src/assets/Icons';
-import { phraseList, selectedPhrase, selectedTags, sideBarOpenState } from 'src/recoil/states';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { scrapedPhrase, scriptIDstate, selectedPhrase, selectedTags, sideBarOpenState } from 'src/recoil/states';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { getTagColor } from 'src/utils/getTagColor';
 import axios from 'axios';
 import { getSelectedPhrase } from 'src/utils/getSelectedPhrase';
@@ -9,14 +9,15 @@ import * as S from './Styles';
 import TagSelector from '../TagSelector/TagSelector';
 
 interface Props {
-  phrase: string;
+  phrase?: string;
 }
 
 const BaseUrl = process.env.REACT_APP_BASE_URL;
 
 const PhraseEditCard = ({ phrase }: Props) => {
-  const [list, setList] = useRecoilState(phraseList);
+  const [list, setList] = useRecoilState(scrapedPhrase);
   const setPhrase = useSetRecoilState(selectedPhrase);
+  const sentenceId = useRecoilValue(scriptIDstate);
   const [meaning, setMeaning] = useState('');
   const [defaultMean, setDefaultMean] = useState('');
   const [tags, setTags] = useRecoilState(selectedTags);
@@ -45,7 +46,7 @@ const PhraseEditCard = ({ phrase }: Props) => {
 
   const handleSubmit = () => {
     const finalMean = meaning || defaultMean;
-    const obj = { sentence: phrase, meaning: finalMean, tags };
+    const obj = { sentenceId, startIndex: 0, endIndex: 4, meaning: finalMean, tags };
     const newList = [...list];
     newList.unshift(obj);
     setList(newList);

@@ -109,9 +109,29 @@ export const selectedTags = atom<string[]>({
   default: [],
 });
 
-export const phraseList = atom<phraseListType[]>({
-  key: 'phraseList',
+export const scrapedPhrase = atom<phraseListType[]>({
+  key: 'scrapedPhrase',
   default: [
-    { sentence: 'this is a test phrase', meaning: '테스트 문장입니다', tags: ['test', 'new', 'phrase', 'english'] },
+    {
+      sentenceId: 5,
+      startIndex: 3,
+      endIndex: 18,
+      meaning: '테스트 문장입니다',
+      tags: ['test', 'new', 'phrase', 'english'],
+    },
+    {
+      sentenceId: 6,
+      startIndex: 16,
+      endIndex: 27,
+      meaning: '테스트 문장입니다',
+      tags: ['test', 'new', 'phrase', 'english'],
+    },
+    {
+      sentenceId: 12,
+      startIndex: 0,
+      endIndex: 17,
+      meaning: '테스트 문장입니다',
+      tags: ['test', 'new', 'phrase', 'english'],
+    },
   ],
 });

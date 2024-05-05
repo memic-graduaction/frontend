@@ -1,18 +1,18 @@
 import React from 'react';
 import { useRecoilValue } from 'recoil';
-import { phraseList, selectedPhrase } from 'src/recoil/states';
+import { scrapedPhrase, selectedPhrase } from 'src/recoil/states';
 import styled from 'styled-components';
 import PhraseCard from '../PhraseCard/PhraseCard';
 import PhraseEditCard from '../PhraseCard/PhraseEditCard';
 
 const PhraseList = () => {
   const phrase = useRecoilValue(selectedPhrase);
-  const list = useRecoilValue(phraseList);
+  const list = useRecoilValue(scrapedPhrase);
   return (
     <Layout>
       {phrase !== '' && <PhraseEditCard phrase={phrase} />}
       {list.map((v) => (
-        <PhraseCard key={v.sentence} phrase={v.sentence} meaning={v.meaning} hashTags={v.tags} />
+        <PhraseCard key={v.startIndex} phrase={v.startIndex} meaning={v.meaning} hashTags={v.tags} />
       ))}
     </Layout>
   );
