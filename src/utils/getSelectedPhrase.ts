@@ -21,6 +21,7 @@ export const getSelectedPhrase = () => {
   // 한 지점 클릭한 경우는 예외 처리
   if (startNode === endNode && startIndex === focusIndex) {
     resetSelection();
+    document.documentElement.style.setProperty('--display', 'none');
   } else {
     // 자동 단어 전체 선택
     sel.setBaseAndExtent(startNode, 0, endNode, endIndex);
@@ -29,18 +30,33 @@ export const getSelectedPhrase = () => {
     content = range.cloneContents();
   }
 
+  function handleButtonClick() {
+    let id = '';
+    if (phrase !== null) {
+      id = phrase.replaceAll(' ', '');
+    }
+    return id;
+  }
+
   function changeTextStyle() {
     if (content !== null) {
       sel.deleteFromDocument();
       const clonedContent = content;
       const div = document.createElement('div');
+      div.id = phrase.replaceAll(' ', '');
       div.className = 'selected';
-      div.appendChild(clonedContent);
+      div.style.position = 'relative';
+
+      // 표현 보기 버튼
+      const button = document.createElement('button');
+      const buttonName = document.createTextNode('표현 보기');
+      button.onclick = handleButtonClick;
+      button.appendChild(buttonName);
+      button.className = 'selectedBtn';
+      div.append(button, clonedContent);
       range.insertNode(div);
     }
   }
 
-  return { phrase, startIndex, endIndex, changeTextStyle, resetSelection };
+  return { phrase, startIndex, endIndex, changeTextStyle, resetSelection, handleButtonClick };
 };
-
-//
