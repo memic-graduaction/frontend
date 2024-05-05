@@ -2,49 +2,64 @@ import React from 'react';
 import styled from 'styled-components';
 
 interface Prop {
-  items: { id: number; sentence: string }[];
+  dataId: number;
+  data: string;
   queries?: Map<number, number[][]>;
+  onClick: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void;
+  textColor?: string;
 }
 
-const HightLightText = ({ items, queries }: Prop) => (
-  <TextBox>
-    {items.map((item) => {
-      if (queries && queries.has(Number(item.id))) {
-        const indexlist = queries.get(Number(item.id));
-        const result: React.ReactNode[] = [];
-        indexlist?.reduce((_, [start, end], currIdx) => {
-          result.push(<NomalText>{item.sentence.slice(0, start)}</NomalText>);
-          result.push(<HighlightedText>{item.sentence.slice(start, end)}</HighlightedText>);
-          if (currIdx === indexlist.length - 1) {
-            result.push(<NomalText>{item.sentence.slice(end)}</NomalText>);
-          }
-          return _;
-        }, undefined);
-        return result;
+interface TextProp {
+  textColor?: string;
+}
+
+const HightLightText = ({ dataId, data, queries, onClick, textColor }: Prop) => {
+  if (queries && queries.has(Number(dataId))) {
+    const indexlist = queries.get(Number(dataId));
+    const result: React.ReactNode[] = [];
+
+    indexlist?.reduce((_, [start, end], currIdx) => {
+      result.push(<NomalText>{data.slice(0, start)}</NomalText>);
+      result.push(<HighlightedText>{data.slice(start, end)}</HighlightedText>);
+      if (currIdx === indexlist.length - 1) {
+        result.push(<NomalText>{data.slice(end)}</NomalText>);
       }
-      return <NomalText>{item.sentence}</NomalText>;
-    })}
-  </TextBox>
-);
+      return _;
+    }, undefined);
+    return (
+      <TextBox onClick={onClick} textColor={textColor}>
+        {result}
+      </TextBox>
+    );
+  }
+  return (
+    <TextBox onClick={onClick} textColor={textColor}>
+      <NomalText>{data}</NomalText>
+    </TextBox>
+  );
+};
 
 export default HightLightText;
 
-const NomalText = styled.div`
+const NomalText = styled.text`
   margin-right: 5px;
 `;
 
-const HighlightedText = styled.div`
-  margin-right: 5px;
+const HighlightedText = styled(NomalText)`
   background: #ffe9b0;
   display: flex;
   user-select: none;
 `;
 
-const TextBox = styled.div`
-  width: 100%;
+const TextBox = styled.div<TextProp>`
+  width: 33rem;
+  height: auto;
   display: flex;
-  flex-wrap: wrap;
-  grid-auto-flow: dense;
-  color: black;
-  background: white;
+  font-size: 1.1rem;
+  font-style: normal;
+  font-weight: 500;
+  margin-left: 3%;
+  line-height: 1.5;
+  word-break: break-all;
+  color: ${(props) => (props.textColor ? props.textColor : '#696565')};
 `;

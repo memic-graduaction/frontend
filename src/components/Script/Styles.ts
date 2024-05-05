@@ -47,31 +47,12 @@ export const TextLayout = styled.div`
   margin-bottom: 1.5rem;
 `;
 
-export const TextBox = styled.div`
-  width: 73%;
-  height: auto;
-  display: flex;
-  flex-wrap: wrap;
-  color: #696565;
-  font-size: 1.1rem;
-  font-style: normal;
-  font-weight: 500;
-  margin-left: 3%;
-  line-height: 1.5;
-  word-break: break-all;
-`;
-
 export const TimeBox = styled.div`
   width: 12%;
   color: rgba(255, 92, 92, 0.5);
   font-size: 1.2rem;
   font-style: normal;
   font-weight: 500;
-`;
-
-export const StyledText = styled.text`
-  white-space: nowrap;
-  margin-right: 5px;
 `;
 
 export const ScrapButton = styled.button<buttonProps>`

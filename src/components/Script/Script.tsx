@@ -7,6 +7,7 @@ import { Pin } from 'src/assets/Icons';
 import * as S from './Styles';
 import Loading from './Loading';
 import RecButton from './RecButton';
+import HightLightText from './HightLightText';
 
 interface Props {
   id: number;
@@ -111,18 +112,12 @@ function Script() {
             >
               {data.startPoint}
             </S.TimeBox>
-            <S.TextBox
-              style={
-                isBetween(data.startPoint, current, getNextStartTime(data.startPoint))
-                  ? { color: '#222222' }
-                  : { color: '#CFCFCF' }
-              }
+            <HightLightText
+              dataId={data.id}
+              data={data.sentence}
+              textColor={isBetween(data.startPoint, current, getNextStartTime(data.startPoint)) ? '#222222' : '#CFCFCF'}
               onClick={(e) => handleSentenceClick(data.id, data.sentence, data.startPoint, e)}
-            >
-              {data.sentence.split(' ').map((d) => (
-                <S.StyledText>{d}</S.StyledText>
-              ))}
-            </S.TextBox>
+            />
             <RecButton id={data.id} sentence={data.sentence} />
           </S.TextLayout>
         ))}
