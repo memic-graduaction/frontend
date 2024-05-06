@@ -11,8 +11,6 @@ import StopSpeechBtn from './ModalButtons/StopSpeechBtn';
 import ModalResult from './ModalResult';
 import ModalLoading from './ModalLoading';
 
-const BaseUrl = process.env.REACT_APP_BASE_URL;
-
 function ModalSpeech() {
   const sentence = useRecoilValue(scriptSentencestate);
   const [recordingStatus, setRecordingStatus] = useRecoilState(recordingState);
@@ -25,7 +23,7 @@ function ModalSpeech() {
 
   const handleStopBtnClick = async () => {
     modalStack.push({ key: 'modal-loading', Component: ModalLoading });
-    const serverUrl = `${BaseUrl}/v1/recognized-sentences`;
+    const serverUrl = '/v1/recognized-sentences';
     const { blob, IdObject } = await stopRecording(recorder, setAudioUrl);
     const formData = new FormData();
     formData.append('speech', blob, 'speech.mp3');
@@ -42,7 +40,7 @@ function ModalSpeech() {
         modalStack.push({ key: 'modal-result', Component: ModalResult });
         setRecordingStatus('inactive');
       })
-      .then((error) => {
+      .catch((error) => {
         console.log(error);
       });
   };

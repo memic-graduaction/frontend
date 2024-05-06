@@ -1,6 +1,5 @@
-.selected {
-  background-color: #FFE9B0;
-  display: flex;
+.scraped {
+  position: relative;
   user-select: none;
   &:hover{
     button{
@@ -9,9 +8,10 @@
   }
 }
 
-.selected button{
+.scraped button{
   display: none;
   position: absolute;
+  width: 5rem;
   top: -100%;
   left: 20%;
   border-radius: 1rem;
@@ -24,6 +24,7 @@
   z-index: 1;
   user-select: none;
 }
+
 
 @keyframes fadeIn{
   0% {

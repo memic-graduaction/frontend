@@ -15,25 +15,22 @@ interface Props {
   sentence: string;
 }
 
-const BaseUrl = process.env.REACT_APP_BASE_URL;
-
 function Script() {
   const [xy, setXY] = useState({ x: -1000, y: -1000 });
   const [isSelected, setIsSelected] = useState(false);
   const [isSideBarOpen, setIsSideBarOpen] = useRecoilState(state.sideBarOpenState);
   const setPhrase = useSetRecoilState(state.selectedPhrase);
-
   const [loading, setLoading] = useState(false);
-  const url = useRecoilState(state.youtubeLinkState);
+  const url = useRecoilValue(state.youtubeLinkState);
   const [datas, setDatas] = useState<Props[] | null>(null);
-  const serverUrl = `${BaseUrl}/v1/transcriptions`;
+
   const handleGetScript = async () => {
     setLoading(true);
     const formData = {
       url: `${url}`,
     };
     try {
-      const response = await axios.post(serverUrl, formData);
+      const response = await axios.post('/v1/transcriptions', formData);
       setDatas(response.data.sentences);
       setLoading(false);
     } catch (e) {
@@ -58,6 +55,7 @@ function Script() {
     setScriptSentencestate(sentence);
     setSelectedStartPointAndSentence({ startPoint, sentence });
     const { phrase } = getSelectedPhrase();
+    if (phrase === null || isSideBarOpen) setXY({ x: -1000, y: -1000 });
     if (phrase !== null && !isSideBarOpen) {
       setXY({ x: e.pageX, y: e.pageY });
       setIsSelected(true);

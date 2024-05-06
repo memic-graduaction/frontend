@@ -12,8 +12,6 @@ interface Props {
   phrase?: string;
 }
 
-const BaseUrl = process.env.REACT_APP_BASE_URL;
-
 const PhraseEditCard = ({ phrase }: Props) => {
   const [list, setList] = useRecoilState(scrapedPhrase);
   const setPhrase = useSetRecoilState(selectedPhrase);
@@ -22,12 +20,12 @@ const PhraseEditCard = ({ phrase }: Props) => {
   const [defaultMean, setDefaultMean] = useState('');
   const [tags, setTags] = useRecoilState(selectedTags);
   const setSideBarOpen = useSetRecoilState(sideBarOpenState);
-  const { changeTextStyle, resetSelection } = getSelectedPhrase();
-  const serverUrl = `${BaseUrl}/v1/translate`;
+  const { startIndex, endIndex, resetSelection } = getSelectedPhrase();
+  const token = process.env.REACT_APP_ACCESS_TOKEN;
 
   const handleGetMeaning = async () => {
     try {
-      const response = await axios.post(serverUrl, { phrase });
+      const response = await axios.post('/v1/translate', { phrase });
       setDefaultMean(response.data.meaningInKorean);
     } catch (e) {
       alert(e);
@@ -51,8 +49,6 @@ const PhraseEditCard = ({ phrase }: Props) => {
     newList.unshift(obj);
     setList(newList);
     setPhrase('');
-    // 스크립트의 저장된 부분 하이라이팅
-    changeTextStyle();
   };
 
   const handleClose = () => {
