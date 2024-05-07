@@ -1,41 +1,33 @@
 export const getSelectedPhrase = () => {
   // 선택된 범위에 selection 객체 생성
   const sel = window.getSelection();
-
-  // 시작 요소 & 인덱스
-  const startNode = sel.anchorNode;
-  const startIndex = sel.anchorOffset;
-  // 끝 요소 & 인덱스
-  const endNode = sel.focusNode;
-  const endIndex = endNode.nodeValue?.length ?? 0;
-  const focusIndex = sel.focusOffset;
-
-  let range = null;
-  let phrase = null;
-  let content = null;
+  const range = sel.getRangeAt(0);
 
   function resetSelection() {
     sel.setPosition(startNode, 0);
   }
 
+  // 요소 & 인덱스
+  const startNode = sel.anchorNode;
+  const endNode = sel.focusNode;
+  let startIndex = sel.anchorOffset;
+  let endIndex = sel.focusOffset;
+  const wholeText = startNode?.textContent;
+  let phrase = null;
+  let content = null;
+
   // 한 지점 클릭한 경우는 예외 처리
-  if (startNode === endNode && startIndex === focusIndex) {
+  if (startIndex === endIndex || startIndex > endIndex) {
     resetSelection();
-    document.documentElement.style.setProperty('--display', 'none');
   } else {
-    // 자동 단어 전체 선택
-    sel.setBaseAndExtent(startNode, 0, endNode, endIndex);
-    range = sel.getRangeAt(0);
+    startIndex = wholeText.slice(0, startIndex + 1).lastIndexOf(' ');
+    endIndex =
+      wholeText.slice(endIndex - 1).indexOf(' ') === -1
+        ? wholeText.length
+        : endIndex + wholeText.slice(endIndex - 1).indexOf(' ');
+    sel.setBaseAndExtent(startNode, startIndex, endNode, endIndex);
     phrase = sel.toString().replace(/\n/g, ' ');
     content = range.cloneContents();
-  }
-
-  function handleButtonClick() {
-    let id = '';
-    if (phrase !== null) {
-      id = phrase.replaceAll(' ', '');
-    }
-    return id;
   }
 
   function changeTextStyle() {
@@ -43,20 +35,18 @@ export const getSelectedPhrase = () => {
       sel.deleteFromDocument();
       const clonedContent = content;
       const div = document.createElement('div');
-      div.id = phrase.replaceAll(' ', '');
-      div.className = 'selected';
+      div.className = 'scraped';
       div.style.position = 'relative';
 
       // 표현 보기 버튼
       const button = document.createElement('button');
       const buttonName = document.createTextNode('표현 보기');
-      button.onclick = handleButtonClick;
       button.appendChild(buttonName);
-      button.className = 'selectedBtn';
+      button.className = 'scraped';
       div.append(button, clonedContent);
       range.insertNode(div);
     }
   }
 
-  return { phrase, startIndex, endIndex, changeTextStyle, resetSelection, handleButtonClick };
+  return { phrase, startIndex, endIndex, changeTextStyle, resetSelection };
 };
