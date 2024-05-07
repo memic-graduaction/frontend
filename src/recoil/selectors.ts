@@ -6,10 +6,11 @@ export const isAllMatched = selector({
   key: 'isAllMatched',
   get: ({ get }) => {
     const wordList = get(recognizedWords);
+    let allMatched = true;
     wordList.forEach((v) => {
-      if (v.isMatchedWithTranscription === false) return false;
+      if (v.isMatchedWithTranscription === false) allMatched = false;
     });
-    return true;
+    return allMatched;
   },
 });
 
