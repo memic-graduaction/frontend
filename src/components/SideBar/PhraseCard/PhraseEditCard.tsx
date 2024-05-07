@@ -20,8 +20,8 @@ const PhraseEditCard = ({ phrase }: Props) => {
   const [defaultMean, setDefaultMean] = useState('');
   const [tags, setTags] = useRecoilState(selectedTags);
   const setSideBarOpen = useSetRecoilState(sideBarOpenState);
-  const { startIndex, endIndex, resetSelection } = getSelectedPhrase();
-  const token = process.env.REACT_APP_ACCESS_TOKEN;
+  const { startIndex, endIndex, resetSelection, changeTextStyle } = getSelectedPhrase();
+  // const token = process.env.REACT_APP_ACCESS_TOKEN;
 
   const handleGetMeaning = async () => {
     try {
@@ -49,6 +49,7 @@ const PhraseEditCard = ({ phrase }: Props) => {
     newList.unshift(obj);
     setList(newList);
     setPhrase('');
+    changeTextStyle();
   };
 
   const handleClose = () => {
@@ -63,28 +64,26 @@ const PhraseEditCard = ({ phrase }: Props) => {
   }, []);
 
   return (
-    <form onSubmit={handleSubmit}>
-      <S.Layout>
-        <S.IconBox>
-          <Close width={15} height={15} onClick={handleClose} />
-        </S.IconBox>
-        <S.PhraseBox>{phrase}</S.PhraseBox>
-        <input placeholder={defaultMean} onChange={saveInputValue} />
-        <S.HashTagBox>
-          {tags.map((v, i) => (
-            <S.HashTag key={v} style={{ background: getTagColor(i) }}>
-              #{v}
-              <Close onClick={() => handleDeleteTag(i)} style={{ cursor: 'pointer' }} />
-            </S.HashTag>
-          ))}
-          <TagSelector />
-        </S.HashTagBox>
-        <S.ButtonBox>
-          <S.SubmitBtn onClick={() => setPhrase('')}>취소</S.SubmitBtn>
-          <S.SubmitBtn type="submit">완료</S.SubmitBtn>
-        </S.ButtonBox>
-      </S.Layout>
-    </form>
+    <S.Layout>
+      <S.IconBox>
+        <Close width={15} height={15} onClick={handleClose} />
+      </S.IconBox>
+      <S.PhraseBox>{phrase}</S.PhraseBox>
+      <input placeholder={defaultMean} onChange={saveInputValue} />
+      <S.HashTagBox>
+        {tags.map((v, i) => (
+          <S.HashTag key={v} style={{ background: getTagColor(i) }}>
+            #{v}
+            <Close onClick={() => handleDeleteTag(i)} style={{ cursor: 'pointer' }} />
+          </S.HashTag>
+        ))}
+        <TagSelector />
+      </S.HashTagBox>
+      <S.ButtonBox>
+        <S.SubmitBtn onClick={() => setPhrase('')}>취소</S.SubmitBtn>
+        <S.SubmitBtn onClick={() => handleSubmit()}>완료</S.SubmitBtn>
+      </S.ButtonBox>
+    </S.Layout>
   );
 };
 

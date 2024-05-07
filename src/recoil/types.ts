@@ -14,6 +14,7 @@ export type recognizedWordsType = {
 };
 
 export type phraseListType = {
+  sentence: string;
   sentenceId: number;
   startIndex: number;
   endIndex: number;
