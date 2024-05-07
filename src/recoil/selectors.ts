@@ -1,5 +1,5 @@
-import { selector } from 'recoil';
-import { recognizedWords, scrapedPhrase } from './states';
+import { selector, selectorFamily } from 'recoil';
+import { UUid, recognizedWords, scrapedPhrase, youtubeIDstate, youtubeLinkState } from './states';
 
 // selector
 export const isAllMatched = selector({
@@ -14,16 +14,41 @@ export const isAllMatched = selector({
   },
 });
 
-export const scrapedSentences = selector({
-  key: 'scrapedSentences',
+export const userToken = selector({
+  key: 'userToken',
   get: ({ get }) => {
-    const phrases = get(scrapedPhrase);
-    const sentences = new Map<number, number[][]>();
-    phrases.forEach((v) => {
-      const string = sentences.get(v.sentenceId) || [];
-      string.push([v.startIndex, v.endIndex]);
-      sentences.set(v.sentenceId, string);
-    });
-    return sentences;
+    const user = get(UUid);
+    const token = user.accessToken;
+    return token;
   },
+});
+
+export const youtubeIDSelector = selector({
+  key: 'youtubeIDSelector',
+  get: ({ get }) => {
+    const youtubelink = get(youtubeLinkState);
+    const youtubeIdList = get(youtubeIDstate);
+    let matchingYoutubeId = null;
+    youtubeIdList.forEach((item) => {
+      if (item.url === youtubelink) matchingYoutubeId = item.id;
+    });
+    return matchingYoutubeId;
+  },
+});
+
+export const scrapedSentences = selectorFamily<string[], number>({
+  key: 'scrapedSentences',
+  get:
+    (params: number) =>
+    ({ get }) => {
+      const phrases = get(scrapedPhrase);
+      // { sentenceId : [[startIndex1,endIndex1],...]} 구조
+      const sentenceMap = {};
+      phrases.forEach((v) => {
+        const sentenceList = sentenceMap[`${v.sentenceId}`] || [];
+        sentenceList.push(v.sentence);
+        sentenceMap[v.sentenceId] = sentenceList;
+      });
+      return sentenceMap[params];
+    },
 });

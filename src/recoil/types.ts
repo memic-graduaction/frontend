@@ -26,3 +26,8 @@ export interface User {
   id: number;
   accessToken: string;
 }
+
+export interface youtubeId {
+  id: number;
+  url: string;
+}

@@ -20,7 +20,8 @@ export const getSelectedPhrase = () => {
   if (startIndex === endIndex || startIndex > endIndex) {
     resetSelection();
   } else {
-    startIndex = wholeText.slice(0, startIndex + 1).lastIndexOf(' ');
+    startIndex =
+      wholeText.slice(0, startIndex + 1).lastIndexOf(' ') > 0 ? wholeText.slice(0, startIndex + 1).lastIndexOf(' ') : 0;
     endIndex =
       wholeText.slice(endIndex - 1).indexOf(' ') === -1
         ? wholeText.length

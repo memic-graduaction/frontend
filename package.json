@@ -28,6 +28,7 @@
     "react-checkmark": "^2.0.0",
     "react-datepicker": "^6.6.0",
     "react-dom": "^18.2.0",
+    "react-highlight-words": "^0.20.0",
     "react-icons": "^5.0.1",
     "react-media-recorder": "^1.6.6",
     "react-player": "^2.15.1",
