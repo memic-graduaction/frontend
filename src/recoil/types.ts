@@ -15,6 +15,9 @@ export type recognizedWordsType = {
 
 export type phraseListType = {
   sentence: string;
+  sentenceId: number;
+  startIndex: number;
+  endIndex: number;
   meaning: string;
   tags: string[];
 };

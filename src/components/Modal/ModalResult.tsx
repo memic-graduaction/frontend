@@ -38,7 +38,7 @@ function ModalResult() {
       </TextContainer>
       <TextContainer>
         <ResultTextTitle>* 내가 말한 문장</ResultTextTitle>
-        {!allMatched ? (
+        {allMatched ? (
           <TextBox>
             <IconBox>
               <Checkmark size="small" color="#0AC78E" />

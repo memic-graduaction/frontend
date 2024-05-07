@@ -1,29 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import { Close } from 'src/assets/Icons';
-import { phraseList, selectedPhrase, selectedTags } from 'src/recoil/states';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { scrapedPhrase, scriptIDstate, selectedPhrase, selectedTags, sideBarOpenState } from 'src/recoil/states';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { getTagColor } from 'src/utils/getTagColor';
 import axios from 'axios';
+import { getSelectedPhrase } from 'src/utils/getSelectedPhrase';
 import * as S from './Styles';
 import TagSelector from '../TagSelector/TagSelector';
 
 interface Props {
-  phrase: string;
+  phrase?: string;
 }
 
-const BaseUrl = process.env.REACT_APP_BASE_URL;
-
 const PhraseEditCard = ({ phrase }: Props) => {
-  const [list, setList] = useRecoilState(phraseList);
+  const [list, setList] = useRecoilState(scrapedPhrase);
   const setPhrase = useSetRecoilState(selectedPhrase);
+  const sentenceId = useRecoilValue(scriptIDstate);
   const [meaning, setMeaning] = useState('');
   const [defaultMean, setDefaultMean] = useState('');
   const [tags, setTags] = useRecoilState(selectedTags);
-  const serverUrl = `${BaseUrl}/v1/translate`;
+  const setSideBarOpen = useSetRecoilState(sideBarOpenState);
+  const { startIndex, endIndex, resetSelection, changeTextStyle } = getSelectedPhrase();
+  // const token = process.env.REACT_APP_ACCESS_TOKEN;
 
   const handleGetMeaning = async () => {
     try {
-      const response = await axios.post(serverUrl, { phrase });
+      const response = await axios.post('/v1/translate', { phrase });
       setDefaultMean(response.data.meaningInKorean);
     } catch (e) {
       alert(e);
@@ -40,13 +42,33 @@ const PhraseEditCard = ({ phrase }: Props) => {
     setTags(newTags);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const finalMean = meaning || defaultMean;
-    const obj = { sentence: phrase, meaning: finalMean, tags };
+    const obj = { sentence: phrase, sentenceId, startIndex, endIndex, meaning: finalMean, tags };
+    // try {
+    //   axios.post(
+    //     'v1/phrases',
+    //     { sentenceId, startIndex, endIndex, meaning: finalMean, tagIds: [0, 1] },
+    //     {
+    //       headers: {
+    //         Authorization: token,
+    //       },
+    //     },
+    //   );
+    // } catch (e) {
+    //   console.log(e);
+    // }
     const newList = [...list];
     newList.unshift(obj);
     setList(newList);
     setPhrase('');
+    changeTextStyle();
+  };
+
+  const handleClose = () => {
+    resetSelection();
+    setPhrase('');
+    setSideBarOpen(false);
   };
 
   useEffect(() => {
@@ -55,28 +77,26 @@ const PhraseEditCard = ({ phrase }: Props) => {
   }, []);
 
   return (
-    <form onSubmit={handleSubmit}>
-      <S.Layout>
-        <S.IconBox>
-          <Close width={15} height={15} onClick={() => setPhrase('')} />
-        </S.IconBox>
-        <S.PhraseBox>{phrase}</S.PhraseBox>
-        <input placeholder={defaultMean} onChange={saveInputValue} />
-        <S.HashTagBox>
-          {tags.map((v, i) => (
-            <S.HashTag key={v} style={{ background: getTagColor(i) }}>
-              #{v}
-              <Close onClick={() => handleDeleteTag(i)} style={{ cursor: 'pointer' }} />
-            </S.HashTag>
-          ))}
-          <TagSelector />
-        </S.HashTagBox>
-        <S.ButtonBox>
-          <S.SubmitBtn onClick={() => setPhrase('')}>취소</S.SubmitBtn>
-          <S.SubmitBtn type="submit">완료</S.SubmitBtn>
-        </S.ButtonBox>
-      </S.Layout>
-    </form>
+    <S.Layout>
+      <S.IconBox>
+        <Close width={15} height={15} onClick={handleClose} />
+      </S.IconBox>
+      <S.PhraseBox>{phrase}</S.PhraseBox>
+      <input placeholder={defaultMean} onChange={saveInputValue} />
+      <S.HashTagBox>
+        {tags.map((v, i) => (
+          <S.HashTag key={v} style={{ background: getTagColor(i) }}>
+            #{v}
+            <Close width={12} height={12} onClick={() => handleDeleteTag(i)} style={{ cursor: 'pointer' }} />
+          </S.HashTag>
+        ))}
+        <TagSelector />
+      </S.HashTagBox>
+      <S.ButtonBox>
+        <S.SubmitBtn onClick={() => setPhrase('')}>취소</S.SubmitBtn>
+        <S.SubmitBtn onClick={() => handleSubmit()}>완료</S.SubmitBtn>
+      </S.ButtonBox>
+    </S.Layout>
   );
 };
 

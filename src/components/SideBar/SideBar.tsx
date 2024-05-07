@@ -2,9 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import { SideBarBtn, Write } from 'src/assets/Icons';
 import { useRecoilState } from 'recoil';
-import { sideBarOpenState } from 'src/recoil/states';
+import { selectedPhrase, sideBarOpenState } from 'src/recoil/states';
 import ToggleBtn from './ToggleBtn/ToggleBtn';
 import PhraseList from './PhraseList/PhraseList';
+import PhraseEditCard from './PhraseCard/PhraseEditCard';
 
 type Props = {
   isOpen: boolean;
@@ -12,9 +13,15 @@ type Props = {
 
 const SideBar = () => {
   const [isOpen, setIsOpen] = useRecoilState(sideBarOpenState);
+  const [phrase, setPhrase] = useRecoilState(selectedPhrase);
+
+  const handleBackGroundClick = () => {
+    setIsOpen(false);
+    setPhrase('');
+  };
   return (
     <>
-      {isOpen ? <BackLayout onClick={() => setIsOpen(false)} /> : null}
+      {isOpen ? <BackLayout onClick={handleBackGroundClick} /> : null}
       <Layout isOpen={isOpen}>
         {!isOpen ? (
           <IconBox onClick={() => setIsOpen(!isOpen)}>
@@ -29,6 +36,7 @@ const SideBar = () => {
           </Title>
         </Header>
         <ToggleBtn />
+        {phrase !== '' && <PhraseEditCard phrase={phrase} />}
         <PhraseList />
       </Layout>
     </>
@@ -58,8 +66,7 @@ const Layout = styled.div<Props>`
   height: 100vh;
   width: 30rem;
   background: #efefef;
-  padding: 1.5rem;
-  padding-right: 0.5rem;
+  padding: 1.5rem 0 1.5rem 2rem;
   transition: all 0.2s ease-in;
   z-index: 3;
 `;

@@ -22,7 +22,7 @@ const ToggleBtn = () => {
 export default ToggleBtn;
 
 const ToggleSwitch = styled.label<Props>`
-  width: 27.125rem;
+  width: 25rem;
   height: 2.25rem;
   border-radius: 3.125rem;
   display: flex;
@@ -32,16 +32,16 @@ const ToggleSwitch = styled.label<Props>`
   background: white;
   box-shadow: 1px 1px 10px rgba(0 0 0 / 15%);
   cursor: pointer;
-  transition: all 0.2s ease-in;
+  transition: all 0.1s ease-in;
 `;
 
 const ToggleButton = styled.span<Props>`
-  width: 13.82rem;
+  width: 13rem;
   height: 2.25rem;
   border-radius: 3.125rem;
   position: absolute;
   top: 50%;
-  left: ${(props) => (props.overall ? '13.82rem' : '0')};
+  left: ${(props) => (props.overall ? '12.5rem' : '0')};
   transform: translateY(-50%);
   background: #9f93af;
   transition: all 0.2s ease-in;

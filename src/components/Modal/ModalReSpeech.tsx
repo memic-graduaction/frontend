@@ -14,8 +14,6 @@ interface Prop {
   word: string;
 }
 
-const BaseUrl = process.env.REACT_APP_BASE_URL;
-
 function ModalReSpeech({ word }: Prop) {
   const [recordingStatus, setRecordingStatus] = useRecoilState(recordingState);
   const [recorder, setRecorder] = useState(null);
@@ -24,7 +22,7 @@ function ModalReSpeech({ word }: Prop) {
   const stopRecording = useStopRecording();
   const { push } = useModalStack();
   const wordObj = JSON.stringify({ originalWord: word });
-  const serverUrl = `${BaseUrl}/v1/speeches/words`;
+  const serverUrl = '/v1/speeches/words';
 
   const handleStopBtnClick = async () => {
     const { blob } = await stopRecording(recorder, setAudioUrl);
@@ -47,7 +45,7 @@ function ModalReSpeech({ word }: Prop) {
           popTwice: true,
         });
       })
-      .then((error) => {
+      .catch((error) => {
         console.log(error);
       });
   };

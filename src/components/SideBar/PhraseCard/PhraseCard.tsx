@@ -6,10 +6,10 @@ import * as S from './Styles';
 interface Props {
   phrase: string;
   meaning: string;
-  hashTags: string[];
+  TagIds: string[];
 }
 
-const PhraseCard = ({ phrase, meaning, hashTags }: Props) => (
+const PhraseCard = ({ phrase, meaning, TagIds }: Props) => (
   <S.Layout>
     <S.IconBox>
       <Edit />
@@ -17,8 +17,8 @@ const PhraseCard = ({ phrase, meaning, hashTags }: Props) => (
     <S.PhraseBox>{phrase}</S.PhraseBox>
     <S.MeaningBox>{meaning}</S.MeaningBox>
     <S.HashTagBox>
-      {hashTags.map((v, i) => (
-        <S.HashTag style={{ background: getTagColor(i) }}>#{v}</S.HashTag>
+      {TagIds.map((_, i) => (
+        <S.HashTag style={{ background: getTagColor(i) }}>#tag</S.HashTag>
       ))}
     </S.HashTagBox>
   </S.Layout>

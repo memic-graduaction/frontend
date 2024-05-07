@@ -7,6 +7,7 @@ import { Pin } from 'src/assets/Icons';
 import * as S from './Styles';
 import Loading from './Loading';
 import RecButton from './RecButton';
+import HightLightText from './HightLightText';
 
 interface Props {
   id: number;
@@ -14,25 +15,22 @@ interface Props {
   sentence: string;
 }
 
-const BaseUrl = process.env.REACT_APP_BASE_URL;
-
 function Script() {
   const [xy, setXY] = useState({ x: -1000, y: -1000 });
   const [isSelected, setIsSelected] = useState(false);
   const [isSideBarOpen, setIsSideBarOpen] = useRecoilState(state.sideBarOpenState);
   const setPhrase = useSetRecoilState(state.selectedPhrase);
-
   const [loading, setLoading] = useState(false);
-  const url = useRecoilState(state.youtubeLinkState);
+  const url = useRecoilValue(state.youtubeLinkState);
   const [datas, setDatas] = useState<Props[] | null>(null);
-  const serverUrl = `${BaseUrl}/v1/transcriptions`;
+
   const handleGetScript = async () => {
     setLoading(true);
     const formData = {
       url: `${url}`,
     };
     try {
-      const response = await axios.post(serverUrl, formData);
+      const response = await axios.post('/v1/transcriptions', formData);
       setDatas(response.data.sentences);
       setLoading(false);
     } catch (e) {
@@ -57,6 +55,7 @@ function Script() {
     setScriptSentencestate(sentence);
     setSelectedStartPointAndSentence({ startPoint, sentence });
     const { phrase } = getSelectedPhrase();
+    if (phrase === null || isSideBarOpen) setXY({ x: -1000, y: -1000 });
     if (phrase !== null && !isSideBarOpen) {
       setXY({ x: e.pageX, y: e.pageY });
       setIsSelected(true);
@@ -111,18 +110,12 @@ function Script() {
             >
               {data.startPoint}
             </S.TimeBox>
-            <S.TextBox
-              style={
-                isBetween(data.startPoint, current, getNextStartTime(data.startPoint))
-                  ? { color: '#222222' }
-                  : { color: '#CFCFCF' }
-              }
+            <HightLightText
+              dataId={data.id}
+              data={data.sentence}
+              textColor={isBetween(data.startPoint, current, getNextStartTime(data.startPoint)) ? '#222222' : '#CFCFCF'}
               onClick={(e) => handleSentenceClick(data.id, data.sentence, data.startPoint, e)}
-            >
-              {data.sentence.split(' ').map((d) => (
-                <S.StyledText>{d}</S.StyledText>
-              ))}
-            </S.TextBox>
+            />
             <RecButton id={data.id} sentence={data.sentence} />
           </S.TextLayout>
         ))}
