@@ -42,9 +42,22 @@ const PhraseEditCard = ({ phrase }: Props) => {
     setTags(newTags);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const finalMean = meaning || defaultMean;
-    const obj = { sentenceId, startIndex: 0, endIndex: 4, meaning: finalMean, tags };
+    const obj = { sentence: phrase, sentenceId, startIndex, endIndex, meaning: finalMean, tags };
+    // try {
+    //   axios.post(
+    //     'v1/phrases',
+    //     { sentenceId, startIndex, endIndex, meaning: finalMean, tagIds: [0, 1] },
+    //     {
+    //       headers: {
+    //         Authorization: token,
+    //       },
+    //     },
+    //   );
+    // } catch (e) {
+    //   console.log(e);
+    // }
     const newList = [...list];
     newList.unshift(obj);
     setList(newList);
@@ -74,7 +87,7 @@ const PhraseEditCard = ({ phrase }: Props) => {
         {tags.map((v, i) => (
           <S.HashTag key={v} style={{ background: getTagColor(i) }}>
             #{v}
-            <Close onClick={() => handleDeleteTag(i)} style={{ cursor: 'pointer' }} />
+            <Close width={12} height={12} onClick={() => handleDeleteTag(i)} style={{ cursor: 'pointer' }} />
           </S.HashTag>
         ))}
         <TagSelector />

@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { selectedTags } from 'src/recoil/states';
@@ -6,25 +7,32 @@ import styled from 'styled-components';
 const TagSelector = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [Tags, setTags] = useRecoilState(selectedTags);
-  const OPTIONS = [
-    { value: 'tag1', name: 'tag1' },
-    { value: 'tag2', name: 'tag2' },
-    { value: 'tag3', name: 'tag3' },
-    { value: 'tag4', name: 'tag4' },
-    { value: 'tag5', name: 'tag5' },
-    { value: 'tag6', name: 'tag6' },
-  ];
+  const [options, setOptions] = useState([]);
+
+  const getTagList = async () => {
+    try {
+      const response = await axios.get('/v1/tags');
+      setOptions(response.data);
+    } catch (e) {
+      alert(e);
+    }
+  };
+  const handlePlusButton = () => {
+    if (!isOpen) getTagList();
+    setIsOpen(!isOpen);
+  };
+
   const handleClickOption = (value: string) => {
     setTags([...Tags, value]);
   };
   return (
-    <SelectBox onClick={() => setIsOpen(!isOpen)}>
+    <SelectBox onClick={handlePlusButton}>
       +
       {isOpen ? (
         <OptionList>
-          {OPTIONS.map((opt) => (
-            <OptionItem key={opt.value} value={opt.value} onClick={() => handleClickOption(opt.value)}>
-              {opt.name}
+          {options.map((v) => (
+            <OptionItem key={v.id} value={v.name} onClick={() => handleClickOption(v.name)}>
+              {v.name}
             </OptionItem>
           ))}
         </OptionList>
@@ -58,7 +66,6 @@ const OptionList = styled.ul`
   justify-content: flex-start;
   width: 8rem;
   border: 1px solid #858585;
-  border-radius: 0.5rem;
   background: white;
   color: #858585;
   padding: 0 0.1rem;
@@ -68,7 +75,7 @@ const OptionList = styled.ul`
 const OptionItem = styled.li`
   height: 1.7rem;
   width: 100%;
-  padding-top: 0.1rem;
+  padding-top: 0.3rem;
   text-align: center;
   &:hover {
     background: rgba(133, 133, 133, 0.24);

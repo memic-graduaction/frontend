@@ -113,6 +113,7 @@ export const scrapedPhrase = atom<phraseListType[]>({
   key: 'scrapedPhrase',
   default: [
     {
+      sentence: 'sentence1',
       sentenceId: 5,
       startIndex: 3,
       endIndex: 18,
@@ -120,6 +121,7 @@ export const scrapedPhrase = atom<phraseListType[]>({
       tags: ['test', 'new', 'phrase', 'english'],
     },
     {
+      sentence: 'sentence2',
       sentenceId: 6,
       startIndex: 16,
       endIndex: 27,
@@ -127,6 +129,7 @@ export const scrapedPhrase = atom<phraseListType[]>({
       tags: ['test', 'new', 'phrase', 'english'],
     },
     {
+      sentence: 'sentence3',
       sentenceId: 12,
       startIndex: 0,
       endIndex: 17,
