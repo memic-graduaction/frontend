@@ -7,6 +7,7 @@ const { persistAtom } = recoilPersist({
   storage: localStorage,
 });
 
+// 유저 로그인
 export const UUid = atom<User>({
   key: 'user',
   default: {
@@ -14,6 +15,12 @@ export const UUid = atom<User>({
     accessToken: '',
   },
   effects_UNSTABLE: [persistAtom],
+});
+
+// 로그인 상태 확인
+export const isLoggedInState = atom({
+  key: 'isLoggedInState',
+  default: false, // 초기값은 로그아웃 상태로 설정
 });
 
 export const modalActivationState = atom<boolean>({

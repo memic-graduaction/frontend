@@ -1,26 +1,27 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import { FaEye, FaEyeSlash, FaCheckSquare, FaRegSquare } from 'react-icons/fa';
 import { useSetRecoilState } from 'recoil';
-import { UUid } from '../../recoil/states';
+import { UUid, isLoggedInState } from '../../recoil/states';
 import * as S from './Styles';
 
 function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const setUserData = useSetRecoilState(UUid);
-  const navigator = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const loginUrl = `/v1/members/sign-in`;
+  const setIsLoggedIn = useSetRecoilState(isLoggedInState);
 
   const handleLoginClick = async () => {
     try {
       const response = await axios.post(loginUrl, { email, password });
       setUserData(response.data);
+      setIsLoggedIn(true);
+      const previousPage = getCookie('previousPage');
+      window.location.href = previousPage || '/';
       alert('로그인 되었습니다!');
-      navigator('/mypage');
     } catch (e) {
       console.log('로그인 실패:', e);
       alert('로그인에 실패했습니다. 다시 시도해주세요.');
@@ -33,6 +34,12 @@ function LoginForm() {
 
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
+  };
+
+  const getCookie = (name) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
   };
 
   return (

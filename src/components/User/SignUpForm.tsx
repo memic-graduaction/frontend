@@ -3,6 +3,8 @@ import { TextField } from '@mui/material';
 import InputAdornment from '@mui/material/InputAdornment';
 import { FaEye, FaEyeSlash, FaCheck } from 'react-icons/fa';
 import axios from 'axios';
+import { useSetRecoilState } from 'recoil';
+import { isLoggedInState } from '../../recoil/states';
 import * as S from './Styles';
 
 const pattern = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-za-z0-9\-]+/;
@@ -15,12 +17,15 @@ function SignupForm() {
   const signupUrl = '/v1/members/sign-up';
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const setIsLoggedIn = useSetRecoilState(isLoggedInState);
 
   const handleSubmit = async () => {
     try {
       const response = await axios.post(signupUrl, { email, password });
+      // 회원 가입 후 자동으로 로그인되도록 업데이트
+      setIsLoggedIn(true);
       console.log(response.data);
-      alert('회원 가입이 완료되었습니다. \n 다시 로그인해주세요.');
+      alert('회원 가입이 완료되었습니다. \n 이전 창으로 돌아갑니다.');
       window.location.reload();
     } catch (e) {
       console.error('회원가입 실패:', e);
