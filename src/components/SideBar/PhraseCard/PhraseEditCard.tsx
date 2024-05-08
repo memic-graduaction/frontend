@@ -1,10 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Close } from 'src/assets/Icons';
-import { scrapedPhrase, scriptIDstate, selectedPhrase, selectedTags, sideBarOpenState } from 'src/recoil/states';
+import {
+  scrapedPhrase,
+  scriptIDstate,
+  scriptSentencestate,
+  selectedPhrase,
+  selectedTags,
+  sideBarOpenState,
+} from 'src/recoil/states';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { getTagColor } from 'src/utils/getTagColor';
 import axios from 'axios';
 import { getSelectedPhrase } from 'src/utils/getSelectedPhrase';
+import { getPhraseIndex } from 'src/utils/getPhraseIndex';
+import { userToken } from 'src/recoil/selectors';
 import * as S from './Styles';
 import TagSelector from '../TagSelector/TagSelector';
 
@@ -20,8 +29,11 @@ const PhraseEditCard = ({ phrase }: Props) => {
   const [defaultMean, setDefaultMean] = useState('');
   const [tags, setTags] = useRecoilState(selectedTags);
   const setSideBarOpen = useSetRecoilState(sideBarOpenState);
-  const { startIndex, endIndex, resetSelection, changeTextStyle } = getSelectedPhrase();
-  // const token = process.env.REACT_APP_ACCESS_TOKEN;
+  const { resetSelection } = getSelectedPhrase();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const scriptSentence = useRecoilValue(scriptSentencestate);
+  const { startIndex, endIndex } = getPhraseIndex(scriptSentence, phrase);
+  const token = useRecoilValue(userToken);
 
   const handleGetMeaning = async () => {
     try {
@@ -32,8 +44,11 @@ const PhraseEditCard = ({ phrase }: Props) => {
     }
   };
 
-  const saveInputValue = (e) => {
+  const onChange = (e) => {
     setMeaning(e.target.value);
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
   };
 
   const handleDeleteTag = (idx: number) => {
@@ -44,25 +59,31 @@ const PhraseEditCard = ({ phrase }: Props) => {
 
   const handleSubmit = async () => {
     const finalMean = meaning || defaultMean;
-    const obj = { sentence: phrase, sentenceId, startIndex, endIndex, meaning: finalMean, tags };
-    // try {
-    //   axios.post(
-    //     'v1/phrases',
-    //     { sentenceId, startIndex, endIndex, meaning: finalMean, tagIds: [0, 1] },
-    //     {
-    //       headers: {
-    //         Authorization: token,
-    //       },
-    //     },
-    //   );
-    // } catch (e) {
-    //   console.log(e);
-    // }
+    const tagIds = tags.map((tag) => tag.id);
+    const tagName = tags.map((tag) => tag.name);
+    const data = {
+      sentence: phrase,
+      sentenceId,
+      startIndex,
+      endIndex,
+      meaning: finalMean,
+      tagIds,
+    };
+    const obj2 = { sentence: phrase, sentenceId, startIndex, endIndex, meaning: finalMean, tags: tagName };
+    try {
+      const response = await axios.post('v1/phrases', data, {
+        headers: {
+          Authorization: token,
+        },
+      });
+      console.log(response.data);
+    } catch (e) {
+      console.log(e);
+    }
     const newList = [...list];
-    newList.unshift(obj);
+    newList.unshift(obj2);
     setList(newList);
     setPhrase('');
-    changeTextStyle();
   };
 
   const handleClose = () => {
@@ -82,14 +103,16 @@ const PhraseEditCard = ({ phrase }: Props) => {
         <Close width={15} height={15} onClick={handleClose} />
       </S.IconBox>
       <S.PhraseBox>{phrase}</S.PhraseBox>
-      <input placeholder={defaultMean} onChange={saveInputValue} />
+      <input ref={inputRef} placeholder={defaultMean} value={meaning} onChange={onChange} />
       <S.HashTagBox>
-        {tags.map((v, i) => (
-          <S.HashTag key={v} style={{ background: getTagColor(i) }}>
-            #{v}
-            <Close width={12} height={12} onClick={() => handleDeleteTag(i)} style={{ cursor: 'pointer' }} />
-          </S.HashTag>
-        ))}
+        {tags
+          .map((v) => v.name)
+          .map((v, i) => (
+            <S.HashTag key={v} style={{ background: getTagColor(i) }}>
+              #{v}
+              <Close width={12} height={12} onClick={() => handleDeleteTag(i)} style={{ cursor: 'pointer' }} />
+            </S.HashTag>
+          ))}
         <TagSelector />
       </S.HashTagBox>
       <S.ButtonBox>
