@@ -28,8 +28,9 @@ export const youtubeIDSelector = selector({
   get: ({ get }) => {
     const youtubelink = get(youtubeLinkState);
     const youtubeIdList = get(youtubeIDstate);
+    const newList = [...youtubeIdList];
     let matchingYoutubeId = null;
-    youtubeIdList.forEach((item) => {
+    newList?.forEach((item) => {
       if (item.url === youtubelink) matchingYoutubeId = item.id;
     });
     return matchingYoutubeId;
