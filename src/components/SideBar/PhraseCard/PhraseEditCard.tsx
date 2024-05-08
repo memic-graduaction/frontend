@@ -108,7 +108,7 @@ const PhraseEditCard = ({ phrase }: Props) => {
         {tags
           .map((v) => v.name)
           .map((v, i) => (
-            <S.HashTag key={v} style={{ background: getTagColor(i) }}>
+            <S.HashTag key={v} style={{ background: getTagColor() }}>
               #{v}
               <Close width={12} height={12} onClick={() => handleDeleteTag(i)} style={{ cursor: 'pointer' }} />
             </S.HashTag>
