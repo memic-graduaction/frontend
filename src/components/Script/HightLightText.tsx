@@ -1,5 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import Highlighter from 'react-highlight-words';
+import { useRecoilValue } from 'recoil';
+import { scrapedSentences } from 'src/recoil/selectors';
 
 interface Prop {
   dataId: number;
@@ -7,16 +10,18 @@ interface Prop {
   onClick: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void;
   textColor?: string;
 }
-
 interface TextProp {
   textColor?: string;
 }
 
-const HightLightText = ({ dataId, data, onClick, textColor }: Prop) => (
-  <TextLayout className={`${dataId}`} onClick={onClick} textColor={textColor}>
-    {data}
-  </TextLayout>
-);
+const HightLightText = ({ dataId, data, onClick, textColor }: Prop) => {
+  const queries = useRecoilValue(scrapedSentences(dataId)) || [];
+  return (
+    <TextLayout onClick={onClick} textColor={textColor}>
+      <Highlighter highlightClassName={`scraped ${dataId}`} searchWords={queries} textToHighlight={data} />
+    </TextLayout>
+  );
+};
 
 export default HightLightText;
 

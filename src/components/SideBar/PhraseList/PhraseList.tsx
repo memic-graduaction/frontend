@@ -1,11 +1,30 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import { scrapedPhrase } from 'src/recoil/states';
 import styled from 'styled-components';
+import axios from 'axios';
 import PhraseCard from '../PhraseCard/PhraseCard';
+
+const token = process.env.REACT_APP_ACCESS_TOKEN;
 
 const PhraseList = () => {
   const list = useRecoilValue(scrapedPhrase);
+
+  const handleGetPhrases = async () => {
+    try {
+      const response = await axios.get('/v1/phrases', {
+        headers: {
+          Authorization: token,
+        },
+      });
+      console.log(response.data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  useEffect(() => {
+    handleGetPhrases();
+  }, []);
   return (
     <Layout>
       {list.map((v) => (

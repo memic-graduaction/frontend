@@ -17,8 +17,8 @@ const PhraseCard = ({ phrase, meaning, TagIds }: Props) => (
     <S.PhraseBox>{phrase}</S.PhraseBox>
     <S.MeaningBox>{meaning}</S.MeaningBox>
     <S.HashTagBox>
-      {TagIds.map((_, i) => (
-        <S.HashTag style={{ background: getTagColor(i) }}>#tag</S.HashTag>
+      {TagIds.map((v, i) => (
+        <S.HashTag style={{ background: getTagColor(i) }}>{v}</S.HashTag>
       ))}
     </S.HashTagBox>
   </S.Layout>

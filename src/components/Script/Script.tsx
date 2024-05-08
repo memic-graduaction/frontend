@@ -4,6 +4,7 @@ import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
 import * as state from 'src/recoil/states';
 import { getSelectedPhrase } from 'src/utils/getSelectedPhrase';
 import { Pin } from 'src/assets/Icons';
+import { youtubeIDSelector } from 'src/recoil/selectors';
 import * as S from './Styles';
 import Loading from './Loading';
 import RecButton from './RecButton';
@@ -22,6 +23,8 @@ function Script() {
   const setPhrase = useSetRecoilState(state.selectedPhrase);
   const [loading, setLoading] = useState(false);
   const url = useRecoilValue(state.youtubeLinkState);
+  const urlId = useRecoilValue(youtubeIDSelector);
+  const [youtubeId, setYoutubeId] = useRecoilState(state.youtubeIDstate);
   const [datas, setDatas] = useState<Props[] | null>(null);
 
   const handleGetScript = async () => {
@@ -30,7 +33,15 @@ function Script() {
       url: `${url}`,
     };
     try {
-      const response = await axios.post('/v1/transcriptions', formData);
+      let response;
+      if (urlId !== null) {
+        response = await axios.get(`/v1/transcriptions/${urlId}`);
+      } else {
+        response = await axios.post('/v1/transcriptions', formData);
+        const newYoutubeId = [...youtubeId];
+        newYoutubeId.push({ url: response.data.url, id: response.data.id });
+        setYoutubeId(newYoutubeId);
+      }
       setDatas(response.data.sentences);
       setLoading(false);
     } catch (e) {

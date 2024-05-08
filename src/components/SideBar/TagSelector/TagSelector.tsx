@@ -22,8 +22,10 @@ const TagSelector = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleClickOption = (value: string) => {
-    setTags([...Tags, value]);
+  const handleClickOption = (id: number, name: string) => {
+    const tagList = [...Tags];
+    tagList.push({ id, name });
+    setTags(tagList);
   };
   return (
     <SelectBox onClick={handlePlusButton}>
@@ -31,7 +33,7 @@ const TagSelector = () => {
       {isOpen ? (
         <OptionList>
           {options.map((v) => (
-            <OptionItem key={v.id} value={v.name} onClick={() => handleClickOption(v.name)}>
+            <OptionItem key={v.id} value={v.name} onClick={() => handleClickOption(v.id, v.name)}>
               {v.name}
             </OptionItem>
           ))}
