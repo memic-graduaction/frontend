@@ -1,8 +1,6 @@
 .scraped {
-  position: relative;
   background: #ffe9b0;
-  margin: 0 0.2rem;
-  display: flex;
+  position: relative;
   &:hover{
     button{
       display: block;

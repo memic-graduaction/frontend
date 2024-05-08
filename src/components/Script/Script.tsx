@@ -36,7 +36,6 @@ function Script() {
       let response;
       if (urlId !== null) {
         response = await axios.get(`/v1/transcriptions/${urlId}`);
-        console.log(response);
       } else {
         response = await axios.post('/v1/transcriptions', formData);
         const newYoutubeId = [...youtubeId];
@@ -49,7 +48,6 @@ function Script() {
       console.log(e);
     }
   };
-  console.log(youtubeId);
 
   const setScriptIDState = useSetRecoilState(state.scriptIDstate);
   const setScriptSentencestate = useSetRecoilState(state.scriptSentencestate);

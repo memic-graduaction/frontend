@@ -31,3 +31,8 @@ export interface youtubeId {
   id: number;
   url: string;
 }
+
+export interface Tag {
+  id: number;
+  name: string;
+}

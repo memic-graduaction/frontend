@@ -1,6 +1,6 @@
-import { atom } from 'recoil';
+import { atom, atomFamily } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
-import { ModalStateType, User, phraseListType, recognizedWordsType, youtubeId } from './types';
+import { ModalStateType, Tag, User, phraseListType, recognizedWordsType, youtubeId } from './types';
 
 const { persistAtom } = recoilPersist({
   key: 'localStorage',
@@ -42,7 +42,7 @@ export const youtubeLinkState = atom<string>({
 
 export const youtubeIDstate = atom<youtubeId[]>({
   key: 'youtubeIDState',
-  default: [{ url: 'https://youtu.be/lpcpsCY4Mco?si=_rxzxxH-fuE78HDf', id: 388 }],
+  default: [],
   effects_UNSTABLE: [persistAtom],
 });
 
@@ -111,7 +111,7 @@ export const selectedPhrase = atom<string>({
   default: '',
 });
 
-export const selectedTags = atom<string[]>({
+export const selectedTags = atom<Tag[]>({
   key: 'selectedTags',
   default: [],
 });
@@ -121,15 +121,15 @@ export const scrapedPhrase = atom<phraseListType[]>({
   default: [
     {
       sentence: 'any significant changes',
-      sentenceId: 3165,
+      sentenceId: 17,
       startIndex: 3,
       endIndex: 18,
       meaning: '어떤 중요한 변화가',
-      tags: ['일상', '직장'],
+      tags: ['일상표현', '대화'],
     },
     {
       sentence: 'to get more data.',
-      sentenceId: 3165,
+      sentenceId: 17,
       startIndex: 10,
       endIndex: 27,
       meaning: '더 많은 자료를 얻기 위해',
@@ -137,11 +137,16 @@ export const scrapedPhrase = atom<phraseListType[]>({
     },
     {
       sentence: 'any updates',
-      sentenceId: 3167,
+      sentenceId: 19,
       startIndex: 0,
       endIndex: 17,
       meaning: '업데이트 사항이',
-      tags: ['일상', '뉴스'],
+      tags: ['뉴스', '업데이트'],
     },
   ],
+});
+
+export const toggleState = atomFamily<boolean, string>({
+  key: 'toggleState',
+  default: false,
 });
