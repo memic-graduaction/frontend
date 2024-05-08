@@ -20,7 +20,8 @@ export const UUid = atom<User>({
 // 로그인 상태 확인
 export const isLoggedInState = atom({
   key: 'isLoggedInState',
-  default: false, // 초기값은 로그아웃 상태로 설정
+  default: true, 
+  effects_UNSTABLE: [persistAtom],
 });
 
 export const modalActivationState = atom<boolean>({
