@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { SideBarBtn, Write } from 'src/assets/Icons';
-import { useRecoilState } from 'recoil';
-import { selectedPhrase, sideBarOpenState } from 'src/recoil/states';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { selectedPhrase, showOverall, sideBarOpenState } from 'src/recoil/states';
 import ToggleBtn from './ToggleBtn/ToggleBtn';
 import PhraseList from './PhraseList/PhraseList';
 import PhraseEditCard from './PhraseCard/PhraseEditCard';
+import PhraseAllList from './PhraseList/PhraseAllList';
 
 type Props = {
   isOpen: boolean;
@@ -14,6 +15,7 @@ type Props = {
 const SideBar = () => {
   const [isOpen, setIsOpen] = useRecoilState(sideBarOpenState);
   const [phrase, setPhrase] = useRecoilState(selectedPhrase);
+  const isOverall = useRecoilValue(showOverall);
 
   const handleBackGroundClick = () => {
     setIsOpen(false);
@@ -37,7 +39,7 @@ const SideBar = () => {
         </Header>
         <ToggleBtn />
         {phrase !== '' && <PhraseEditCard phrase={phrase} />}
-        <PhraseList />
+        {isOverall ? <PhraseAllList /> : <PhraseList />}
       </Layout>
     </>
   );

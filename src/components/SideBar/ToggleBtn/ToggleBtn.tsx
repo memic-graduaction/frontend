@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useRecoilState } from 'recoil';
+import { showOverall } from 'src/recoil/states';
 import styled from 'styled-components';
 
 type Props = {
@@ -6,10 +8,10 @@ type Props = {
 };
 
 const ToggleBtn = () => {
-  const [isOverall, setisOverall] = useState(false);
+  const [isOverall, setIsOverall] = useRecoilState(showOverall);
   return (
     <>
-      <CheckBox id="toggle" hidden onChange={() => setisOverall(!isOverall)} />
+      <CheckBox id="toggle" hidden onChange={() => setIsOverall(!isOverall)} />
       <ToggleSwitch htmlFor="toggle" overall={isOverall}>
         <Text overall={!isOverall}>이 영상의 표현 보기</Text>
         <Text overall={isOverall}>모든 표현 보기</Text>
