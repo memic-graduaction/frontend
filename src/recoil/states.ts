@@ -1,4 +1,4 @@
-import { atom, atomFamily } from 'recoil';
+import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
 import { ModalStateType, Tag, User, phraseListType, recognizedWordsType, youtubeId } from './types';
 
@@ -147,7 +147,8 @@ export const scrapedPhrase = atom<phraseListType[]>({
   ],
 });
 
-export const toggleState = atomFamily<boolean, string>({
-  key: 'toggleState',
+export const showOverall = atom<boolean>({
+  key: 'showOverall',
   default: false,
+  effects_UNSTABLE: [persistAtom],
 });

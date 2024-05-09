@@ -1,30 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import { scrapedListById, youtubeIDSelector } from 'src/recoil/selectors';
+import { scrapedList } from 'src/recoil/selectors';
 import PhraseCard from '../PhraseCard/PhraseCard';
 
-const PhraseList = () => {
+const PhraseAllList = () => {
   const [list, setList] = useState([]);
   const [tags, setTags] = useState([]);
-  const youtubeId = useRecoilValue(youtubeIDSelector);
-  const getScrap = useRecoilValue(scrapedListById(youtubeId));
+  const getScrap = useRecoilValue(scrapedList);
 
   const handleGetPhrases = async () => {
-    if (youtubeId) {
-      getScrap().then((data) => {
-        setList(data);
-        const tagList = data?.map((v) => v.tags.map((tag) => tag.name));
-        setTags(tagList);
-      });
-    }
+    getScrap().then((data) => {
+      setList(data);
+      const tagList = data?.map((v) => v.tags.map((tag) => tag.name));
+      setTags(tagList);
+    });
   };
   useEffect(() => {
     handleGetPhrases();
   }, []);
   return (
     <Layout>
-      {list.length ? (
+      {list.length > 0 ? (
         list.map((v, i) => <PhraseCard key={v.id} phrase={v.phrase} meaning={v.meaning} TagIds={tags[i]} />)
       ) : (
         <div>저장된 표현이 없습니다</div>
@@ -33,7 +30,7 @@ const PhraseList = () => {
   );
 };
 
-export default PhraseList;
+export default PhraseAllList;
 
 const Layout = styled.div`
   display: flex;

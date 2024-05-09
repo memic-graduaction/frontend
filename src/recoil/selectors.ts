@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { selector, selectorFamily } from 'recoil';
 import { UUid, recognizedWords, scrapedPhrase, youtubeIDstate, youtubeLinkState } from './states';
 
@@ -35,6 +36,42 @@ export const youtubeIDSelector = selector({
     });
     return matchingYoutubeId;
   },
+});
+
+export const scrapedList = selector({
+  key: 'scrapedList',
+  get:
+    ({ get }) =>
+    async () => {
+      const token = get(userToken);
+      const response = await axios.get('/v1/phrases', {
+        headers: {
+          Authorization: token,
+        },
+      });
+
+      const { data } = response;
+      return data;
+    },
+});
+
+export const scrapedListById = selectorFamily({
+  key: 'scrapedListById',
+  get:
+    (param: string) =>
+    ({ get }) =>
+    async () => {
+      const token = get(userToken);
+      const url = `/v1/phrases/transcriptions/${param}`;
+      const response = await axios.get(url, {
+        headers: {
+          Authorization: token,
+        },
+      });
+
+      const { data } = response;
+      return data;
+    },
 });
 
 export const scrapedSentences = selectorFamily<string[], number>({
