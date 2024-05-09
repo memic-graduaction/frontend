@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { IoPowerOutline } from 'react-icons/io5';
 import { LuUser2 } from 'react-icons/lu';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -11,10 +11,6 @@ function Header() {
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLoggedInState);
   const navigator = useNavigate();
   const location = useLocation();
-
-  useEffect(() => {
-    console.log('isLoggedIn:', isLoggedIn);
-  }, [isLoggedIn]);
 
   const handleLoginClick = () => {
     // 현재 페이지 정보 저장

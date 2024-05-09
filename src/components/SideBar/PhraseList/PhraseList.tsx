@@ -3,12 +3,12 @@ import { useRecoilValue } from 'recoil';
 import { scrapedPhrase } from 'src/recoil/states';
 import styled from 'styled-components';
 import axios from 'axios';
+import { userToken } from 'src/recoil/selectors';
 import PhraseCard from '../PhraseCard/PhraseCard';
-
-const token = process.env.REACT_APP_ACCESS_TOKEN;
 
 const PhraseList = () => {
   const list = useRecoilValue(scrapedPhrase);
+  const token = useRecoilValue(userToken);
 
   const handleGetPhrases = async () => {
     try {
