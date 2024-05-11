@@ -2,13 +2,14 @@ import React from 'react';
 import { IoPowerOutline } from 'react-icons/io5';
 import { LuUser2 } from 'react-icons/lu';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
-import { isLoggedInState } from '../../recoil/states';
+import { useRecoilState, useResetRecoilState } from 'recoil';
+import { UUid, isLoggedInState } from '../../recoil/states';
 import * as S from './Styles';
 import { Logo } from '../../assets/Icons';
 
 function Header() {
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLoggedInState);
+  const resetUserInfo = useResetRecoilState(UUid);
   const navigator = useNavigate();
   const location = useLocation();
 
@@ -31,6 +32,7 @@ function Header() {
   const handleLogoutClick = () => {
     // 로그아웃 시 항상 홈 페이지로 이동
     setIsLoggedIn(false);
+    resetUserInfo();
     navigator('/');
   };
 
