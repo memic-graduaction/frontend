@@ -20,7 +20,7 @@ export const Layout = styled.div<Props>`
   left: ${(props) => (props.isOpen ? '0' : '-30rem')};
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1rem;
   border-radius: 0 0.625rem 0.625rem 0;
   height: 100vh;
   width: 30rem;

@@ -21,6 +21,7 @@ const SideBar = () => {
     setIsOpen(false);
     setPhrase('');
   };
+
   return (
     <>
       {isOpen ? <S.BackLayout onClick={handleBackGroundClick} /> : null}

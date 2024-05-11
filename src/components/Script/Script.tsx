@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useSetRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 import * as state from 'src/recoil/states';
 import { getSelectedPhrase } from 'src/utils/getSelectedPhrase';
 import { Pin } from 'src/assets/Icons';
@@ -27,6 +27,7 @@ function Script() {
   const urlId = useRecoilValue(youtubeIDSelector);
   const [youtubeId, setYoutubeId] = useRecoilState(state.youtubeIDstate);
   const [datas, setDatas] = useState<Props[] | null>(null);
+  const resetSideBar = useResetRecoilState(state.showOverall);
   useSetScrapFunc();
 
   const handleGetScript = async () => {
@@ -99,7 +100,9 @@ function Script() {
   useEffect(() => {
     handleGetScript();
     setXY({ x: -1000, y: -1000 });
-  }, []);
+    resetSideBar();
+    setIsSideBarOpen(false);
+  }, [url]);
 
   return (
     <S.Layout>
