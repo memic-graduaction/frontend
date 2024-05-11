@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Close } from 'src/assets/Icons';
 import { scriptIDstate, scriptSentencestate, selectedPhrase, selectedTags, sideBarOpenState } from 'src/recoil/states';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
@@ -9,25 +9,19 @@ import { getPhraseIndex } from 'src/utils/getPhraseIndex';
 import { userToken } from 'src/recoil/selectors';
 import * as S from './Styles';
 import TagSelector from '../TagSelector/TagSelector';
+import MeaningInput from './MeaningInput';
 
-interface Props {
-  phrase?: string;
-}
-
-const PhraseEditCard = ({ phrase }: Props) => {
-  const setPhrase = useSetRecoilState(selectedPhrase);
+const PhraseEditCard = () => {
+  const [phrase, setPhrase] = useRecoilState(selectedPhrase);
   const sentenceId = useRecoilValue(scriptIDstate);
+  const [tags, setTags] = useRecoilState(selectedTags);
   const [meaning, setMeaning] = useState('');
   const [defaultMean, setDefaultMean] = useState('');
-  const [tags, setTags] = useRecoilState(selectedTags);
   const setSideBarOpen = useSetRecoilState(sideBarOpenState);
   const { resetSelection } = getSelectedPhrase();
-  const inputRef = useRef<HTMLInputElement>(null);
   const scriptSentence = useRecoilValue(scriptSentencestate);
   const { startIndex, endIndex } = getPhraseIndex(scriptSentence, phrase);
   const token = useRecoilValue(userToken);
-
-  console.log(startIndex, endIndex);
 
   const handleGetMeaning = async () => {
     try {
@@ -35,13 +29,6 @@ const PhraseEditCard = ({ phrase }: Props) => {
       setDefaultMean(response.data.meaningInKorean);
     } catch (e) {
       alert(e);
-    }
-  };
-
-  const onChange = (e) => {
-    setMeaning(e.target.value);
-    if (inputRef.current) {
-      inputRef.current.focus();
     }
   };
 
@@ -63,12 +50,11 @@ const PhraseEditCard = ({ phrase }: Props) => {
       tagIds,
     };
     try {
-      const response = await axios.post('v1/phrases', data, {
+      await axios.post('v1/phrases', data, {
         headers: {
           Authorization: token,
         },
       });
-      console.log(response.data);
     } catch (e) {
       console.log(e);
     }
@@ -82,8 +68,8 @@ const PhraseEditCard = ({ phrase }: Props) => {
   };
 
   useEffect(() => {
-    setTags([]);
     handleGetMeaning();
+    setTags([]);
   }, []);
 
   return (
@@ -92,7 +78,7 @@ const PhraseEditCard = ({ phrase }: Props) => {
         <Close width={15} height={15} onClick={handleClose} />
       </S.IconBox>
       <S.PhraseBox>{phrase}</S.PhraseBox>
-      <input ref={inputRef} placeholder={defaultMean} value={meaning} onChange={onChange} />
+      <MeaningInput defaultMean={defaultMean} setMeaning={setMeaning} />
       <S.HashTagBox>
         {tags
           .map((v) => v.name)

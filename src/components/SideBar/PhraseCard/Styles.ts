@@ -64,3 +64,13 @@ export const SubmitBtn = styled.button`
   background: #9f93af;
   color: white;
 `;
+
+export const InputBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const Input = styled.input`
+  width: 18rem;
+`;

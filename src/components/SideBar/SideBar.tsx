@@ -38,7 +38,7 @@ const SideBar = () => {
           </Title>
         </Header>
         <ToggleBtn />
-        {phrase !== '' && <PhraseEditCard phrase={phrase} />}
+        {phrase !== '' && <PhraseEditCard />}
         {isOverall ? <PhraseAllList /> : <PhraseList />}
       </Layout>
     </>
