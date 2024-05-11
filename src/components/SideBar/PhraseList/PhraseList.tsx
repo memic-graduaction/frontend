@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { scrapedListById, youtubeIDSelector } from 'src/recoil/selectors';
+import { highLightPhrase } from 'src/recoil/states';
 import PhraseCard from '../PhraseCard/PhraseCard';
 
 const PhraseList = () => {
@@ -9,6 +10,7 @@ const PhraseList = () => {
   const [tags, setTags] = useState([]);
   const youtubeId = useRecoilValue(youtubeIDSelector);
   const getScrap = useRecoilValue(scrapedListById(youtubeId));
+  const setPhrase = useSetRecoilState(highLightPhrase);
 
   const handleGetPhrases = async () => {
     if (youtubeId) {
@@ -16,12 +18,15 @@ const PhraseList = () => {
         setList(data);
         const tagList = data?.map((v) => v.tags.map((tag) => tag.name));
         setTags(tagList);
+        const newPhrases = data.map((v) => ({ id: v.sentenceId, phrase: v.phrase }));
+        setPhrase(newPhrases);
       });
     }
   };
   useEffect(() => {
     handleGetPhrases();
   }, []);
+
   return (
     <Layout>
       {list.length ? (

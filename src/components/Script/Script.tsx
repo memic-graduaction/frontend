@@ -8,7 +8,7 @@ import { youtubeIDSelector } from 'src/recoil/selectors';
 import * as S from './Styles';
 import Loading from './Loading';
 import RecButton from './RecButton';
-import HightLightText from './HightLightText';
+import HighLightText from './HighLightText';
 
 interface Props {
   id: number;
@@ -121,7 +121,7 @@ function Script() {
             >
               {data.startPoint}
             </S.TimeBox>
-            <HightLightText
+            <HighLightText
               dataId={data.id}
               data={data.sentence}
               textColor={isBetween(data.startPoint, current, getNextStartTime(data.startPoint)) ? '#222222' : '#CFCFCF'}

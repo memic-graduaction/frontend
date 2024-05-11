@@ -1,6 +1,6 @@
 import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
-import { ModalStateType, Tag, User, phraseListType, recognizedWordsType, youtubeId } from './types';
+import { ModalStateType, Tag, User, recognizedWordsType, scrapedPhrase, youtubeId } from './types';
 
 const { persistAtom } = recoilPersist({
   key: 'localStorage',
@@ -43,7 +43,7 @@ export const youtubeLinkState = atom<string>({
 
 export const youtubeIDstate = atom<youtubeId[]>({
   key: 'youtubeIDState',
-  default: [],
+  default: [{ url: 'https://youtu.be/lpcpsCY4Mco?si=_rxzxxH-fuE78HDf', id: 2 }],
   effects_UNSTABLE: [persistAtom],
 });
 
@@ -117,38 +117,15 @@ export const selectedTags = atom<Tag[]>({
   default: [],
 });
 
-export const scrapedPhrase = atom<phraseListType[]>({
-  key: 'scrapedPhrase',
-  default: [
-    {
-      sentence: 'any significant changes',
-      sentenceId: 17,
-      startIndex: 3,
-      endIndex: 18,
-      meaning: '어떤 중요한 변화가',
-      tags: ['일상표현', '대화'],
-    },
-    {
-      sentence: 'to get more data.',
-      sentenceId: 17,
-      startIndex: 10,
-      endIndex: 27,
-      meaning: '더 많은 자료를 얻기 위해',
-      tags: ['자료수집', '데이터'],
-    },
-    {
-      sentence: 'any updates',
-      sentenceId: 19,
-      startIndex: 0,
-      endIndex: 17,
-      meaning: '업데이트 사항이',
-      tags: ['뉴스', '업데이트'],
-    },
-  ],
-});
-
+// 이번 영상 표현 보기 or 모든 표현 보기
 export const showOverall = atom<boolean>({
   key: 'showOverall',
   default: false,
   effects_UNSTABLE: [persistAtom],
+});
+
+// 하이라이팅할 표현들
+export const highLightPhrase = atom<scrapedPhrase[]>({
+  key: 'highLightPhrase',
+  default: [],
 });

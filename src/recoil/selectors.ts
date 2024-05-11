@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { selector, selectorFamily } from 'recoil';
-import { UUid, recognizedWords, scrapedPhrase, youtubeIDstate, youtubeLinkState } from './states';
+import { UUid, recognizedWords, youtubeIDstate, youtubeLinkState } from './states';
 
 // selector
 export const isAllMatched = selector({
@@ -58,7 +58,7 @@ export const scrapedList = selector({
 export const scrapedListById = selectorFamily({
   key: 'scrapedListById',
   get:
-    (param: string) =>
+    (param: number) =>
     ({ get }) =>
     async () => {
       const token = get(userToken);
@@ -71,22 +71,5 @@ export const scrapedListById = selectorFamily({
 
       const { data } = response;
       return data;
-    },
-});
-
-export const scrapedSentences = selectorFamily<string[], number>({
-  key: 'scrapedSentences',
-  get:
-    (params: number) =>
-    ({ get }) => {
-      const phrases = get(scrapedPhrase);
-      // { sentenceId : [[startIndex1,endIndex1],...]} 구조
-      const sentenceMap = {};
-      phrases.forEach((v) => {
-        const sentenceList = sentenceMap[`${v.sentenceId}`] || [];
-        sentenceList.push(v.sentence);
-        sentenceMap[v.sentenceId] = sentenceList;
-      });
-      return sentenceMap[params];
     },
 });

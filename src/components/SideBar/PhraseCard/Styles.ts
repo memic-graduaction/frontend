@@ -30,14 +30,13 @@ export const MeaningBox = styled(PhraseBox)`
 `;
 
 export const HashTagBox = styled.div`
-  display: grid;
+  display: flex;
+  flex-wrap: wrap;
   gap: 0.5rem;
-  grid-template-columns: repeat(auto-fill, minmax(5rem, 1fr));
 `;
 
 export const HashTag = styled.div`
   display: flex;
-  width: 5rem;
   height: 1.6875rem;
   padding: 0.5rem 0.6rem;
   justify-content: center;

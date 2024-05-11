@@ -1,13 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Close } from 'src/assets/Icons';
-import {
-  scrapedPhrase,
-  scriptIDstate,
-  scriptSentencestate,
-  selectedPhrase,
-  selectedTags,
-  sideBarOpenState,
-} from 'src/recoil/states';
+import { scriptIDstate, scriptSentencestate, selectedPhrase, selectedTags, sideBarOpenState } from 'src/recoil/states';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { getTagColor } from 'src/utils/getTagColor';
 import axios from 'axios';
@@ -22,7 +15,6 @@ interface Props {
 }
 
 const PhraseEditCard = ({ phrase }: Props) => {
-  const [list, setList] = useRecoilState(scrapedPhrase);
   const setPhrase = useSetRecoilState(selectedPhrase);
   const sentenceId = useRecoilValue(scriptIDstate);
   const [meaning, setMeaning] = useState('');
@@ -34,6 +26,8 @@ const PhraseEditCard = ({ phrase }: Props) => {
   const scriptSentence = useRecoilValue(scriptSentencestate);
   const { startIndex, endIndex } = getPhraseIndex(scriptSentence, phrase);
   const token = useRecoilValue(userToken);
+
+  console.log(startIndex, endIndex);
 
   const handleGetMeaning = async () => {
     try {
@@ -60,7 +54,6 @@ const PhraseEditCard = ({ phrase }: Props) => {
   const handleSubmit = async () => {
     const finalMean = meaning || defaultMean;
     const tagIds = tags.map((tag) => tag.id);
-    const tagName = tags.map((tag) => tag.name);
     const data = {
       sentence: phrase,
       sentenceId,
@@ -69,7 +62,6 @@ const PhraseEditCard = ({ phrase }: Props) => {
       meaning: finalMean,
       tagIds,
     };
-    const obj2 = { sentence: phrase, sentenceId, startIndex, endIndex, meaning: finalMean, tags: tagName };
     try {
       const response = await axios.post('v1/phrases', data, {
         headers: {
@@ -80,9 +72,6 @@ const PhraseEditCard = ({ phrase }: Props) => {
     } catch (e) {
       console.log(e);
     }
-    const newList = [...list];
-    newList.unshift(obj2);
-    setList(newList);
     setPhrase('');
   };
 

@@ -13,15 +13,6 @@ export type recognizedWordsType = {
   isMatchedWithTranscription: boolean;
 };
 
-export type phraseListType = {
-  sentence: string;
-  sentenceId: number;
-  startIndex: number;
-  endIndex: number;
-  meaning: string;
-  tags: string[];
-};
-
 export interface User {
   id: number;
   accessToken: string;
@@ -35,4 +26,9 @@ export interface youtubeId {
 export interface Tag {
   id: number;
   name: string;
+}
+
+export interface scrapedPhrase {
+  id: number;
+  phrase: string;
 }
