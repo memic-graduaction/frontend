@@ -17,10 +17,9 @@ interface TextProp {
 const HighLightText = ({ dataId, data, onClick, textColor }: Prop) => {
   const phrases = useRecoilValue(highLightPhrase);
   const queries = phrases.filter((item) => item.id === dataId).map((item) => item.phrase);
-
   return (
     <TextLayout onClick={onClick} textColor={textColor}>
-      <Highlighter highlightClassName={`scraped ${dataId}`} searchWords={queries} textToHighlight={data} />
+      <Highlighter highlightClassName={`scraped ${dataId}`} searchWords={queries} textToHighlight={data} autoEscape />
     </TextLayout>
   );
 };

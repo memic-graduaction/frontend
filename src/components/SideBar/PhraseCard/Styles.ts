@@ -79,5 +79,5 @@ export const InputBox = styled.div`
 `;
 
 export const Input = styled.input`
-  width: 18rem;
+  width: 17rem;
 `;
