@@ -31,8 +31,10 @@ const PhraseList = () => {
 
   return (
     <Layout>
-      {list.length
-        ? list.map((v, i) => <PhraseCard key={v.id} phrase={v.phrase} meaning={v.meaning} TagIds={tags[i]} />)
+      {list.length > 0
+        ? list.map((v, i) => (
+            <PhraseCard key={v.id} sentenceId={v.sentenceId} phrase={v.phrase} meaning={v.meaning} TagIds={tags[i]} />
+          ))
         : !loading && <NullLayout>스크립트에서 표현을 저장해보세요 !</NullLayout>}
     </Layout>
   );

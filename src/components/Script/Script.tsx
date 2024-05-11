@@ -5,6 +5,7 @@ import * as state from 'src/recoil/states';
 import { getSelectedPhrase } from 'src/utils/getSelectedPhrase';
 import { Pin } from 'src/assets/Icons';
 import { youtubeIDSelector } from 'src/recoil/selectors';
+import { useSetScrapFunc } from 'src/utils/useSetScrapFunc';
 import * as S from './Styles';
 import Loading from './Loading';
 import RecButton from './RecButton';
@@ -26,6 +27,7 @@ function Script() {
   const urlId = useRecoilValue(youtubeIDSelector);
   const [youtubeId, setYoutubeId] = useRecoilState(state.youtubeIDstate);
   const [datas, setDatas] = useState<Props[] | null>(null);
+  useSetScrapFunc();
 
   const handleGetScript = async () => {
     setLoading(true);

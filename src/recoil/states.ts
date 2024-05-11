@@ -129,3 +129,8 @@ export const highLightPhrase = atom<scrapedPhrase[]>({
   key: 'highLightPhrase',
   default: [],
 });
+
+export const selectedHighLight = atom<{ sentenceId: number; phrase: string }>({
+  key: 'selectedHighLight',
+  default: null,
+});

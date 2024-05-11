@@ -1,11 +1,6 @@
 .scraped {
   background: #ffe9b0;
   position: relative;
-  &:hover{
-    button{
-      display: block;
-    }
-  }
 }
 
 .scraped button{
