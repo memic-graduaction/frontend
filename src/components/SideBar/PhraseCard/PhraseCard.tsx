@@ -1,8 +1,8 @@
 import React from 'react';
 import { Edit } from 'src/assets/Icons';
 import { getTagColor } from 'src/utils/getTagColor';
-import { useRecoilValue } from 'recoil';
-import { selectedHighLight } from 'src/recoil/states';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { selectedHighLight, sideBarOpenState } from 'src/recoil/states';
 import * as S from './Styles';
 
 interface Props {
@@ -13,10 +13,14 @@ interface Props {
 }
 
 const PhraseCard = ({ sentenceId, phrase, meaning, TagIds }: Props) => {
-  const selected = useRecoilValue(selectedHighLight);
+  const [selected, setSelected] = useRecoilState(selectedHighLight);
+  const isSideBarOpen = useRecoilValue(sideBarOpenState);
   let isSelected = false;
   if (selected) {
     isSelected = sentenceId === selected.sentenceId && phrase === selected.phrase;
+  }
+  if (isSideBarOpen === false) {
+    setSelected(null);
   }
 
   return (
