@@ -8,24 +8,25 @@ const PhraseAllList = () => {
   const [list, setList] = useState([]);
   const [tags, setTags] = useState([]);
   const getScrap = useRecoilValue(scrapedList);
+  const [loading, setLoading] = useState(true);
 
   const handleGetPhrases = async () => {
     getScrap().then((data) => {
       setList(data);
       const tagList = data?.map((v) => v.tags.map((tag) => tag.name));
       setTags(tagList);
+      setLoading(false);
     });
   };
   useEffect(() => {
     handleGetPhrases();
   }, []);
+
   return (
     <Layout>
-      {list.length > 0 ? (
-        list.map((v, i) => <PhraseCard key={v.id} phrase={v.phrase} meaning={v.meaning} TagIds={tags[i]} />)
-      ) : (
-        <div>저장된 표현이 없습니다</div>
-      )}
+      {list.length > 0
+        ? list.map((v, i) => <PhraseCard key={v.id} phrase={v.phrase} meaning={v.meaning} TagIds={tags[i]} />)
+        : !loading && <NullLayout>스크립트에서 표현을 저장해보세요 !</NullLayout>}
     </Layout>
   );
 };
@@ -49,4 +50,14 @@ const Layout = styled.div`
     border-radius: 1.25rem;
     background: rgba(217, 217, 217, 0.6);
   }
+`;
+
+const NullLayout = styled.div`
+  width: 90%;
+  height: 100%;
+  color: #9f93af;
+  font-size: 1.1rem;
+  display: flex;
+  justify-content: center;
+  margin-top: 4rem;
 `;

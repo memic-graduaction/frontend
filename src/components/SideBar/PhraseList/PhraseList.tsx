@@ -11,6 +11,7 @@ const PhraseList = () => {
   const youtubeId = useRecoilValue(youtubeIDSelector);
   const getScrap = useRecoilValue(scrapedListById(youtubeId));
   const setPhrase = useSetRecoilState(highLightPhrase);
+  const [loading, setLoading] = useState(true);
 
   const handleGetPhrases = async () => {
     if (youtubeId) {
@@ -20,6 +21,7 @@ const PhraseList = () => {
         setTags(tagList);
         const newPhrases = data.map((v) => ({ id: v.sentenceId, phrase: v.phrase }));
         setPhrase(newPhrases);
+        setLoading(false);
       });
     }
   };
@@ -29,11 +31,9 @@ const PhraseList = () => {
 
   return (
     <Layout>
-      {list.length ? (
-        list.map((v, i) => <PhraseCard key={v.id} phrase={v.phrase} meaning={v.meaning} TagIds={tags[i]} />)
-      ) : (
-        <div>저장된 표현이 없습니다</div>
-      )}
+      {list.length
+        ? list.map((v, i) => <PhraseCard key={v.id} phrase={v.phrase} meaning={v.meaning} TagIds={tags[i]} />)
+        : !loading && <NullLayout>스크립트에서 표현을 저장해보세요 !</NullLayout>}
     </Layout>
   );
 };
@@ -57,4 +57,14 @@ const Layout = styled.div`
     border-radius: 1.25rem;
     background: rgba(217, 217, 217, 0.6);
   }
+`;
+
+const NullLayout = styled.div`
+  width: 90%;
+  height: 100%;
+  color: #9f93af;
+  font-size: 1.1rem;
+  display: flex;
+  justify-content: center;
+  margin-top: 4rem;
 `;
