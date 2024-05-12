@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 type Props = {
-  isOpen: boolean;
+  $isopen: boolean;
 };
 
 export const BackLayout = styled.div`
@@ -17,7 +17,7 @@ export const BackLayout = styled.div`
 export const Layout = styled.div<Props>`
   position: fixed;
   top: 0;
-  left: ${(props) => (props.isOpen ? '0' : '-30rem')};
+  left: ${(props) => (props.$isopen ? '0' : '-30rem')};
   display: flex;
   flex-direction: column;
   gap: 1rem;

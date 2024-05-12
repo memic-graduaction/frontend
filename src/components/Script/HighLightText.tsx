@@ -11,14 +11,14 @@ interface Prop {
   textColor?: string;
 }
 interface TextProp {
-  textColor?: string;
+  $textcolor?: string;
 }
 
 const HighLightText = ({ dataId, data, onClick, textColor }: Prop) => {
   const phrases = useRecoilValue(highLightPhrase);
   const queries = phrases.filter((item) => item.id === dataId).map((item) => item.phrase);
   return (
-    <TextLayout onClick={onClick} textColor={textColor}>
+    <TextLayout onClick={onClick} $textcolor={textColor}>
       <Highlighter highlightClassName={`scraped ${dataId}`} searchWords={queries} textToHighlight={data} autoEscape />
     </TextLayout>
   );
@@ -36,5 +36,5 @@ const TextLayout = styled.div<TextProp>`
   font-weight: 500;
   margin-left: 3%;
   line-height: 1.5;
-  color: ${(props) => (props.textColor ? props.textColor : '#696565')};
+  color: ${(props) => (props.$textcolor ? props.$textcolor : '#696565')};
 `;

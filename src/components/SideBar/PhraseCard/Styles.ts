@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 interface Props {
-  isSelected: boolean;
+  $isselected: boolean;
 }
 
 export const Layout = styled.div<Props>`
@@ -15,7 +15,7 @@ export const Layout = styled.div<Props>`
   margin: 1rem;
   padding: 1rem;
   box-shadow: ${(props) =>
-    props.isSelected ? '1px 1px 15px rgba(100 0 50 / 40%);' : '1px 1px 10px rgba(0 0 0 / 15%);'};
+    props.$isselected ? '1px 1px 15px rgba(100 0 50 / 40%);' : '1px 1px 10px rgba(0 0 0 / 15%);'};
 `;
 
 export const IconBox = styled.button`
@@ -25,7 +25,7 @@ export const IconBox = styled.button`
 `;
 
 export const PhraseBox = styled.div<Props>`
-  color: ${(props) => (props.isSelected ? '#ff5c5c' : '#4f4957')};
+  color: ${(props) => (props.$isselected ? '#ff5c5c' : '#4f4957')};
   font-size: 1.25rem;
   font-weight: 500;
 `;

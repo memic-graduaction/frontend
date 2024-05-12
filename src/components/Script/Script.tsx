@@ -135,7 +135,7 @@ function Script() {
             <RecButton id={data.id} sentence={data.sentence} />
           </S.TextLayout>
         ))}
-      <S.ScrapButton isSelected={isSelected} xy={xy} onClick={handleScrapClick}>
+      <S.ScrapButton $isselected={isSelected} $xy={xy} onClick={handleScrapClick}>
         <Pin />
         표현 저장
       </S.ScrapButton>

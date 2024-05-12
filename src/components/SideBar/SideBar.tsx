@@ -25,7 +25,7 @@ const SideBar = () => {
   return (
     <>
       {isOpen ? <S.BackLayout onClick={handleBackGroundClick} /> : null}
-      <S.Layout isOpen={isOpen}>
+      <S.Layout $isopen={isOpen}>
         {!isOpen ? (
           <S.IconBox onClick={() => setIsOpen(!isOpen)}>
             <SideBarBtn />

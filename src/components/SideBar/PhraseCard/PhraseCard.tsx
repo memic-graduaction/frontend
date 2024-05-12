@@ -23,11 +23,11 @@ const PhraseCard = forwardRef(({ sentenceId, phrase, meaning, TagIds }: Props, r
   }, [selectedPhrase]);
 
   return (
-    <S.Layout isSelected={isHighLighted} ref={ref}>
+    <S.Layout $isselected={isHighLighted} ref={ref}>
       <S.IconBox>
         <Edit />
       </S.IconBox>
-      <S.PhraseBox isSelected={isHighLighted}>{phrase}</S.PhraseBox>
+      <S.PhraseBox $isselected={isHighLighted}>{phrase}</S.PhraseBox>
       <S.MeaningBox>{meaning}</S.MeaningBox>
       <S.HashTagBox>
         {TagIds.map((v) => (

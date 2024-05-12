@@ -2,8 +2,8 @@ import styled, { keyframes } from 'styled-components';
 import Colors from 'src/styles/Colors';
 
 type buttonProps = {
-  isSelected: boolean;
-  xy: { x: number; y: number };
+  $isselected: boolean;
+  $xy: { x: number; y: number };
 };
 
 export const fadeIn = keyframes`
@@ -56,10 +56,10 @@ export const TimeBox = styled.div`
 `;
 
 export const ScrapButton = styled.button<buttonProps>`
-  display: ${(props) => (props.isSelected ? 'block' : 'none')};
+  display: ${(props) => (props.$isselected ? 'block' : 'none')};
   position: absolute;
-  left: ${(props) => `${props.xy.x}px`};
-  top: ${(props) => `${props.xy.y}px`};
+  left: ${(props) => `${props.$xy.x}px`};
+  top: ${(props) => `${props.$xy.y}px`};
   border-radius: 1rem;
   color: white;
   background: #ff5c5c;
