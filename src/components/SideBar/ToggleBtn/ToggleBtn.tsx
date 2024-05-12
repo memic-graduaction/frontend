@@ -4,7 +4,7 @@ import { showOverall } from 'src/recoil/states';
 import styled from 'styled-components';
 
 type Props = {
-  overall: boolean;
+  $overall: boolean;
 };
 
 const ToggleBtn = () => {
@@ -12,10 +12,10 @@ const ToggleBtn = () => {
   return (
     <>
       <CheckBox id="toggle" hidden onChange={() => setIsOverall(!isOverall)} />
-      <ToggleSwitch htmlFor="toggle" overall={isOverall}>
-        <Text overall={!isOverall}>이 영상의 표현 보기</Text>
-        <Text overall={isOverall}>모든 표현 보기</Text>
-        <ToggleButton overall={isOverall} />
+      <ToggleSwitch htmlFor="toggle" $overall={isOverall}>
+        <Text $overall={!isOverall}>이 영상의 표현 보기</Text>
+        <Text $overall={isOverall}>모든 표현 보기</Text>
+        <ToggleButton $overall={isOverall} />
       </ToggleSwitch>
     </>
   );
@@ -43,7 +43,7 @@ const ToggleButton = styled.span<Props>`
   border-radius: 3.125rem;
   position: absolute;
   top: 50%;
-  left: ${(props) => (props.overall ? '12.5rem' : '0')};
+  left: ${(props) => (props.$overall ? '12.5rem' : '0')};
   transform: translateY(-50%);
   background: #9f93af;
   transition: all 0.2s ease-in;
@@ -55,8 +55,8 @@ const CheckBox = styled.input.attrs({ type: 'checkbox' })`
 
 const Text = styled.div<Props>`
   font-size: 1.1rem;
-  font-weight: ${(props) => (props.overall ? '500' : '300')};
-  color: ${(props) => (props.overall ? 'white' : '#9f93af')};
+  font-weight: ${(props) => (props.$overall ? '500' : '300')};
+  color: ${(props) => (props.$overall ? 'white' : '#9f93af')};
   transition: all 0.2s ease-in;
   z-index: 1;
 `;

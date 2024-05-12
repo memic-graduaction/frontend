@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { Ref, forwardRef, useEffect, useState } from 'react';
 import { Edit } from 'src/assets/Icons';
 import { getTagColor } from 'src/utils/getTagColor';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { selectedHighLight, sideBarOpenState } from 'src/recoil/states';
+import { useRecoilValue } from 'recoil';
+import { selectedHighLight } from 'src/recoil/states';
 import * as S from './Styles';
 
 interface Props {
@@ -12,23 +12,22 @@ interface Props {
   TagIds: string[];
 }
 
-const PhraseCard = ({ sentenceId, phrase, meaning, TagIds }: Props) => {
-  const [selected, setSelected] = useRecoilState(selectedHighLight);
-  const isSideBarOpen = useRecoilValue(sideBarOpenState);
-  let isSelected = false;
-  if (selected) {
-    isSelected = sentenceId === selected.sentenceId && phrase === selected.phrase;
-  }
-  if (isSideBarOpen === false) {
-    setSelected(null);
-  }
+const PhraseCard = forwardRef(({ sentenceId, phrase, meaning, TagIds }: Props, ref: Ref<HTMLDivElement>) => {
+  const selectedPhrase = useRecoilValue(selectedHighLight);
+  const [isHighLighted, setIsHighLighted] = useState(false);
+
+  useEffect(() => {
+    if (selectedPhrase) {
+      setIsHighLighted(sentenceId === selectedPhrase.sentenceId && phrase === selectedPhrase.phrase);
+    }
+  }, [selectedPhrase]);
 
   return (
-    <S.Layout isSelected={isSelected}>
+    <S.Layout $isselected={isHighLighted} ref={ref}>
       <S.IconBox>
         <Edit />
       </S.IconBox>
-      <S.PhraseBox isSelected={isSelected}>{phrase}</S.PhraseBox>
+      <S.PhraseBox $isselected={isHighLighted}>{phrase}</S.PhraseBox>
       <S.MeaningBox>{meaning}</S.MeaningBox>
       <S.HashTagBox>
         {TagIds.map((v) => (
@@ -37,6 +36,6 @@ const PhraseCard = ({ sentenceId, phrase, meaning, TagIds }: Props) => {
       </S.HashTagBox>
     </S.Layout>
   );
-};
+});
 
-export default PhraseCard;
+export default React.memo(PhraseCard);

@@ -43,7 +43,7 @@ export const youtubeLinkState = atom<string>({
 
 export const youtubeIDstate = atom<youtubeId[]>({
   key: 'youtubeIDState',
-  default: [{ url: 'https://youtu.be/lpcpsCY4Mco?si=_rxzxxH-fuE78HDf', id: 2 }],
+  default: [],
   effects_UNSTABLE: [persistAtom],
 });
 
@@ -130,6 +130,7 @@ export const highLightPhrase = atom<scrapedPhrase[]>({
   default: [],
 });
 
+// 스크립트에서 클릭된 표현
 export const selectedHighLight = atom<{ sentenceId: number; phrase: string }>({
   key: 'selectedHighLight',
   default: null,

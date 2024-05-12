@@ -73,11 +73,11 @@ const PhraseEditCard = () => {
   }, []);
 
   return (
-    <S.Layout isSelected={false}>
+    <S.Layout $isselected={false}>
       <S.IconBox>
         <Close width={15} height={15} onClick={handleClose} />
       </S.IconBox>
-      <S.PhraseBox isSelected={false}>{phrase}</S.PhraseBox>
+      <S.PhraseBox $isselected={false}>{phrase}</S.PhraseBox>
       <MeaningInput defaultMean={defaultMean} setMeaning={setMeaning} />
       <S.HashTagBox>
         {tags
