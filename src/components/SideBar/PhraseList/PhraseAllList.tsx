@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { scrapedList } from 'src/recoil/selectors';
 import _ from 'lodash';
 import { youtubeLinkState } from 'src/recoil/states';
+import { Logo } from 'src/assets/Icons';
 import PhraseCard from '../PhraseCard/PhraseCard';
 
 const PhraseAllList = () => {
@@ -32,7 +33,10 @@ const PhraseAllList = () => {
     <Layout>
       {Object.keys(urlMap).map((url) => (
         <CardLayout key={url}>
-          <UrlButton onClick={() => handleButtonClick(url)}>영상 보러 가기</UrlButton>
+          <UrlButton onClick={() => handleButtonClick(url)}>
+            <Logo width="17px" />
+            유튜브 보기
+          </UrlButton>
           {urlMap[url].map((item) => (
             <PhraseCard
               key={item.id}
@@ -72,7 +76,6 @@ const CardLayout = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
 `;
 
 const NullLayout = styled.div`
@@ -86,19 +89,22 @@ const NullLayout = styled.div`
 `;
 
 const UrlButton = styled.button`
-  width: 10rem;
-  height: 2rem;
+  width: 9rem;
+  height: 1.7rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: white;
-  font-size: 1.1rem;
-  border-radius: 3rem;
-  background: rgba(133, 133, 133, 0.24);
+  gap: 0.5rem;
+  color: black;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: 10px;
+  background: #cfcfcf;
+  margin: 0.5rem 0;
 `;
 
 const Border = styled.div`
   width: 90%;
   border: 0.1px solid rgba(133, 133, 133, 0.24);
-  margin-bottom: 1.5rem;
+  margin: 1.5rem 0;
 `;
