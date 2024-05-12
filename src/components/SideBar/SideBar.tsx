@@ -51,6 +51,7 @@ const SideBar = () => {
           </S.NullLayout>
         )}
       </S.Layout>
+      {isOpen ? <style>{'body { overflow: hidden; }'}</style> : null}
     </>
   );
 };

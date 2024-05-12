@@ -25,7 +25,7 @@ function SignupForm() {
       // 회원 가입 후 자동으로 로그인되도록 업데이트
       setIsLoggedIn(true);
       console.log(response.data);
-      alert('회원 가입이 완료되었습니다. \n 이전 창으로 돌아갑니다.');
+      alert('회원 가입이 완료되었습니다. \n이전 창으로 돌아갑니다.');
       window.location.reload();
     } catch (e) {
       console.error('회원가입 실패:', e);

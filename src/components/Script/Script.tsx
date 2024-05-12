@@ -83,18 +83,25 @@ function Script() {
     setIsSelected(false);
   };
 
-  const isBetween = (startTime: string, currentTime: string, nextStartTime: string): boolean =>
-    startTime <= currentTime && currentTime < nextStartTime;
+  let lastStartTime = '';
+
+  const isBetween = (startTime: string, currentTime: string, nextStartTime: string): boolean => {
+    console.log('Current Time:', currentTime);
+    console.log('Next Start Time:', nextStartTime);
+    return startTime <= currentTime && currentTime < nextStartTime;
+  };
 
   const getNextStartTime = (currentStartTime: string): string => {
     if (!datas) return ''; // 데이터가 없으면 빈 문자열 반환
 
-    for (let i = 0; i < datas.length; i += 1) {
-      if (datas[i].startPoint > currentStartTime) {
-        return datas[i].startPoint;
+    for (let i = 0; i < datas.length - 1; i += 1) {
+      if (datas[i].startPoint <= currentStartTime && currentStartTime < datas[i + 1].startPoint) {
+        lastStartTime = datas[i + 1].startPoint;
+        return lastStartTime;
       }
     }
-    return '';
+    lastStartTime = datas[datas.length - 1].startPoint;
+    return lastStartTime;
   };
 
   useEffect(() => {
