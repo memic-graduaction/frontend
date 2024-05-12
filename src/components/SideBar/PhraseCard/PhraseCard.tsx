@@ -2,7 +2,7 @@ import React, { Ref, forwardRef, useEffect, useState } from 'react';
 import { Edit } from 'src/assets/Icons';
 import { getTagColor } from 'src/utils/getTagColor';
 import { useRecoilValue } from 'recoil';
-import { selectedHighLight } from 'src/recoil/states';
+import { selectedHighLight, sideBarOpenState } from 'src/recoil/states';
 import * as S from './Styles';
 
 interface Props {
@@ -14,6 +14,7 @@ interface Props {
 
 const PhraseCard = forwardRef(({ sentenceId, phrase, meaning, TagIds }: Props, ref: Ref<HTMLDivElement>) => {
   const selectedPhrase = useRecoilValue(selectedHighLight);
+  const isSideBarOpen = useRecoilValue(sideBarOpenState);
   const [isHighLighted, setIsHighLighted] = useState(false);
 
   useEffect(() => {
@@ -21,6 +22,10 @@ const PhraseCard = forwardRef(({ sentenceId, phrase, meaning, TagIds }: Props, r
       setIsHighLighted(sentenceId === selectedPhrase.sentenceId && phrase === selectedPhrase.phrase);
     }
   }, [selectedPhrase]);
+
+  useEffect(() => {
+    if (!isSideBarOpen) setIsHighLighted(false);
+  }, [isSideBarOpen]);
 
   return (
     <S.Layout $isselected={isHighLighted} ref={ref}>
