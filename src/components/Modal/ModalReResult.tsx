@@ -55,15 +55,15 @@ const Layout = styled.div`
 `;
 
 const TextLayout = styled.div`
-  width: 42rem;
-  height: 10rem;
+  width: 40vw;
+  height: 12vw;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 0.9375rem;
-  padding-bottom: 1rem;
+  padding: 2vw 3vw;
   box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, 0.25);
-  font-size: 6.25rem;
+  font-size: 2rem;
   font-style: normal;
   font-weight: 500;
   line-height: 1.3;
