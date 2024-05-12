@@ -17,6 +17,8 @@ export const MainLayout = styled.div`
 
 export const MainContainer = styled.div`
   background: white;
+  display: flex;
+  flex-direction: column;
   height: 100%;
   width: 46%;
   border-radius: 1rem;
