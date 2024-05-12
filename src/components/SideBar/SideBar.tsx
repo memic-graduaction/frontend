@@ -39,6 +39,7 @@ const SideBar = () => {
           </S.Title>
         </S.Header>
         <ToggleBtn />
+
         {isLogin ? (
           <>
             {phrase !== '' && <PhraseEditCard />}

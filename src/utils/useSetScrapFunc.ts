@@ -1,9 +1,10 @@
 import { useSetRecoilState } from 'recoil';
-import { selectedHighLight, sideBarOpenState } from 'src/recoil/states';
+import { selectedHighLight } from 'src/recoil/states';
+
+// 하이라이팅된 요소에 onclick 함수 지정
 
 export const useSetScrapFunc = () => {
   const setSelected = useSetRecoilState(selectedHighLight);
-  const isSideBarOpen = useSetRecoilState(sideBarOpenState);
   const elements = document.querySelectorAll('[class^="scraped "]');
 
   elements.forEach((elem) => {
@@ -11,7 +12,6 @@ export const useSetScrapFunc = () => {
     const text = elem.textContent;
     elem.addEventListener('click', () => {
       setSelected({ sentenceId: Number(sentenceId), phrase: text });
-      isSideBarOpen(true);
     });
   });
 };

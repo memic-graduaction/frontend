@@ -8,11 +8,11 @@ export const Layout = styled.div<Props>`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  width: 24rem;
+  width: 23rem;
   border-radius: 0.625rem;
   background: white;
   position: relative;
-  margin-left: 0.4rem;
+  margin: 1rem;
   padding: 1rem;
   box-shadow: ${(props) =>
     props.isSelected ? '1px 1px 15px rgba(100 0 50 / 40%);' : '1px 1px 10px rgba(0 0 0 / 15%);'};
@@ -79,5 +79,5 @@ export const InputBox = styled.div`
 `;
 
 export const Input = styled.input`
-  width: 17rem;
+  width: 16rem;
 `;
