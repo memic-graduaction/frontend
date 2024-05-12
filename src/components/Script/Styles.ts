@@ -105,15 +105,15 @@ export const Border = styled.div`
 
 // 녹음버튼 레이아웃
 export const RecBtnLayout = styled.div`
-  width: 9%;
+  width: 13%;
   right: 0;
   height: 1.875rem;
   display: flex;
   flex-direction: row;
   align-items: center;
-  border: 1px solid #222222;
+  border: 1px solid #cccccc;
   border-radius: 1.5rem;
-  padding: 2px;
+  padding: 1px;
   margin-left: auto;
 
   opacity: 0;
@@ -130,7 +130,7 @@ export const RecordIcon = styled.div`
   border-radius: 50%;
   background-color: #ff0000;
   margin-left: 10%;
-  margin-right: 5%;
+  margin-right: 7%;
 `;
 
 export const RecordText = styled.div`
