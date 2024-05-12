@@ -70,7 +70,7 @@ function Script() {
     setSelectedStartPointAndSentence({ startPoint, sentence });
     const { phrase } = getSelectedPhrase();
     if (phrase === null || isSideBarOpen) setXY({ x: -1000, y: -1000 });
-    if (phrase !== null && !isSideBarOpen) {
+    if (e && phrase !== null && !isSideBarOpen) {
       setXY({ x: e.pageX, y: e.pageY });
       setIsSelected(true);
       setPhrase(phrase);
