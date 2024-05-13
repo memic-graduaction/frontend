@@ -6,7 +6,6 @@ import TopTitle from '../../components/MyPage/TopTitleIndex';
 import Dashboard from '../../components/MyPage/Dashboard/Dashboard';
 import Accuracy from '../../components/MyPage/Dashboard/Accuracy';
 import Statistics from '../../components/MyPage/Dashboard/Statistics';
-import Records from '../../components/MyPage/Records';
 import ScrapVideos from '../../components/MyPage/ScrapVideo/ScrapVideo';
 import Words from '../../components/MyPage/Words/Words';
 import Privacy from '../../components/MyPage/Privacy';
@@ -23,8 +22,6 @@ function MyPage() {
     switch (activeComponent) {
       case 'Dashboard':
         return <Dashboard />;
-      case 'Records':
-        return <Records />;
       case 'Scrap Videos':
         return <ScrapVideos />;
       case 'Words':
@@ -46,7 +43,7 @@ function MyPage() {
           </S.LogoLayout>
           <MenuBar setActiveComponent={setActiveComponent} />
         </S.IndexContainer>
-        <S.ContentsContainer>
+        <S.ContentsContainer className={activeComponent === 'Dashboard' ? 'dashboard-width' : ''}>
           <TopTitle />
           {renderActiveComponent()}
         </S.ContentsContainer>

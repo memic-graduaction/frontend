@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import { BookMarkBefore, BookMarkAfter } from 'src/assets/Icons';
 import { youtubeLinkState } from 'src/recoil/states';
+import { extractVideoIdFromLink } from 'src/utils/extractVideoId';
 import * as S from './Styles';
 
 function PlayerInfo() {
@@ -21,9 +22,7 @@ function PlayerInfo() {
 
         const videoId = extractVideoIdFromLink(youtubeLink);
         const channelId = await fetchChannelId(videoId);
-        // 채널 정보 가져오기
         const channelInfo = await fetchChannelInfo(channelId);
-        console.log(channelInfo);
 
         if (channelInfo.items && channelInfo.items.length > 0) {
           const profileImageUrl = channelInfo.items[0].snippet.thumbnails.default.url;
@@ -39,19 +38,6 @@ function PlayerInfo() {
       fetchVideoTitle();
     }
   }, [youtubeLink]);
-
-  // 동영상 id 추출
-  function extractVideoIdFromLink(url) {
-    try {
-      const regex = /(?:youtu\.be\/|youtube\.com\/(?:[^\/]+\?v=|v\/|embed\/|watch\?.+&v=))([^&\n?]+)/;
-      const match = url.match(regex);
-      if (match && match.length > 1) {
-        return match[1];
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  }
 
   // 채널 id 가져오는 함수
   async function fetchChannelId(videoId) {

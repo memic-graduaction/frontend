@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRecoilState, useSetRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 import * as state from 'src/recoil/states';
+import { fetchVideoDuration } from 'src/utils/youtubeAPI';
+import { extractVideoIdFromLink } from 'src/utils/extractVideoId';
 import { getSelectedPhrase } from 'src/utils/getSelectedPhrase';
 import { Pin } from 'src/assets/Icons';
 import { youtubeIDSelector } from 'src/recoil/selectors';
@@ -26,6 +28,7 @@ function Script() {
   const url = useRecoilValue(state.youtubeLinkState);
   const urlId = useRecoilValue(youtubeIDSelector);
   const [youtubeId, setYoutubeId] = useRecoilState(state.youtubeIDstate);
+  const [videoDuration, setVideoDuration] = useRecoilState(state.videoDurationState);
   const [datas, setDatas] = useState<Props[] | null>(null);
   const resetSideBar = useResetRecoilState(state.showOverall);
   useSetScrapFunc();
@@ -83,8 +86,6 @@ function Script() {
     setIsSelected(false);
   };
 
-  let lastStartTime = '';
-
   const isBetween = (startTime: string, currentTime: string, nextStartTime: string): boolean => {
     console.log('Current Time:', currentTime);
     console.log('Next Start Time:', nextStartTime);
@@ -92,20 +93,29 @@ function Script() {
   };
 
   const getNextStartTime = (currentStartTime: string): string => {
-    if (!datas) return ''; // 데이터가 없으면 빈 문자열 반환
-
-    for (let i = 0; i < datas.length - 1; i += 1) {
-      if (datas[i].startPoint <= currentStartTime && currentStartTime < datas[i + 1].startPoint) {
-        lastStartTime = datas[i + 1].startPoint;
-        return lastStartTime;
-      }
+    const index = datas.findIndex((data) => data.startPoint === currentStartTime);
+    if (index !== -1 && index + 1 < datas.length) {
+      return datas[index + 1].startPoint;
     }
-    lastStartTime = datas[datas.length - 1].startPoint;
-    return lastStartTime;
+    return videoDuration;  // 마지막 자막이거나 데이터를 찾을 수 없는 경우
   };
 
   useEffect(() => {
     handleGetScript();
+    const videoId = extractVideoIdFromLink(url);
+    if (videoId) {
+      fetchVideoDuration(videoId).then((duration) => {
+        if (duration) {
+          setVideoDuration(duration);
+        } else {
+          console.error('Failed to fetch video duration');
+          setVideoDuration('99:59:59');
+        }
+      }).catch((error) => {
+        console.error('Error fetching video duration:', error);
+        setVideoDuration('99:59:59');
+      });
+    }
     setXY({ x: -1000, y: -1000 });
     resetSideBar();
     setIsSideBarOpen(false);
@@ -136,9 +146,14 @@ function Script() {
             <HighLightText
               dataId={data.id}
               data={data.sentence}
-              textColor={isBetween(data.startPoint, current, getNextStartTime(data.startPoint)) ? '#222222' : '#CFCFCF'}
+              textColor={
+                isBetween(data.startPoint, current, getNextStartTime(data.startPoint))
+                  ? '#222222'
+                  : '#CFCFCF'
+              }
               onClick={(e) => handleSentenceClick(data.id, data.sentence, data.startPoint, e)}
             />
+
             <RecButton id={data.id} sentence={data.sentence} />
           </S.TextLayout>
         ))}

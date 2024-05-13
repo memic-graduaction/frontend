@@ -135,3 +135,8 @@ export const selectedHighLight = atom<{ sentenceId: number; phrase: string }>({
   key: 'selectedHighLight',
   default: null,
 });
+
+export const videoDurationState = atom<string>({
+  key: 'videoDuration',
+  default: '',
+});

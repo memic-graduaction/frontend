@@ -39,9 +39,6 @@ function MenuBar({ setActiveComponent }) {
       <MenuItem isActive={activeMenu === 'Dashboard'} onClick={() => handleClick('Dashboard')}>
         <MenuItemText>Dashboard</MenuItemText>
       </MenuItem>
-      <MenuItem isActive={activeMenu === 'Records'} onClick={() => handleClick('Records')}>
-        <MenuItemText>Records</MenuItemText>
-      </MenuItem>
       <MenuItem isActive={activeMenu === 'Scrap Videos'} onClick={() => handleClick('Scrap Videos')}>
         <MenuItemText>Scrap Videos</MenuItemText>
       </MenuItem>

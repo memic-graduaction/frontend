@@ -23,9 +23,10 @@ export const IndexContainer = styled.div`
     display: flex;
     flex-direction: column;
     background: #FFFFFF;
-    width: 25%;
+    width: 350px;
     height: 100%;
     border-radius: 20px;
+    flex-grow: 0;
 `;
 
 export const LogoLayout = styled.div`
@@ -43,17 +44,21 @@ export const ContentsContainer = styled.div`
   display: flex;
   flex-direction: column;
   background: none;
-  width: 75%;
+  width: 80%;
   height: 100%;
   border-radius: 20px;
   margin-left: 10px;
   gap: 10px;
+
+  &.dashboard-width {
+    width: 55%;
+  }
 `
 
 export const BoardContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 33%;
+  width: 25%;
   height: 100%;
   gap: 10px;
 `
