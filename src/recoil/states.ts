@@ -121,7 +121,6 @@ export const selectedTags = atom<Tag[]>({
 export const showOverall = atom<boolean>({
   key: 'showOverall',
   default: false,
-  effects_UNSTABLE: [persistAtom],
 });
 
 // 하이라이팅할 표현들

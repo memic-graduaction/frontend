@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { scrapedListById, youtubeIDSelector } from 'src/recoil/selectors';
-import { highLightPhrase, selectedHighLight, sideBarOpenState } from 'src/recoil/states';
+import { highLightPhrase, selectedHighLight } from 'src/recoil/states';
 import PhraseCard from '../PhraseCard/PhraseCard';
 
 const PhraseList = () => {
@@ -12,7 +12,6 @@ const PhraseList = () => {
   const setPhrase = useSetRecoilState(highLightPhrase);
   const cardRefs = useRef<HTMLDivElement[]>([]);
   const selectedPhrase = useRecoilValue(selectedHighLight);
-  const setSideBarOpen = useSetRecoilState(sideBarOpenState);
 
   const handleGetPhrases = async () => {
     if (youtubeId) {
@@ -33,7 +32,6 @@ const PhraseList = () => {
       const selectedIndex = list.findIndex((item) => item.sentenceId === selectedPhrase?.sentenceId);
       if (selectedIndex !== -1) {
         cardRefs.current[selectedIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
-        setSideBarOpen(true);
       }
     }
   }, [list, selectedPhrase]);

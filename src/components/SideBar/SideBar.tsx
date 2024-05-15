@@ -18,8 +18,8 @@ const SideBar = () => {
   const navigate = useNavigate();
 
   const handleBackGroundClick = () => {
-    setIsOpen(false);
     setPhrase('');
+    setIsOpen(false);
   };
 
   return (
