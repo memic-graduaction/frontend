@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Highlighter from 'react-highlight-words';
 import { useRecoilValue } from 'recoil';
-import { highLightPhrase } from 'src/recoil/states';
+import { highLightPhrase, isLoggedInState } from 'src/recoil/states';
 
 interface Prop {
   dataId: number;
@@ -15,8 +15,9 @@ interface TextProp {
 }
 
 const HighLightText = ({ dataId, data, onClick, textColor }: Prop) => {
+  const isLogin = useRecoilValue(isLoggedInState);
   const phrases = useRecoilValue(highLightPhrase);
-  const queries = phrases.filter((item) => item.id === dataId).map((item) => item.phrase);
+  const queries = isLogin ? phrases.filter((item) => item.id === dataId).map((item) => item.phrase) : [];
   return (
     <TextLayout onClick={onClick} $textcolor={textColor}>
       <Highlighter highlightClassName={`scraped ${dataId}`} searchWords={queries} textToHighlight={data} autoEscape />
