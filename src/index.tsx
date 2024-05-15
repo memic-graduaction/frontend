@@ -10,10 +10,10 @@ axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
-  <React.StrictMode>
+  <>
     <GlobalStyles />
     <BrowserRouter>
       <App />
     </BrowserRouter>
-  </React.StrictMode>,
+  </>,
 );

@@ -86,35 +86,34 @@ function Script() {
     setIsSelected(false);
   };
 
-  const isBetween = (startTime: string, currentTime: string, nextStartTime: string): boolean => {
-    console.log('Current Time:', currentTime);
-    console.log('Next Start Time:', nextStartTime);
-    return startTime <= currentTime && currentTime < nextStartTime;
-  };
+  const isBetween = (startTime: string, currentTime: string, nextStartTime: string): boolean =>
+    startTime <= currentTime && currentTime < nextStartTime;
 
   const getNextStartTime = (currentStartTime: string): string => {
     const index = datas.findIndex((data) => data.startPoint === currentStartTime);
     if (index !== -1 && index + 1 < datas.length) {
       return datas[index + 1].startPoint;
     }
-    return videoDuration;  // 마지막 자막이거나 데이터를 찾을 수 없는 경우
+    return videoDuration; // 마지막 자막이거나 데이터를 찾을 수 없는 경우
   };
 
   useEffect(() => {
     handleGetScript();
     const videoId = extractVideoIdFromLink(url);
     if (videoId) {
-      fetchVideoDuration(videoId).then((duration) => {
-        if (duration) {
-          setVideoDuration(duration);
-        } else {
-          console.error('Failed to fetch video duration');
+      fetchVideoDuration(videoId)
+        .then((duration) => {
+          if (duration) {
+            setVideoDuration(duration);
+          } else {
+            console.error('Failed to fetch video duration');
+            setVideoDuration('99:59:59');
+          }
+        })
+        .catch((error) => {
+          console.error('Error fetching video duration:', error);
           setVideoDuration('99:59:59');
-        }
-      }).catch((error) => {
-        console.error('Error fetching video duration:', error);
-        setVideoDuration('99:59:59');
-      });
+        });
     }
     setXY({ x: -1000, y: -1000 });
     resetSideBar();
@@ -146,11 +145,7 @@ function Script() {
             <HighLightText
               dataId={data.id}
               data={data.sentence}
-              textColor={
-                isBetween(data.startPoint, current, getNextStartTime(data.startPoint))
-                  ? '#222222'
-                  : '#CFCFCF'
-              }
+              textColor={isBetween(data.startPoint, current, getNextStartTime(data.startPoint)) ? '#222222' : '#CFCFCF'}
               onClick={(e) => handleSentenceClick(data.id, data.sentence, data.startPoint, e)}
             />
 
