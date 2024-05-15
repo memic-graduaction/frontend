@@ -27,8 +27,9 @@ function HomePage() {
   const handleButtonClick = () => {
     // 버튼을 누를 때 실행되는 함수
     if (isValidUrl && isYoutubeUrl) {
+      const link = inputValue.replace(/\?.*$/, '');
       // recoil에 링크 및 video id 저장
-      setLink(inputValue);
+      setLink(link);
     } else {
       alert('유효한 YouTube 동영상 URL이 아닙니다.');
     }

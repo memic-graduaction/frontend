@@ -60,6 +60,7 @@ const Layout = styled.div`
   width: 100%;
   height: 85%;
   overflow-y: auto;
+  padding-top: 1rem;
   &::-webkit-scrollbar {
     width: 4px;
     height: 4px;

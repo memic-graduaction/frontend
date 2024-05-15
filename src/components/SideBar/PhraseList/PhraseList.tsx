@@ -10,7 +10,6 @@ const PhraseList = () => {
   const youtubeId = useRecoilValue(youtubeIDSelector);
   const getScrap = useRecoilValue(scrapedListById(youtubeId));
   const setPhrase = useSetRecoilState(highLightPhrase);
-  const [loading, setLoading] = useState(true);
   const cardRefs = useRef<HTMLDivElement[]>([]);
   const selectedPhrase = useRecoilValue(selectedHighLight);
   const setSideBarOpen = useSetRecoilState(sideBarOpenState);
@@ -21,7 +20,6 @@ const PhraseList = () => {
         setList(data);
         const newPhrases = data.map((v) => ({ id: v.sentenceId, phrase: v.phrase }));
         setPhrase(newPhrases);
-        setLoading(false);
       });
     }
   };
@@ -42,20 +40,22 @@ const PhraseList = () => {
 
   return (
     <Layout>
-      {list.length > 0
-        ? list.map((v, index) => (
-            <PhraseCard
-              key={v.id}
-              sentenceId={v.sentenceId}
-              phrase={v.phrase}
-              meaning={v.meaning}
-              TagIds={v.tags.map((tag) => tag.name)}
-              ref={(el) => {
-                cardRefs.current[index] = el;
-              }}
-            />
-          ))
-        : !loading && <NullLayout>스크립트에서 표현을 저장해보세요 !</NullLayout>}
+      {list.length > 0 ? (
+        list.map((v, index) => (
+          <PhraseCard
+            key={v.id}
+            sentenceId={v.sentenceId}
+            phrase={v.phrase}
+            meaning={v.meaning}
+            TagIds={v.tags.map((tag) => tag.name)}
+            ref={(el) => {
+              cardRefs.current[index] = el;
+            }}
+          />
+        ))
+      ) : (
+        <NullLayout>스크립트에서 표현을 저장해보세요 !</NullLayout>
+      )}
     </Layout>
   );
 };
