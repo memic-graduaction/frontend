@@ -139,3 +139,8 @@ export const videoDurationState = atom<string>({
   key: 'videoDuration',
   default: '',
 });
+
+export const forceRefresh = atom<number>({
+  key: 'forceRefresh',
+  default: 0,
+});

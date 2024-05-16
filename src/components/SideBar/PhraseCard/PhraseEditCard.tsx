@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Close } from 'src/assets/Icons';
-import { scriptIDstate, scriptSentencestate, selectedPhrase, selectedTags, sideBarOpenState } from 'src/recoil/states';
+import {
+  forceRefresh,
+  scriptIDstate,
+  scriptSentencestate,
+  selectedPhrase,
+  selectedTags,
+  sideBarOpenState,
+} from 'src/recoil/states';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { getTagColor } from 'src/utils/getTagColor';
 import axios from 'axios';
@@ -22,6 +29,7 @@ const PhraseEditCard = () => {
   const scriptSentence = useRecoilValue(scriptSentencestate);
   const { startIndex, endIndex } = getPhraseIndex(scriptSentence, phrase);
   const token = useRecoilValue(userToken);
+  const setRefresh = useSetRecoilState(forceRefresh);
 
   const handleGetMeaning = async () => {
     try {
@@ -59,6 +67,7 @@ const PhraseEditCard = () => {
       console.log(e);
     }
     setPhrase('');
+    setRefresh((prev) => prev + 1);
   };
 
   const handleClose = () => {

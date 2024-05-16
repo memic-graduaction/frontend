@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { SideBarBtn, Write } from 'src/assets/Icons';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { isLoggedInState, selectedPhrase, showOverall, sideBarOpenState } from 'src/recoil/states';

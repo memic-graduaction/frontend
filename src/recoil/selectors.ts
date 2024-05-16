@@ -68,7 +68,6 @@ export const scrapedListById = selectorFamily({
           Authorization: token,
         },
       });
-
       const { data } = response;
       return data;
     },

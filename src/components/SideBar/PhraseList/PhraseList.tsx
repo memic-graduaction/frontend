@@ -1,31 +1,42 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { scrapedListById, youtubeIDSelector } from 'src/recoil/selectors';
-import { highLightPhrase, selectedHighLight } from 'src/recoil/states';
+import { userToken, youtubeIDSelector } from 'src/recoil/selectors';
+import { forceRefresh, highLightPhrase, selectedHighLight } from 'src/recoil/states';
+import axios from 'axios';
 import PhraseCard from '../PhraseCard/PhraseCard';
 
 const PhraseList = () => {
   const [list, setList] = useState([]);
   const youtubeId = useRecoilValue(youtubeIDSelector);
-  const getScrap = useRecoilValue(scrapedListById(youtubeId));
   const setPhrase = useSetRecoilState(highLightPhrase);
   const cardRefs = useRef<HTMLDivElement[]>([]);
   const selectedPhrase = useRecoilValue(selectedHighLight);
+  const token = useRecoilValue(userToken);
+  const refresh = useRecoilValue(forceRefresh);
 
   const handleGetPhrases = async () => {
     if (youtubeId) {
-      getScrap().then((data) => {
-        setList(data);
-        const newPhrases = data.map((v) => ({ id: v.sentenceId, phrase: v.phrase }));
+      try {
+        const url = `/v1/phrases/transcriptions/${youtubeId}`;
+        const response = await axios.get(url, {
+          headers: {
+            Authorization: token,
+          },
+        });
+        console.log('api 호출');
+        setList(response.data);
+        const newPhrases = response.data.map((v) => ({ id: v.sentenceId, phrase: v.phrase }));
         setPhrase(newPhrases);
-      });
+      } catch (e) {
+        console.log(e);
+      }
     }
   };
 
   useEffect(() => {
     handleGetPhrases();
-  }, []);
+  }, [refresh]);
 
   useEffect(() => {
     if (cardRefs.current.length > 0) {
