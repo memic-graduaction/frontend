@@ -17,7 +17,7 @@ export const Container = styled.div`
 
 export const Separator = styled.div`
   border-bottom: 1px solid #ccc; 
-  margin: 30px 30px 0 30px;
+  margin: 45px 30px 0 30px;
 `
 
 export const IndexContainer = styled.div`
@@ -27,6 +27,7 @@ export const IndexContainer = styled.div`
     width: 350px;
     height: 100%;
     flex-grow: 0;
+    padding-top: 15px;
 `;
 
 export const LogoLayout = styled.div`
