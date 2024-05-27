@@ -1,22 +1,23 @@
 import styled from 'styled-components';
 import Colors from 'src/styles/Colors';
 
-
 export const Layout = styled.div`
     background: ${Colors.BgMPMain};
-    height: 100vh;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 `;
 
 export const Container = styled.div`
-    background: #DBDBDB;
     display: flex;
-    width: 95%;
-    height: 90vh;
-    border-radius: 20px;
-    padding: 10px;
+    width: 100%;
+    height: 100%;
+`
+
+export const Separator = styled.div`
+  border-bottom: 1px solid #ccc; 
+  margin: 30px 30px 0 30px;
 `
 
 export const IndexContainer = styled.div`
@@ -25,7 +26,6 @@ export const IndexContainer = styled.div`
     background: #FFFFFF;
     width: 350px;
     height: 100%;
-    border-radius: 20px;
     flex-grow: 0;
 `;
 
@@ -43,22 +43,24 @@ export const LogoLayout = styled.div`
 export const ContentsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  background: none;
   width: 80%;
-  height: 100%;
+  height: auto;
   border-radius: 20px;
-  margin-left: 10px;
-  gap: 10px;
-
-  &.dashboard-width {
-    width: 55%;
-  }
+  padding: 10px;
 `
 
 export const BoardContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 25%;
-  height: 100%;
+  width: 35%;
+  height: auto;
   gap: 10px;
 `
+export const OuterContainer = styled.div`
+  display: flex;
+  width: auto;
+  height: 100%;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-top: 10px;
+`;

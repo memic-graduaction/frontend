@@ -5,10 +5,7 @@ const Colors = {
   BgBookMark: '#F3E8EB',
   BgScript: '#433E49',
   BgLogin: '#DADADA',
-  BgMPMain: '#FFF5E1',
-  BgMPBookMark: '#CFB2B4',
-  BgMpDic: '#C2D5F1',
-  BgMpRec: '#F1CFC2',
+  BgMPMain: '#EDECFF',
 
   // 컴포넌트 - Cp
   CpScript: '#494248',

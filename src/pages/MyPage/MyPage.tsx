@@ -13,7 +13,7 @@ import * as S from './Styles';
 
 function MyPage() {
   const navigator = useNavigate();
-  const [activeComponent, setActiveComponent] = useState(null);
+  const [activeComponent, setActiveComponent] = useState('Dashboard');
   const handleClick = () => {
     navigator('/');
   };
@@ -36,23 +36,25 @@ function MyPage() {
   return (
     <S.Layout>
       <S.Container>
-        {/* 목차컨테이너 */}
         <S.IndexContainer>
           <S.LogoLayout onClick={handleClick}>
             <Logo /> Me.Mic
           </S.LogoLayout>
+          <S.Separator />
           <MenuBar setActiveComponent={setActiveComponent} />
         </S.IndexContainer>
-        <S.ContentsContainer className={activeComponent === 'Dashboard' ? 'dashboard-width' : ''}>
+        <S.ContentsContainer>
           <TopTitle />
-          {renderActiveComponent()}
+          <S.OuterContainer>
+            {renderActiveComponent()}
+            {activeComponent === 'Dashboard' && (
+              <S.BoardContainer>
+                <Accuracy />
+                <Statistics />
+              </S.BoardContainer>
+            )}
+          </S.OuterContainer>
         </S.ContentsContainer>
-        {activeComponent === 'Dashboard' && (
-          <S.BoardContainer>
-            <Accuracy />
-            <Statistics />
-          </S.BoardContainer>
-        )}
       </S.Container>
     </S.Layout>
   );

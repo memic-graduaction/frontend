@@ -1,12 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-// import accuracy from './Accuracy';
-// import recentVideo from './RecentVideo';
-// import scrapVideoList from './ScrapVideoList';
 
 const Container = styled.div`
     display: flex;
-    width: auto;
+    width: 100%;
     height: 100%;
     flex-direction: column;
     background: #FFFFFF;

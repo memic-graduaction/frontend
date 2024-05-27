@@ -17,7 +17,7 @@ const Container = styled.div`
 `;
 
 const Title = styled.div`
-    font-size: 1.75rem; 
+    font-size: 1.5rem; 
     margin-bottom: 20px;
 `;
 
@@ -34,14 +34,15 @@ const CircleGraphContainer = styled.div`
 
 const CircleGraph = styled.div<CircleGraphProps>`
   position: relative;
-  width: 15em; 
-  height: 15em;
+  width: 13em; 
+  height: 13em;
   border-radius: 50%;
   background: conic-gradient(
     #D8CAFF 0%, 
     #D8CAFF ${(props) => props.percent}%, 
     transparent calc(100% - ${(props) => props.percent}%)
   );
+  margin-top: 30px;
 `;
 
 const Percent = styled.div`

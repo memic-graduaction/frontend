@@ -8,12 +8,12 @@ import { menuState } from '../../recoil/states';
 const TitleContainer = styled.div<{ isShortMenu: boolean }>`
     display: flex;
     width: auto;
-    height: ${(props) => (props.isShortMenu ? '13%' : '18%')};
+    height: ${(props) => (props.isShortMenu ? 'auto' : 'auto')};
     flex-direction: column;
     background: #FFFFFF;
     color: #000000;
     border-radius: 20px;
-    padding: 25px;
+    padding: 30px;
 `
 
 const TitleText = styled.div`

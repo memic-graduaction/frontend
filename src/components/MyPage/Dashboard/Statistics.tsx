@@ -12,7 +12,7 @@ const Container = styled.div`
     margin-left: 10px;
 `
 const Title = styled.div`
-    font-size: 1.75rem; 
+    font-size: 1.5rem; 
     margin-bottom: 20px;
     margin-left: 10px;
 `;
@@ -35,7 +35,7 @@ const ContentTitle = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   padding: 30px 0;
   margin-left: 30px;
 `
@@ -52,7 +52,7 @@ const ContentAmount = styled.div`
 `;
 
 const Amount = styled.div`
-  font-size: 1.5rem;
+  font-size: 1.3rem;
 `;
 
 const VisitAmount = styled(Amount)``;
