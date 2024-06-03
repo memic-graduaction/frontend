@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const Container = styled.div`
     display: flex;
-    height: 40%;
+    height: auto;
     flex-direction: column;
     background: #2C2A3E;
     color: #FFFFFF;
@@ -14,7 +14,7 @@ const Container = styled.div`
 const Title = styled.div`
     font-size: 1.5rem; 
     margin-bottom: 20px;
-    margin-left: 10px;
+    margin-left: 20px;
 `;
 
 const Separator = styled.div`
@@ -38,6 +38,7 @@ const ContentTitle = styled.div`
   font-size: 1.3rem;
   padding: 30px 0;
   margin-left: 30px;
+  gap: 30px;
 `
 
 const ContentAmount = styled.div`

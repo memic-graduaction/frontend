@@ -26,7 +26,6 @@ export const IndexContainer = styled.div`
     background: #FFFFFF;
     width: 350px;
     height: 100%;
-    flex-grow: 0;
     padding-top: 15px;
 `;
 
@@ -44,8 +43,8 @@ export const LogoLayout = styled.div`
 export const ContentsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 80%;
-  height: auto;
+  width: 82%;
+  height: 100%;
   border-radius: 20px;
   padding: 10px;
 `
@@ -54,7 +53,7 @@ export const BoardContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 35%;
-  height: auto;
+  height: 100%;
   gap: 10px;
 `
 export const OuterContainer = styled.div`
@@ -63,5 +62,5 @@ export const OuterContainer = styled.div`
   height: 100%;
   flex-direction: row;
   justify-content: flex-end;
-  margin-top: 10px;
+  margin: 10px 0;
 `;

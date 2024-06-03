@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import { selectedDateState } from '../../recoil/states';
 import MenuBar from '../../components/MyPage/MenuBar';
 import { Logo } from '../../assets/Icons';
 import TopTitle from '../../components/MyPage/TopTitleIndex';
@@ -14,8 +16,15 @@ import * as S from './Styles';
 function MyPage() {
   const navigator = useNavigate();
   const [activeComponent, setActiveComponent] = useState('Dashboard');
+  const [, setSelectedDate] = useRecoilState(selectedDateState);
+
   const handleClick = () => {
     navigator('/');
+  };
+
+  const handleDateChange = (date: Date) => {
+    const newDate = new Date(date.getFullYear(), date.getMonth());
+    setSelectedDate(newDate);
   };
 
   const renderActiveComponent = () => {
@@ -44,7 +53,7 @@ function MyPage() {
           <MenuBar setActiveComponent={setActiveComponent} />
         </S.IndexContainer>
         <S.ContentsContainer>
-          <TopTitle />
+          <TopTitle onDateChange={handleDateChange} />
           <S.OuterContainer>
             {renderActiveComponent()}
             {activeComponent === 'Dashboard' && (

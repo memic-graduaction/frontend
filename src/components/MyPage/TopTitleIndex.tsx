@@ -1,64 +1,54 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { useRecoilValue } from 'recoil';
-import { menuState } from '../../recoil/states';
+import { useRecoilValue, useRecoilState } from 'recoil';
+import { menuState, selectedDateState } from '../../recoil/states';
 
-const TitleContainer = styled.div<{ isShortMenu: boolean }>`
-    display: flex;
-    width: auto;
-    height: ${(props) => (props.isShortMenu ? 'auto' : 'auto')};
-    flex-direction: column;
-    background: #FFFFFF;
-    color: #000000;
-    border-radius: 20px;
-    padding: 30px;
-`
+interface TopTitleIndexProps {
+  onDateChange: (date: Date) => void;
+}
 
-const TitleText = styled.div`
-    display: flex;
-    font-size: 2.2rem;
-    font-weight: 500;
-`
+function TopTitleIndex({ onDateChange }: TopTitleIndexProps) {
+  const [selectedDate, setSelectedDate] = useRecoilState(selectedDateState);
 
-const CalendarText = styled.div<{ isDashboard: boolean }>`
-  display: flex;
-  width: ${(props) => (props.isDashboard ? '11%' : '9%')};
-  height: 100%;
-  font-size: 1.3rem;
-  margin-top: 10px;
+  const handleDateChange = (date: Date) => {
+    const newDate = new Date(date.getFullYear(), date.getMonth());
+    setSelectedDate(newDate);
+    onDateChange(newDate);
+    console.log(formatDateToPlaceholder(newDate));
+  };
 
-  .react-datepicker__input-container input {
-    width: 100%;
-    height: 100%;
-    border: none; 
-    outline: none; 
-    border-bottom: 1px solid #ccc;
-    padding-bottom: 5px;
-  }
-`;
-
-function TopTitleIndex() {
-  const [selectedDate, setSelectedDate] = useState(null);
   const menu = useRecoilValue(menuState);
 
-  const isShortMenu = menu === '개인정보 수정' || menu === 'Words';
   const isDashboard = menu === 'Dashboard';
   const isDatePickerVisible = () => menu !== '개인정보 수정' && menu !== 'Words';
 
+  useEffect(() => {
+    if (!selectedDate) {
+      const today = new Date();
+      setSelectedDate(today);
+    }
+  }, [selectedDate, setSelectedDate]);
+
+  const formatDateToPlaceholder = (date: Date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    return `${year}.${month} ▾`;
+  };
+
   return (
-    <TitleContainer isShortMenu={isShortMenu}>
+    <TitleContainer>
       <TitleText>{`${menu}`}</TitleText>
       {isDatePickerVisible() && (
         <CalendarText isDashboard={isDashboard}>
           <DatePicker
             selected={selectedDate}
             dateFormat="yyyy.MM ▾"
-            onChange={(date) => setSelectedDate(date)}
+            onChange={handleDateChange}
             shouldCloseOnSelect
             showMonthYearPicker
-            placeholderText="날짜선택 ▾"
+            placeholderText={formatDateToPlaceholder(selectedDate)}
           />
         </CalendarText>
       )}
@@ -67,3 +57,40 @@ function TopTitleIndex() {
 }
 
 export default TopTitleIndex;
+
+
+const TitleContainer = styled.div`
+    display: flex;
+    width: 100%;
+    height: 15%;
+    justify-content: center;
+    flex-direction: column;
+    background: #FFFFFF;
+    color: #000000;
+    border-radius: 20px;
+    padding-left: 30px;
+`
+
+const TitleText = styled.div`
+    display: flex;
+    height: auto;
+    font-size: 2rem;
+    font-weight: 500;
+`
+
+const CalendarText = styled.div<{ isDashboard: boolean }>`
+  display: flex;
+  width: auto;
+  height: auto;
+  margin-top: 15px;
+
+  .react-datepicker__input-container input {
+    width: 50%;
+    height: 100%;
+    border: none; 
+    outline: none; 
+    font-size: 1rem;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 5px;
+  }
+`;

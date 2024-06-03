@@ -1,10 +1,20 @@
 import React from 'react';
+import styled from 'styled-components';
+
+const Container = styled.div`
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    background: #fff;
+    border-radius: 20px;
+`
 
 function App() {
   return (
-    <div>
-      {/* 여기에 컴포넌트 내용을 추가하세요 */}
-    </div>
+    <Container>
+      최신 비디오
+    </Container>
   );
 }
 

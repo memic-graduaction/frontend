@@ -1,21 +1,26 @@
 import React from 'react';
 import styled from 'styled-components';
+import RecentVideo from './RecentVideo';
+import WordsGraph from './WordsGraph';
 
 const Container = styled.div`
     display: flex;
     width: 100%;
     height: 100%;
     flex-direction: column;
-    background: #FFFFFF;
-    color: #000000;
-    border-radius: 20px;
-    padding: 30px;
+    background: none;
+    gap: 10px;
 `
 
 function App() {
   return (
     <Container>
-      대시보드
+      <div style={{ flex: '0 0 40%' }}>
+        <WordsGraph />
+      </div>
+      <div style={{ flex: '0 0 60%' }}>
+        <RecentVideo />
+      </div>
     </Container>
   );
 }

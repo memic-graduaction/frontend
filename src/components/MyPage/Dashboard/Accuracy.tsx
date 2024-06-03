@@ -5,6 +5,25 @@ interface CircleGraphProps {
   percent: number;
 }
 
+function App() {
+  const percent = 70; // 퍼센트 값을 조정하세요
+
+  return (
+    <Container>
+      <Title>내 정확도</Title>
+      <Separator />
+      <CircleGraphContainer>
+        <CircleGraph percent={percent}>
+          <Percent>{percent}%</Percent>
+        </CircleGraph>
+      </CircleGraphContainer>
+      <Encouragement>Just keep going !</Encouragement>
+    </Container>
+  );
+}
+
+export default App;
+
 const Container = styled.div`
     display: flex;
     height: 60%;
@@ -51,7 +70,7 @@ const Percent = styled.div`
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 2rem; 
-    color: #000000; /* 퍼센트 색상 */
+    color: #000000;
 `;
 
 const Encouragement = styled.div`
@@ -60,22 +79,3 @@ const Encouragement = styled.div`
     font-weight: bold;
     margin-top: 30px;
 `;
-
-function App() {
-  const percent = 70; // 퍼센트 값을 조정하세요
-
-  return (
-    <Container>
-      <Title>내 정확도</Title>
-      <Separator />
-      <CircleGraphContainer>
-        <CircleGraph percent={percent}>
-          <Percent>{percent}%</Percent>
-        </CircleGraph>
-      </CircleGraphContainer>
-      <Encouragement>Just keep going !</Encouragement>
-    </Container>
-  );
-}
-
-export default App;

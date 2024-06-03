@@ -32,3 +32,5 @@ export interface scrapedPhrase {
   id: number;
   phrase: string;
 }
+
+export type SelectedDate = Date;
