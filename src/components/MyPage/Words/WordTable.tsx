@@ -11,6 +11,7 @@ interface Prop {
 
 const WordTable = ({ queries }: Prop) => {
   const [list, setList] = useState([]);
+  const [filteredList, setFilteredList] = useState([]);
   const getScrap = useRecoilValue(scrapedList);
 
   const handleGetPhrases = async () => {
@@ -19,9 +20,23 @@ const WordTable = ({ queries }: Prop) => {
     });
   };
 
+  const getFilteredList = () => {
+    const array = [];
+    list.forEach((v) => {
+      if (v.phrase.includes(queries[0]) || v.meaning.includes(queries[0])) {
+        array.push(v);
+      }
+    });
+    setFilteredList(array);
+  };
+
   useEffect(() => {
     handleGetPhrases();
   }, []);
+
+  useEffect(() => {
+    getFilteredList();
+  }, [queries]);
 
   return (
     <Layout>
@@ -31,9 +46,8 @@ const WordTable = ({ queries }: Prop) => {
         <Title>해시태그</Title>
         <Title>원본 영상</Title>
       </Row>
-      {list.map((v, i) =>
-        queries.length > 0 ? (
-          (v.phrase.includes(queries[0]) || v.meaning.includes(queries[0])) && (
+      {queries.length > 0
+        ? filteredList.map((v, i) => (
             <Row key={v.id} style={{ background: i % 2 === 0 ? 'white' : '#F1F0FA' }}>
               <Content>
                 <Highlighter
@@ -60,22 +74,21 @@ const WordTable = ({ queries }: Prop) => {
                 <a href={v.url}>링크</a>
               </Content>
             </Row>
-          )
-        ) : (
-          <Row key={v.id} style={{ background: i % 2 === 0 ? 'white' : '#F1F0FA' }}>
-            <Content>{v.phrase}</Content>
-            <Content>{v.meaning}</Content>
-            <Content>
-              {v.tags.map((tag) => (
-                <HashTag style={{ background: getTagColor() }}># {tag.name}</HashTag>
-              ))}
-            </Content>
-            <Content>
-              <a href={v.url}>링크</a>
-            </Content>
-          </Row>
-        ),
-      )}
+          ))
+        : list.map((v, i) => (
+            <Row key={v.id} style={{ background: i % 2 === 0 ? 'white' : '#F1F0FA' }}>
+              <Content>{v.phrase}</Content>
+              <Content>{v.meaning}</Content>
+              <Content>
+                {v.tags.map((tag) => (
+                  <HashTag style={{ background: getTagColor() }}># {tag.name}</HashTag>
+                ))}
+              </Content>
+              <Content>
+                <a href={v.url}>링크</a>
+              </Content>
+            </Row>
+          ))}
     </Layout>
   );
 };
