@@ -1,26 +1,22 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
-import { userToken } from 'src/recoil/selectors';
+import { scrapedList } from 'src/recoil/selectors';
 import { getTagColor } from 'src/utils/getTagColor';
+import Highlighter from 'react-highlight-words';
 import styled from 'styled-components';
 
-const WordTable = () => {
-  const token = useRecoilValue(userToken);
+interface Prop {
+  queries?: string[];
+}
+
+const WordTable = ({ queries }: Prop) => {
   const [list, setList] = useState([]);
+  const getScrap = useRecoilValue(scrapedList);
 
   const handleGetPhrases = async () => {
-    try {
-      const url = `/v1/phrases`;
-      const response = await axios.get(url, {
-        headers: {
-          Authorization: token,
-        },
-      });
-      setList(response.data);
-    } catch (e) {
-      console.log(e);
-    }
+    getScrap().then((data) => {
+      setList(data);
+    });
   };
 
   useEffect(() => {
@@ -35,20 +31,51 @@ const WordTable = () => {
         <Title>해시태그</Title>
         <Title>원본 영상</Title>
       </Row>
-      {list.map((v, i) => (
-        <Row key={v.id} style={{ background: i % 2 === 0 ? 'white' : '#F1F0FA' }}>
-          <Content>{v.phrase}</Content>
-          <Content>{v.meaning}</Content>
-          <Content>
-            {v.tags.map((tag) => (
-              <HashTag style={{ background: getTagColor() }}># {tag.name}</HashTag>
-            ))}
-          </Content>
-          <Content>
-            <a href={v.url}>링크</a>
-          </Content>
-        </Row>
-      ))}
+      {list.map((v, i) =>
+        queries.length > 0 ? (
+          (v.phrase.includes(queries[0]) || v.meaning.includes(queries[0])) && (
+            <Row key={v.id} style={{ background: i % 2 === 0 ? 'white' : '#F1F0FA' }}>
+              <Content>
+                <Highlighter
+                  searchWords={queries}
+                  textToHighlight={v.phrase}
+                  highlightStyle={{ background: '#ffe9b0' }}
+                  autoEscape
+                />
+              </Content>
+              <Content>
+                <Highlighter
+                  searchWords={queries}
+                  textToHighlight={v.meaning}
+                  highlightStyle={{ background: '#ffe9b0' }}
+                  autoEscape
+                />
+              </Content>
+              <Content>
+                {v.tags.map((tag) => (
+                  <HashTag style={{ background: getTagColor() }}># {tag.name}</HashTag>
+                ))}
+              </Content>
+              <Content>
+                <a href={v.url}>링크</a>
+              </Content>
+            </Row>
+          )
+        ) : (
+          <Row key={v.id} style={{ background: i % 2 === 0 ? 'white' : '#F1F0FA' }}>
+            <Content>{v.phrase}</Content>
+            <Content>{v.meaning}</Content>
+            <Content>
+              {v.tags.map((tag) => (
+                <HashTag style={{ background: getTagColor() }}># {tag.name}</HashTag>
+              ))}
+            </Content>
+            <Content>
+              <a href={v.url}>링크</a>
+            </Content>
+          </Row>
+        ),
+      )}
     </Layout>
   );
 };

@@ -3,15 +3,19 @@ import styled from 'styled-components';
 
 interface Prop {
   placeholder: string;
+  setQueries: (arg1: string[]) => void;
 }
 
-function SearchBar({ placeholder }: Prop) {
-  return <Layout placeholder={placeholder} />;
+function SearchBar({ placeholder, setQueries }: Prop) {
+  const onChange = (e) => {
+    setQueries([e.target.value]);
+  };
+  return <Input placeholder={placeholder} onChange={onChange} />;
 }
 
 export default SearchBar;
 
-const Layout = styled.input`
+const Input = styled.input`
   width: 68rem;
   height: 3.7rem;
   padding-left: 2rem;
