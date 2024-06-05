@@ -11,7 +11,6 @@ export default createGlobalStyle`
     }
     a{
         color: inherit;
-        text-decoration: none;
     }
     ul{
         list-style: none;
