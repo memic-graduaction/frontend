@@ -35,8 +35,8 @@ const WordTable = () => {
         <Title>해시태그</Title>
         <Title>원본 영상</Title>
       </Row>
-      {list.map((v) => (
-        <Row key={v.id}>
+      {list.map((v, i) => (
+        <Row key={v.id} style={{ background: i % 2 === 0 ? 'white' : '#F1F0FA' }}>
           <Content>{v.phrase}</Content>
           <Content>{v.meaning}</Content>
           <Content>
