@@ -3,25 +3,36 @@ import styled from 'styled-components';
 import RecentVideo from './RecentVideo';
 import WordsGraph from './WordsGraph';
 
-const Container = styled.div`
+const MainContainer = styled.div`
     display: flex;
     width: 100%;
     height: 100%;
     flex-direction: column;
     background: none;
     gap: 10px;
+    box-sizing: border-box;
 `
+
+const WordsGraphContainer = styled.div`
+  flex: 0 0 calc(40% - 5px);
+  overflow: auto;
+`;
+
+const RecentVideoContainer = styled.div`
+  flex: 0 0 calc(60% - 5px); 
+  overflow: auto;
+`;
 
 function App() {
   return (
-    <Container>
-      <div style={{ flex: '0 0 40%' }}>
+    <MainContainer>
+      <WordsGraphContainer>
         <WordsGraph />
-      </div>
-      <div style={{ flex: '0 0 60%' }}>
+      </WordsGraphContainer>
+      <RecentVideoContainer>
         <RecentVideo />
-      </div>
-    </Container>
+      </RecentVideoContainer>
+    </MainContainer>
   );
 }
 

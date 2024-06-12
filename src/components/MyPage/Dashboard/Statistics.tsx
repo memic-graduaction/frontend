@@ -3,31 +3,33 @@ import styled from 'styled-components';
 
 const Container = styled.div`
     display: flex;
+    height: auto;
     flex-grow: 1;
     flex-direction: column;
     background: #2C2A3E;
     color: #FFFFFF;
     border-radius: 20px;
-    padding: 25px;
+    padding: 20px;
     margin-left: 10px;
 `
 const Title = styled.div`
-    font-size: 1.7rem; 
-    margin-bottom: 20px;
+    font-size: 1.3rem; 
+    margin-bottom: 10px;
     margin-left: 20px;
 `;
 
 const Separator = styled.div`
     border-top: 1px solid #A3A3A3;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 `;
 
 const Content = styled.div`
   display: flex;
-  height: 100%;
+  height: auto;
   flex-direction: row;
-  gap: 30px;
+  gap: 10px;
 `
+
 const ContentTitle = styled.div`
   display: flex;
   width: 50%;
@@ -35,8 +37,8 @@ const ContentTitle = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  font-size: 1.5rem;
-  padding: 30px 0;
+  font-size: 1rem;
+  padding: 15px 0;
   margin-left: 30px;
   gap: 30px;
 `
@@ -48,12 +50,12 @@ const ContentAmount = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 30px 0;
+  padding: 15px 0;
   margin-right: 20px;
 `;
 
 const Amount = styled.div`
-  font-size: 1.5rem;
+  font-size: 1rem;
 `;
 
 const VisitAmount = styled(Amount)``;
