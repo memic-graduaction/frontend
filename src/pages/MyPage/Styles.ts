@@ -46,7 +46,7 @@ export const ContentsContainer = styled.div`
   width: 83%;
   height: 100%;
   border-radius: 20px;
-  padding: 10px;
+  padding: 10px 10px 0 10px;
 `
 
 export const BoardContainer = styled.div`
@@ -56,6 +56,7 @@ export const BoardContainer = styled.div`
   height: 100%;
   gap: 10px;
 `
+
 export const OuterContainer = styled.div`
   display: flex;
   width: auto;
@@ -63,4 +64,5 @@ export const OuterContainer = styled.div`
   flex-direction: row;
   justify-content: flex-end;
   margin: 10px 0;
+  overflow: hidden;
 `;
