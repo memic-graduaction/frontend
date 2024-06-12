@@ -43,7 +43,7 @@ export const LogoLayout = styled.div`
 export const ContentsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 82%;
+  width: 83%;
   height: 100%;
   border-radius: 20px;
   padding: 10px;
@@ -52,7 +52,7 @@ export const ContentsContainer = styled.div`
 export const BoardContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 35%;
+  width: 32%;
   height: 100%;
   gap: 10px;
 `

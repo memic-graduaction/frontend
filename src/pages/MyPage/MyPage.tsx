@@ -6,7 +6,7 @@ import MenuBar from '../../components/MyPage/MenuBar';
 import { Logo } from '../../assets/Icons';
 import TopTitle from '../../components/MyPage/TopTitleIndex';
 import Dashboard from '../../components/MyPage/Dashboard/Dashboard';
-import Accuracy from '../../components/MyPage/Dashboard/Accuracy';
+import Calendar from '../../components/MyPage/Dashboard/Calendar';
 import Statistics from '../../components/MyPage/Dashboard/Statistics';
 import ScrapVideos from '../../components/MyPage/ScrapVideo/ScrapVideo';
 import Words from '../../components/MyPage/Words/Words';
@@ -58,7 +58,7 @@ function MyPage() {
             {renderActiveComponent()}
             {activeComponent === 'Dashboard' && (
               <S.BoardContainer>
-                <Accuracy />
+                <Calendar />
                 <Statistics />
               </S.BoardContainer>
             )}

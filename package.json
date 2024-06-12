@@ -26,6 +26,7 @@
     "mic-recorder-to-mp3": "^2.2.2",
     "os-browserify": "^0.3.0",
     "react": "^18.2.0",
+    "react-calendar": "^5.0.0",
     "react-checkmark": "^2.0.0",
     "react-datepicker": "^6.6.0",
     "react-dom": "^18.2.0",

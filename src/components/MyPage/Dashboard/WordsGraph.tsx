@@ -16,7 +16,7 @@ function App() {
       const month = selectedDate.getMonth() + 1;
 
       try {
-        const response = await axios.get(`/recognized-sentences/counts?year=${year}&month=${month}`, {
+        const response = await axios.get(`/v1/recognized-sentences/counts?year=${year}&month=${month}`, {
           headers: {
             Authorization: `Bearer ${user.accessToken}`, // UUid에서 가져온 accessToken 사용
           },

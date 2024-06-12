@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const Container = styled.div`
     display: flex;
-    height: auto;
+    flex-grow: 1;
     flex-direction: column;
     background: #2C2A3E;
     color: #FFFFFF;
@@ -12,7 +12,7 @@ const Container = styled.div`
     margin-left: 10px;
 `
 const Title = styled.div`
-    font-size: 1.5rem; 
+    font-size: 1.7rem; 
     margin-bottom: 20px;
     margin-left: 20px;
 `;
@@ -26,7 +26,7 @@ const Content = styled.div`
   display: flex;
   height: 100%;
   flex-direction: row;
-  gap: 40px;
+  gap: 30px;
 `
 const ContentTitle = styled.div`
   display: flex;
@@ -35,7 +35,7 @@ const ContentTitle = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   padding: 30px 0;
   margin-left: 30px;
   gap: 30px;
@@ -53,7 +53,7 @@ const ContentAmount = styled.div`
 `;
 
 const Amount = styled.div`
-  font-size: 1.3rem;
+  font-size: 1.5rem;
 `;
 
 const VisitAmount = styled(Amount)``;
