@@ -45,8 +45,13 @@ export default App;
 
 const Wrapper = styled.div`
   width: 100%;
-  height: auto;
+  height: 100%;
+  overflow: hidden;
   position: relative;
+  background: #fff;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
 `;
 
 const Header = styled.div`
@@ -56,6 +61,8 @@ const Header = styled.div`
   background: #fff;
   z-index: 1;
   padding: 20px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
 `;
 
 const Container = styled.div`
@@ -63,8 +70,11 @@ const Container = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%; 
+  overflow-y: auto;
   background: #fff;
   padding: 0 20px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
 `;
 
 const VideoItem = styled.div`

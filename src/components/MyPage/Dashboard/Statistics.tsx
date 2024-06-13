@@ -1,6 +1,30 @@
 import React from 'react';
 import styled from 'styled-components';
 
+function App() {
+  return (
+    <Container>
+      <Title>통계</Title>
+      <Separator />
+      <Content>
+        <ContentTitle>
+          <div>Visit</div>
+          <div>Record</div>
+          <div>Convert</div>
+        </ContentTitle>
+        <ContentAmount>
+          <VisitAmount>20</VisitAmount>
+          <RecordAmount>7</RecordAmount>
+          <ConvertAmount>13</ConvertAmount>
+        </ContentAmount>
+      </Content>
+    </Container>
+  );
+}
+
+export default App;
+
+
 const Container = styled.div`
     display: flex;
     height: auto;
@@ -9,11 +33,12 @@ const Container = styled.div`
     background: #2C2A3E;
     color: #FFFFFF;
     border-radius: 20px;
-    padding: 20px;
+    padding: 30px;
     margin-left: 10px;
 `
 const Title = styled.div`
     font-size: 1.3rem; 
+    font-weight: bold;
     margin-bottom: 10px;
     margin-left: 20px;
 `;
@@ -38,9 +63,9 @@ const ContentTitle = styled.div`
   justify-content: space-between;
   align-items: center;
   font-size: 1rem;
-  padding: 15px 0;
+  padding: 8px 0;
   margin-left: 30px;
-  gap: 30px;
+  gap: 25px;
 `
 
 const ContentAmount = styled.div`
@@ -50,7 +75,7 @@ const ContentAmount = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 0;
+  padding: 8px 0;
   margin-right: 20px;
 `;
 
@@ -61,26 +86,3 @@ const Amount = styled.div`
 const VisitAmount = styled(Amount)``;
 const RecordAmount = styled(Amount)``;
 const ConvertAmount = styled(Amount)``;
-
-function App() {
-  return (
-    <Container>
-      <Title>통계</Title>
-      <Separator />
-      <Content>
-        <ContentTitle>
-          <div>Visit</div>
-          <div>Record</div>
-          <div>Convert</div>
-        </ContentTitle>
-        <ContentAmount>
-          <VisitAmount>20</VisitAmount>
-          <RecordAmount>7</RecordAmount>
-          <ConvertAmount>13</ConvertAmount>
-        </ContentAmount>
-      </Content>
-    </Container>
-  );
-}
-
-export default App;
