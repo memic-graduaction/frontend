@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-// import { ResponsiveLine } from '@nivo/line';
 import axios from 'axios';
 import { useRecoilValue } from 'recoil';
 import { selectedDateState, UUid } from '../../../recoil/states';
 
-function App() {
+interface DataItem {
+  date: number;
+  count: number;
+}
+
+function WordsGraph() {
   const selectedDate = useRecoilValue(selectedDateState);
   const user = useRecoilValue(UUid);
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<DataItem[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -16,38 +20,44 @@ function App() {
       const month = selectedDate.getMonth() + 1;
 
       try {
-        const response = await axios.get(`/v1/recognized-sentences/counts?year=${year}&month=${month}`, {
+        const response = await axios.get<DataItem[]>(`/v1/recognized-sentences/counts?year=${year}&month=${month}`, {
           headers: {
-            Authorization: `Bearer ${user.accessToken}`, // UUid에서 가져온 accessToken 사용
+            Authorization: `${user.accessToken}`,
           },
         });
-        setData(response.data);
-        console.log(setData);
+
+        if (Array.isArray(response.data)) {
+          setData(response.data);
+        } else {
+          console.error('Unexpected response data format:', response.data);
+        }
+
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error(error);
       }
     };
+
     if (user.accessToken) {
-      fetchData(); // 토큰이 있을 때만 fetchData 호출
+      fetchData();
     }
   }, [selectedDate, user.accessToken]);
 
   return (
     <Container>
-      <Title>주간 공부한 횟수</Title>
+      <Title>My Study Chart</Title>
       <Separator />
       <DataList>
         {data.map((item) => (
-          <DataItem key={item.date}>
+          <StyledDataItem key={item.date}>
             Date: {item.date}, Count: {item.count}
-          </DataItem>
+          </StyledDataItem>
         ))}
       </DataList>
     </Container>
   );
 }
 
-export default App;
+export default WordsGraph;
 
 const Container = styled.div`
   display: flex;
@@ -63,7 +73,7 @@ const DataList = styled.div`
   margin-top: 20px;
 `;
 
-const DataItem = styled.div`
+const StyledDataItem = styled.div`
   margin-bottom: 10px;
   padding: 10px;
   border: 1px solid #ccc;

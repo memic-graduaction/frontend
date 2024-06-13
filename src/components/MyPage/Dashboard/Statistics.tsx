@@ -33,19 +33,18 @@ const Container = styled.div`
     background: #2C2A3E;
     color: #FFFFFF;
     border-radius: 20px;
-    padding: 30px;
+    padding: 25px;
     margin-left: 10px;
 `
 const Title = styled.div`
     font-size: 1.3rem; 
     font-weight: bold;
-    margin-bottom: 10px;
     margin-left: 20px;
 `;
 
 const Separator = styled.div`
     border-top: 1px solid #A3A3A3;
-    margin-bottom: 10px;
+    margin: 10px 0;
 `;
 
 const Content = styled.div`
@@ -63,9 +62,9 @@ const ContentTitle = styled.div`
   justify-content: space-between;
   align-items: center;
   font-size: 1rem;
-  padding: 8px 0;
+  padding: 5px 0;
   margin-left: 30px;
-  gap: 25px;
+  gap: 20px;
 `
 
 const ContentAmount = styled.div`
@@ -75,7 +74,7 @@ const ContentAmount = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 0;
+  padding: 5px 0;
   margin-right: 20px;
 `;
 

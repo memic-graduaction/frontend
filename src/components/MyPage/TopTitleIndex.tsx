@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { useRecoilValue } from 'recoil';
-import { menuState } from '../../recoil/states';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { menuState, selectedDateState } from 'src/recoil/states';
 
 const TitleContainer = styled.div<{ isShortMenu: boolean }>`
     display: flex;
@@ -40,11 +40,17 @@ const CalendarText = styled.div`
 `;
 
 function TopTitleIndex() {
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useRecoilState(selectedDateState);
   const menu = useRecoilValue(menuState);
 
   const isShortMenu = menu === '개인정보 수정' || menu === 'Words';
   const isDatePickerVisible = () => menu !== '개인정보 수정' && menu !== 'Words';
+
+  useEffect(() => {
+    if (selectedDate === null) {
+      setSelectedDate(new Date()); // 컴포넌트가 마운트될 때 현재 날짜로 설정
+    }
+  }, [selectedDate]);
 
   return (
     <TitleContainer isShortMenu={isShortMenu}>
@@ -57,7 +63,6 @@ function TopTitleIndex() {
             onChange={(date) => setSelectedDate(date)}
             shouldCloseOnSelect
             showMonthYearPicker
-            placeholderText="날짜선택 ▾"
           />
         </CalendarText>
       )}
