@@ -34,6 +34,8 @@ function App() {
 
   return (
     <Container>
+      <Title>주간 공부한 횟수</Title>
+      <Separator />
       <DataList>
         {data.map((item) => (
           <DataItem key={item.date}>
@@ -54,7 +56,7 @@ const Container = styled.div`
   flex-direction: column;
   background: #fff;
   border-radius: 20px;
-  padding: 30px;
+  padding: 20px;
 `;
 
 const DataList = styled.div`
@@ -67,4 +69,15 @@ const DataItem = styled.div`
   border: 1px solid #ccc;
   border-radius: 10px;
   color: #000000;
+`;
+
+const Title = styled.div`
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 5px;
+`;
+
+const Separator = styled.div`
+  border-top: 1px solid #A3A3A3;
+  margin: 10px 0;
 `;
