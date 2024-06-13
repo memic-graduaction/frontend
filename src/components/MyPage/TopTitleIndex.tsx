@@ -22,9 +22,9 @@ const TitleText = styled.div`
     font-weight: 500;
 `
 
-const CalendarText = styled.div<{ isDashboard: boolean }>`
+const CalendarText = styled.div`
   display: flex;
-  width: ${(props) => (props.isDashboard ? '11%' : '9%')};
+  width: 6%;
   height: 100%;
   font-size: 1.3rem;
   margin-top: 10px;
@@ -44,14 +44,13 @@ function TopTitleIndex() {
   const menu = useRecoilValue(menuState);
 
   const isShortMenu = menu === '개인정보 수정' || menu === 'Words';
-  const isDashboard = menu === 'Dashboard';
   const isDatePickerVisible = () => menu !== '개인정보 수정' && menu !== 'Words';
 
   return (
     <TitleContainer isShortMenu={isShortMenu}>
       <TitleText>{`${menu}`}</TitleText>
       {isDatePickerVisible() && (
-        <CalendarText isDashboard={isDashboard}>
+        <CalendarText>
           <DatePicker
             selected={selectedDate}
             dateFormat="yyyy.MM ▾"
