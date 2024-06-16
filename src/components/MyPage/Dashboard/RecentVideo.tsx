@@ -52,6 +52,7 @@ const Wrapper = styled.div`
   border-radius: 20px;
   display: flex;
   flex-direction: column;
+  padding: 0 20px;
 `;
 
 const Header = styled.div`
@@ -91,13 +92,15 @@ const Thumbnail = styled.img`
 
 const Title = styled.div`
   font-size: 1.5rem;
-  font-weight: bold;
-  margin: 10px 0 10px 5px;
+  font-weight: 600;
+  color: #333;
+  margin: 10px 0 20px 5px;
 `;
 
 const VideoTitle = styled.div`
   font-size: 1.3rem;
   margin: 10px 0;
+  color: #2C3E50;
 `;
 
 const Separator = styled.div`

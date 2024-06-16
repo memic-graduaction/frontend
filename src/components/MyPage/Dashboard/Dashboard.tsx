@@ -2,33 +2,41 @@ import React from 'react';
 import styled from 'styled-components';
 import RecentVideo from './RecentVideo';
 import WordsGraph from './WordsGraph';
+import Statistics from './Statistics';
+import Calendar from './Calendar';
 
 const MainContainer = styled.div`
     display: flex;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     flex-direction: column;
     background: none;
-    gap: 10px;
-    box-sizing: border-box;
+    gap: 25px;
+    overflow: auto;
 `
 
-const WordsGraphContainer = styled.div`
-  flex: 0 0 calc(40% - 5px);
-  overflow: auto;
+const GraphCalContainer = styled.div`
+  width: 100%;
+  height: 60%;
+  gap: 20px;
+  display: flex;
+  flex-direction: row;
 `;
 
 const RecentVideoContainer = styled.div`
-  flex: 0 0 calc(60% - 5px); 
+  width: 100%;
+  height: 80%;
   overflow: auto;
 `;
 
 function App() {
   return (
     <MainContainer>
-      <WordsGraphContainer>
+      <Statistics />
+      <GraphCalContainer>
         <WordsGraph />
-      </WordsGraphContainer>
+        <Calendar />
+      </GraphCalContainer>
       <RecentVideoContainer>
         <RecentVideo />
       </RecentVideoContainer>

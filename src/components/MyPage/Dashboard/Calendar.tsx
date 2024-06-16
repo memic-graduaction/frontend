@@ -29,7 +29,6 @@ function App() {
           next2Label={null}
           showNeighboringMonth={false}
         />
-        <Encouragement>Just keep going !</Encouragement>
       </Container>
     </ThemeProvider>
   );
@@ -39,27 +38,16 @@ export default App;
 
 const Container = styled.div`
   display: flex;
-  width: auto;
-  height: 80%;
+  width: 40%;
+  height: 100%;
   flex-direction: column;
-  background: #FFFFFF;
   color: #000000;
   border-radius: 20px;
-  padding: 30px;
   margin-left: 10px;
 `;
 
-const Encouragement = styled.div`
-display : flex;
-justify-content: center;
-margin-top: 15%;
-  text-align: center;
-  font-size: 1.25rem;
-  font-weight: bold;
-`;
-
 const CustomCalendar = styled(Calendar)`
-  height: 85%;
+  height: 100%;
   width: auto;
   border: 2px solid #eaeaea;
   border-radius: 20px;

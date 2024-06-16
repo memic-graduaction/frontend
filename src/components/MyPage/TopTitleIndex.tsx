@@ -8,34 +8,37 @@ import { menuState, selectedDateState } from 'src/recoil/states';
 const TitleContainer = styled.div<{ isShortMenu: boolean }>`
     display: flex;
     width: auto;
-    height: ${(props) => (props.isShortMenu ? 'auto' : 'auto')};
-    flex-direction: column;
-    background: #FFFFFF;
+    height: ${(props) => (props.isShortMenu ? 'auto' : '9%')};
+    flex-direction: row;
+    background: none;
     color: #000000;
     border-radius: 20px;
-    padding: 30px;
+    padding: 20px 30px;
+    gap: 20px;
 `
 
 const TitleText = styled.div`
     display: flex;
-    font-size: 2.2rem;
-    font-weight: 500;
+    font-size: 2rem;
+    font-weight: 700;
 `
 
 const CalendarText = styled.div`
   display: flex;
-  width: 6%;
-  height: 100%;
-  font-size: 1.3rem;
-  margin-top: 10px;
+  align-items: center;
+
+  .react-datepicker__input-container {
+    width: 100%; /* 필요에 따라 크기를 조정할 수 있습니다 */
+  }
 
   .react-datepicker__input-container input {
-    width: 100%;
-    height: 100%;
     border: none; 
     outline: none; 
-    border-bottom: 1px solid #ccc;
+    border-bottom: none;
     padding-bottom: 5px;
+    background-color: transparent;
+    font-size: 1.5rem; 
+    font-weight: 200;
   }
 `;
 

@@ -66,7 +66,7 @@ const Container = styled.div`
   flex-direction: column;
   background: #fff;
   border-radius: 20px;
-  padding: 20px;
+  padding: 20px 40px;
 `;
 
 const DataList = styled.div`
@@ -83,8 +83,9 @@ const StyledDataItem = styled.div`
 
 const Title = styled.div`
   font-size: 1.5rem;
-  font-weight: bold;
+  font-weight: 600;
   margin: 5px;
+  color: #333;
 `;
 
 const Separator = styled.div`
