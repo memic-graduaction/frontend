@@ -131,7 +131,7 @@ const Container = styled.div`
 `;
 
 const SideModalWrapper = styled.div`
-  width: 35%;
+  width: 30%;
   height: 100%;
   position: absolute;
   right: 0;

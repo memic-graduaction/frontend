@@ -79,8 +79,9 @@ const ModalWrapper = styled.div<{ isVisible: boolean }>`
   background: #fff;
   box-shadow: -10px 0 5px rgba(0, 0, 0, 0.1);
   z-index: 10;
-  padding: 20px 50px;
+  padding: 20px 60px;
   position: absolute;
+  overflow: auto;
   right: 0;
   top: 0;
   animation: ${({ isVisible }) => (isVisible ? slideIn : slideOut)} 0.3s forwards;
@@ -107,7 +108,7 @@ const Title = styled.h2`
 const Thumbnail = styled.img`
   width: 100%;
   border-radius: 20px;
-  margin: 35px 0;
+  margin: 35px 0 10px 0;
 `;
 
 const Uploader = styled.div`
