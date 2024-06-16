@@ -38,10 +38,12 @@ function Script() {
     const formData = {
       url: `${url}`,
     };
+    console.log('handleGetScript - URL:', url);
     try {
       let response;
       if (urlId !== null) {
         response = await axios.get(`/v1/transcriptions/${urlId}`);
+        console.log(response.data);
       } else {
         response = await axios.post('/v1/transcriptions', formData);
         const newYoutubeId = [...youtubeId];
@@ -99,6 +101,7 @@ function Script() {
 
   useEffect(() => {
     handleGetScript();
+    console.log('useEffect - URL:', url);
     const videoId = extractVideoIdFromLink(url);
     if (videoId) {
       fetchVideoDuration(videoId)

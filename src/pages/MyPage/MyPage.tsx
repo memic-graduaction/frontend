@@ -4,8 +4,6 @@ import MenuBar from '../../components/MyPage/MenuBar';
 import { Logo } from '../../assets/Icons';
 import TopTitle from '../../components/MyPage/TopTitleIndex';
 import Dashboard from '../../components/MyPage/Dashboard/Dashboard';
-import Accuracy from '../../components/MyPage/Dashboard/Accuracy';
-import Statistics from '../../components/MyPage/Dashboard/Statistics';
 import ScrapVideos from '../../components/MyPage/ScrapVideo/ScrapVideo';
 import Words from '../../components/MyPage/Words/Words';
 import Privacy from '../../components/MyPage/Privacy';
@@ -21,7 +19,7 @@ function MyPage() {
   const renderActiveComponent = () => {
     switch (activeComponent) {
       case 'Dashboard':
-        return <Dashboard />;
+        return <S.ScrollableContainer><Dashboard /></S.ScrollableContainer>;
       case 'Scrap Videos':
         return <ScrapVideos />;
       case 'Words':
@@ -40,19 +38,12 @@ function MyPage() {
           <S.LogoLayout onClick={handleClick}>
             <Logo /> Me.Mic
           </S.LogoLayout>
-          <S.Separator />
           <MenuBar setActiveComponent={setActiveComponent} />
         </S.IndexContainer>
         <S.ContentsContainer>
           <TopTitle />
           <S.OuterContainer>
             {renderActiveComponent()}
-            {activeComponent === 'Dashboard' && (
-              <S.BoardContainer>
-                <Accuracy />
-                <Statistics />
-              </S.BoardContainer>
-            )}
           </S.OuterContainer>
         </S.ContentsContainer>
       </S.Container>

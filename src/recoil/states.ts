@@ -144,3 +144,8 @@ export const forceRefresh = atom<number>({
   key: 'forceRefresh',
   default: 0,
 });
+
+export const selectedDateState = atom({
+  key: 'selectedDateState',
+  default: new Date(), // 현재 날짜로 초기화
+});
