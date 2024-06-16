@@ -8,7 +8,7 @@ import { menuState, selectedDateState } from 'src/recoil/states';
 const TitleContainer = styled.div<{ isShortMenu: boolean }>`
     display: flex;
     width: auto;
-    height: ${(props) => (props.isShortMenu ? 'auto' : '9%')};
+    height: ${(props) => (props.isShortMenu ? '10%' : '13%')};
     flex-direction: row;
     background: none;
     color: #000000;
@@ -19,6 +19,7 @@ const TitleContainer = styled.div<{ isShortMenu: boolean }>`
 
 const TitleText = styled.div`
     display: flex;
+    align-items: center;
     font-size: 2rem;
     font-weight: 700;
 `

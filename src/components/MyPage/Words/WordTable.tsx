@@ -99,7 +99,8 @@ const Layout = styled.div`
   width: 68rem;
   height: 34rem;
   border-radius: 1rem;
-  border: 1px solid #ececec;
+  border: 2px solid #ececec;
+  background-color: #fff;
   overflow-y: auto;
   &::-webkit-scrollbar {
     width: 4px;

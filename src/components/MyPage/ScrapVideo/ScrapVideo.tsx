@@ -122,7 +122,7 @@ const Container = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
-  background: #FFFFFF;
+  background: rgba(255, 255, 255, 0.7);
   color: #000000;
   border-radius: 20px;
   padding: 30px;
@@ -131,7 +131,7 @@ const Container = styled.div`
 `;
 
 const SideModalWrapper = styled.div`
-  width: 30%;
+  width: 35%;
   height: 100%;
   position: absolute;
   right: 0;
@@ -153,7 +153,6 @@ const Thumbnail = styled.img`
 
 const Title = styled.div`
   font-size: 1.4rem;
-  font-weight: bold;
 `;
 
 const Separator = styled.div`

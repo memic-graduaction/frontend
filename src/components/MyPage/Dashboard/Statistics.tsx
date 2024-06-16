@@ -28,7 +28,7 @@ const Container = styled.div`
     color: #2C3E50;
     border-radius: 20px;
     padding: 20px;
-    border: 4px solid #dfdfdf;
+    border: 2px solid #dfdfdf;
     align-items: center;
 `
 const Content = styled.div`

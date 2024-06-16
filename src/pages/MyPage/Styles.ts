@@ -39,7 +39,7 @@ export const LogoLayout = styled.div`
 export const ContentsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 82%;
+  width: 80%;
   height: 100%;
   border-radius: 20px;
   padding: 13px 80px;
@@ -69,7 +69,6 @@ export const ScrollableContainer = styled.div`
   height: 100%;
   overflow: auto;
 
-  /* Hide scrollbar for Webkit browsers */
   &::-webkit-scrollbar {
     display: none;
   }

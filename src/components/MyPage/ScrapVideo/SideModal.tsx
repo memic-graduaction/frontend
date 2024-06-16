@@ -62,7 +62,7 @@ function SideModal({ video, onClose, isVisible }: SideModalProps) {
         <Uploader>Uploaded by: {video.uploader}</Uploader>
         <Description>{video.description}</Description>
       </VideoInfo>
-      <Button onClick={() => {/* 스크랩 해제 로직 */ }}>스크랩 해제</Button>
+      <ScrapButton onClick={() => {/* 스크랩 해제 로직 */ }}>스크랩 해제</ScrapButton>
       <Separator />
       <Button onClick={() => {/* 스크립트 페이지로 이동 로직 */ }}>동영상 스크립트 보기</Button>
       <Button onClick={() => window.open(video.url, '_blank')}>유튜브에서 보기</Button>
@@ -102,7 +102,7 @@ const VideoInfo = styled.div`
 `;
 
 const Title = styled.h2`
-  font-size: 1.7rem;
+  font-size: 1.5rem;
 `;
 
 const Thumbnail = styled.img`
@@ -112,7 +112,7 @@ const Thumbnail = styled.img`
 `;
 
 const Uploader = styled.div`
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   color: #555;
 `;
 
@@ -125,7 +125,7 @@ const Button = styled.button`
   width: 100%;
   padding: 15px;
   margin: 10px 0;
-  background: #3fd1a0;
+  background: #008080;
   color: #fff;
   border: none;
   cursor: pointer;
@@ -133,7 +133,24 @@ const Button = styled.button`
   font-size: 1.3rem;
 
   &:hover {
-    background: #0056b3;
+    background:#005757;
+  }
+`;
+
+const ScrapButton = styled.button`
+  width: 100%;
+  padding: 15px;
+  margin: 10px 0;
+  background: none;
+  color: #008080;
+  border: 1px solid #008080;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 1.3rem;
+
+  &:hover {
+    background:#005757;
+    color: white;
   }
 `;
 
