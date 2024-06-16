@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { selector, selectorFamily } from 'recoil';
-import { UUid, recognizedWords, youtubeIDstate, youtubeLinkState } from './states';
+import { UUid, recognizedWords, youtubeIDstate, youtubeLinkState, selectedDateState } from './states';
+import { SelectedDate } from './types';
 
 // selector
 export const isAllMatched = selector({
@@ -71,4 +72,13 @@ export const scrapedListById = selectorFamily({
       const { data } = response;
       return data;
     },
+});
+
+
+export const formattedSelectedDateSelector = selector({
+  key: 'formattedSelectedDateSelector',
+  get: ({ get }) => {
+    const selectedDate: SelectedDate = get(selectedDateState);
+    return `${selectedDate.getFullYear()}.${String(selectedDate.getMonth() + 1).padStart(2, '0')}`;
+  },
 });

@@ -8,21 +8,26 @@ import WordsIcon from '../../assets/words.png';
 import PrivacyIcon from '../../assets/privacy.png';
 import { menuState } from '../../recoil/states';
 
+
 const IndexLayout = styled.div`
   display: flex;
   flex-direction: column; 
   gap: 50px;
-  padding: 30px 30px 0 30px;
+  padding: 30px;
   margin-top: 30px;
+  position: relative;
+  width: 100%;
+  height: 100%;
 `;
 
 const MenuItem = styled.div<{ isActive?: boolean }>`
   display: flex;
   flex-direction: row;
-  color: ${(props) => props.isActive ? '#000000' : '#BEBEBE'};
+  color: ${(props) => props.isActive ? '#f1f1f1' : '#B0BEC5'};
   cursor: pointer;
   font-size: 1.5rem;
   font-weight: ${(props) => props.isActive ? 700 : 400};
+  font-family: 'Roboto', sans-serif;
 `;
 
 const IconWrapper = styled.div`
@@ -41,15 +46,6 @@ const Icon = styled.img<{ isActive?: boolean }>`
   opacity: ${(props) => (props.isActive ? '1' : '0.3')};
 `;
 
-const LinkItem = styled.div`
-  display: flex;
-  flex-direction: row;
-  cursor: pointer;
-  font-size: 1.5rem;
-  font-weight: 500;
-  padding-left: 85px;
-`;
-
 function MenuBar({ setActiveComponent }) {
   const [activeMenu, setActiveMenu] = useRecoilState(menuState);
 
@@ -64,19 +60,19 @@ function MenuBar({ setActiveComponent }) {
         <IconWrapper>
           <Icon src={DashboardIcon} alt="Dashboard" isActive={activeMenu === 'Dashboard'} />
         </IconWrapper>
-        Dashboard
+        DASHBOARD
       </MenuItem>
       <MenuItem isActive={activeMenu === 'Scrap Videos'} onClick={() => handleClick('Scrap Videos')}>
         <IconWrapper>
           <Icon src={ScrapVideosIcon} alt="Scrap Videos" isActive={activeMenu === 'Scrap Videos'} />
         </IconWrapper>
-        Scrap Videos
+        SCRAP VIDEOS
       </MenuItem>
       <MenuItem isActive={activeMenu === 'Words'} onClick={() => handleClick('Words')}>
         <IconWrapper>
           <Icon src={WordsIcon} alt="Words" isActive={activeMenu === 'Words'} />
         </IconWrapper>
-        Words
+        WORDS
       </MenuItem>
       <MenuItem isActive={activeMenu === '개인정보 수정'} onClick={() => handleClick('개인정보 수정')}>
         <IconWrapper>
@@ -84,9 +80,6 @@ function MenuBar({ setActiveComponent }) {
         </IconWrapper>
         개인정보 수정
       </MenuItem>
-      <LinkItem>
-        <a href="https://www.youtube.com" style={{ color: '#FF0000', textDecoration: 'underline' }}>Youtube</a>
-      </LinkItem>
     </IndexLayout>
   );
 }

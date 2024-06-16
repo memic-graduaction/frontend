@@ -15,53 +15,66 @@ export const Container = styled.div`
     height: 100%;
 `
 
-export const Separator = styled.div`
-  border-bottom: 1px solid #ccc; 
-  margin: 45px 30px 0 30px;
-`
-
 export const IndexContainer = styled.div`
     display: flex;
     flex-direction: column;
-    background: #FFFFFF;
-    width: 350px;
+    background: #607D8B;
+    width: auto;
+    flex-grow: 1;
     height: 100%;
-    flex-grow: 0;
     padding-top: 15px;
 `;
 
 export const LogoLayout = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
   font-size: 2rem;
   font-weight: 500;
   cursor: pointer;
   gap: 0.5rem;
-  margin-top: 30px;
+  margin: 30px 0 30px 60px;
+  color: #f1f1f1;
 `;
 
 export const ContentsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 80%;
-  height: auto;
+  width: 82%;
+  height: 100%;
   border-radius: 20px;
-  padding: 10px;
+  padding: 13px 80px;
+  overflow: auto;
 `
 
 export const BoardContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 35%;
-  height: auto;
-  gap: 10px;
+  width: 50%;
+  height: 100%;
+  gap: 15px;
 `
+
 export const OuterContainer = styled.div`
   display: flex;
   width: auto;
   height: 100%;
   flex-direction: row;
   justify-content: flex-end;
-  margin-top: 10px;
+  margin: 15px 0;
+  overflow: hidden;
+`;
+
+export const ScrollableContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+
+  /* Hide scrollbar for Webkit browsers */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 `;

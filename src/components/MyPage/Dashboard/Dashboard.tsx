@@ -1,22 +1,46 @@
 import React from 'react';
 import styled from 'styled-components';
+import RecentVideo from './RecentVideo';
+import WordsGraph from './WordsGraph';
+import Statistics from './Statistics';
+import Calendar from './Calendar';
 
-const Container = styled.div`
+const MainContainer = styled.div`
     display: flex;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     flex-direction: column;
-    background: #FFFFFF;
-    color: #000000;
-    border-radius: 20px;
-    padding: 30px;
+    background: none;
+    gap: 25px;
+    overflow: auto;
 `
+
+const GraphCalContainer = styled.div`
+  width: 100%;
+  height: 60%;
+  gap: 20px;
+  display: flex;
+  flex-direction: row;
+`;
+
+const RecentVideoContainer = styled.div`
+  width: 100%;
+  height: 80%;
+  overflow: auto;
+`;
 
 function App() {
   return (
-    <Container>
-      대시보드
-    </Container>
+    <MainContainer>
+      <Statistics />
+      <GraphCalContainer>
+        <WordsGraph />
+        <Calendar />
+      </GraphCalContainer>
+      <RecentVideoContainer>
+        <RecentVideo />
+      </RecentVideoContainer>
+    </MainContainer>
   );
 }
 
