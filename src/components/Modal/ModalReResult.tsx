@@ -26,7 +26,7 @@ function ModalReResult({ word, isMatched }: Prop) {
     <Layout>
       {isMatched ? (
         <TextLayout>
-          {word}
+          <TextBox>{word}</TextBox>
           <IconLayout>
             <Checkmark size="large" color="#0AC78E" />
           </IconLayout>
@@ -56,19 +56,24 @@ const Layout = styled.div`
 
 const TextLayout = styled.div`
   width: 40vw;
-  height: 12vw;
   display: flex;
+  word-break: break-all;
   align-items: center;
   justify-content: center;
   border-radius: 0.9375rem;
   padding: 2vw 3vw;
   box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, 0.25);
-  font-size: 2rem;
+  font-size: 3rem;
   font-style: normal;
   font-weight: 500;
   line-height: 1.3;
   color: #0ac78e;
   gap: 1.5rem;
+`;
+
+const TextBox = styled.div`
+  width: 100%;
+  padding-top: 1rem;
 `;
 
 const MisMatchText = styled(TextLayout)`
