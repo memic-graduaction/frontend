@@ -27,13 +27,13 @@ export const IconBox = styled.button`
 export const PhraseBox = styled.div<Props>`
   color: ${(props) => (props.$isselected ? '#ff5c5c' : '#4f4957')};
   font-size: 1.25rem;
-  font-weight: 500;
+  font-weight: 600;
 `;
 
 export const MeaningBox = styled.div`
   color: #4f4957;
   font-size: 1rem;
-  font-weight: 300;
+  font-weight: 400;
 `;
 
 export const HashTagBox = styled.div`
@@ -79,5 +79,6 @@ export const InputBox = styled.div`
 `;
 
 export const Input = styled.input`
-  width: 16rem;
+  width: 90%;
+  height: 2rem;
 `;

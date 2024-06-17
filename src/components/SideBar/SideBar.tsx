@@ -38,11 +38,10 @@ const SideBar = () => {
           </S.Title>
         </S.Header>
         <ToggleBtn />
-
         {isLogin ? (
           <>
             {phrase !== '' && <PhraseEditCard />}
-            {isOverall ? <PhraseAllList /> : <PhraseList />}{' '}
+            {isOverall ? <PhraseAllList /> : <PhraseList />}
           </>
         ) : (
           <S.NullLayout>

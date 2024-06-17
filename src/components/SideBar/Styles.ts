@@ -20,7 +20,7 @@ export const Layout = styled.div<Props>`
   left: ${(props) => (props.$isopen ? '0' : '-30rem')};
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.5rem;
   border-radius: 0 0.625rem 0.625rem 0;
   height: 100vh;
   width: 30rem;
@@ -73,6 +73,7 @@ export const NullLayout = styled.div`
   margin-top: 10rem;
   color: #9f93af;
   font-size: 1.1rem;
+  font-weigth: 400;
 `;
 
 export const LoginBtn = styled.button`

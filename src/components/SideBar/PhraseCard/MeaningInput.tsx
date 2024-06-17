@@ -7,32 +7,20 @@ interface Props {
 }
 
 const MeaningInput = ({ defaultMean, setMeaning }: Props) => {
-  const [current, setCurrent] = useState('');
-  const [finalMean, setFinalMean] = useState('');
-  const [isSave, setIsSave] = useState(false);
+  const [current, setCurrent] = useState(defaultMean);
 
   const onChange = (e) => {
     setCurrent(e.target.value);
   };
 
-  const handleSaveButton = (e) => {
+  const onBlur = (e) => {
     setCurrent(e.target.value);
-    setIsSave(true);
-    if (current.length === 0) {
-      setFinalMean(defaultMean);
-      setMeaning(defaultMean);
-    } else {
-      setFinalMean(current);
-      setMeaning(current);
-    }
+    setMeaning(current);
   };
 
-  return isSave ? (
-    <S.MeaningBox>{finalMean}</S.MeaningBox>
-  ) : (
+  return (
     <S.InputBox>
-      <S.Input placeholder={defaultMean} onChange={onChange} />
-      <S.SubmitBtn onClick={handleSaveButton}>입력</S.SubmitBtn>
+      <S.Input defaultValue={defaultMean} onChange={onChange} onBlur={onBlur} />
     </S.InputBox>
   );
 };
