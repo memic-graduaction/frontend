@@ -7,12 +7,11 @@ const Container = styled.div`
   display: flex;
   width: 100%;
   height: 100%;
-  gap: 1rem;
+  gap: 2rem;
   flex-direction: column;
   background: none;
   color: #000000;
   border-radius: 20px;
-  padding: 30px;
 `;
 
 function App() {

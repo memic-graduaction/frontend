@@ -16,7 +16,7 @@ function SearchBar({ placeholder, setQueries }: Prop) {
 export default SearchBar;
 
 const Input = styled.input`
-  width: 68rem;
+  width: 100%;
   height: 3.7rem;
   padding-left: 2rem;
   border-radius: 2rem;
