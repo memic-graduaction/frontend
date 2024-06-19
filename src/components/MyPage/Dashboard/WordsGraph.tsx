@@ -81,9 +81,9 @@ function WordsGraph() {
           text: 'Count',
         },
         beginAtZero: true,
-        max: 50,
+        max: 30,
         ticks: {
-          stepSize: 10,
+          stepSize: 5,
         },
       },
     },
