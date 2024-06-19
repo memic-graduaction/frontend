@@ -132,7 +132,6 @@ function Script() {
     <S.Layout>
       <S.ButtonContainer>
         <S.ScriptSmall>Script</S.ScriptSmall>
-        <S.DownLoadBtn>Download</S.DownLoadBtn>
       </S.ButtonContainer>
       <S.Border />
       {loading ? <Loading /> : null}

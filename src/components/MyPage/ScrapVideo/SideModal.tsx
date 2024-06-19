@@ -1,4 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { useRecoilValue } from 'recoil';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { UUid } from 'src/recoil/states';
 import styled, { keyframes } from 'styled-components';
 
 interface SideModalProps {
@@ -7,7 +11,6 @@ interface SideModalProps {
     thumbnail: string;
     title: string;
     uploader: string;
-    description: string;
     url: string;
   } | null;
   onClose: () => void;
@@ -34,12 +37,52 @@ const slideOut = keyframes`
 
 function SideModal({ video, onClose, isVisible }: SideModalProps) {
   const [isRendered, setIsRendered] = useState(isVisible);
+  const modalRef = useRef(null);
+  const user = useRecoilValue(UUid);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (isVisible) {
       setIsRendered(true);
     }
   }, [isVisible]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        onClose();
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [modalRef, onClose]);
+
+  const deleteBookmark = async (scrapId) => {
+    const confirmed = window.confirm('스크랩을 취소하시겠습니까?');
+    if (confirmed) {
+      try {
+        await axios.delete(`/v1/scraps/${scrapId}`, {
+          headers: {
+            Authorization: `${user.accessToken}`,
+          },
+        });
+        window.location.reload();
+      } catch (error) {
+        console.error('Error deleting bookmark:', error);
+      }
+    }
+  };
+
+  const toggleBookmark = (videoId) => {
+    deleteBookmark(videoId);
+  };
+
+  const handleVideoScript = () => {
+    navigate(`/script/${video.url}`);
+  };
 
   const animationEndHandler = () => {
     if (!isVisible) {
@@ -55,18 +98,16 @@ function SideModal({ video, onClose, isVisible }: SideModalProps) {
       onClick={(e) => e.stopPropagation()}
       onAnimationEnd={animationEndHandler}
     >
-      <CloseButton onClick={onClose}>×</CloseButton>
+      <CloseButton onClick={(e) => { e.stopPropagation(); onClose(); }}>×</CloseButton>
       <Thumbnail src={video.thumbnail} alt={video.title} />
       <VideoInfo>
         <Title>{video.title}</Title>
         <Uploader>Uploaded by: {video.uploader}</Uploader>
-        <Description>{video.description}</Description>
       </VideoInfo>
-      <ScrapButton onClick={() => {/* 스크랩 해제 로직 */ }}>스크랩 해제</ScrapButton>
+      <ScrapButton onClick={() => toggleBookmark(video.id)}>스크랩 해제</ScrapButton>
       <Separator />
-      <Button onClick={() => {/* 스크립트 페이지로 이동 로직 */ }}>동영상 스크립트 보기</Button>
+      <Button onClick={handleVideoScript}>동영상 스크립트 보기</Button>
       <Button onClick={() => window.open(video.url, '_blank')}>유튜브에서 보기</Button>
-      {/* 추가 기능 버튼들 */}
     </ModalWrapper>
   );
 }
@@ -74,7 +115,7 @@ function SideModal({ video, onClose, isVisible }: SideModalProps) {
 export default SideModal;
 
 const ModalWrapper = styled.div<{ isVisible: boolean }>`
-  width: 100%;
+  width: 35%;
   height: 100%;
   background: #fff;
   box-shadow: -10px 0 5px rgba(0, 0, 0, 0.1);
@@ -114,11 +155,6 @@ const Thumbnail = styled.img`
 const Uploader = styled.div`
   font-size: 1.1rem;
   color: #555;
-`;
-
-const Description = styled.p`
-  font-size: 1rem;
-  color: #777;
 `;
 
 const Button = styled.button`

@@ -47,6 +47,11 @@ export const youtubeIDstate = atom<youtubeId[]>({
   effects_UNSTABLE: [persistAtom],
 });
 
+export const scrapState = atom({
+  key: 'scrapState',
+  default: [],
+});
+
 export const scriptIDstate = atom<number>({
   key: 'scriptIDstate',
   default: 0,

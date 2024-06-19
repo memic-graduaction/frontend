@@ -1,9 +1,7 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { useRecoilValue } from 'recoil';
 import axios from 'axios';
 import { UUid } from 'src/recoil/states';
-import { BookMarkAfter } from 'src/assets/Icons';
 import styled from 'styled-components';
 import SideModal from "./SideModal";
 
@@ -25,7 +23,13 @@ function App() {
             Authorization: `${user.accessToken}`,
           },
         });
-        setVideos(response.data);
+
+        const videosWithDetails = await Promise.all(response.data.map(async (video) => {
+          const videoDetails = await fetchVideoDetails(video.url);
+          return { ...video, ...videoDetails };
+        }));
+
+        setVideos(videosWithDetails);
       } catch (error) {
         console.error('Error fetching videos:', error);
       } finally {
@@ -36,51 +40,24 @@ function App() {
     fetchVideos();
   }, [page]);
 
+  const fetchVideoDetails = async (url) => {
+    try {
+      const response = await fetch(`https://noembed.com/embed?url=${url}`);
+      const data = await response.json();
+      return {
+        title: data.title,
+        thumbnail: data.thumbnail_url,
+        uploader: data.author_name,
+      };
+    } catch (error) {
+      console.error('Error fetching video details:', error);
+    }
+  };
+
   const handleScroll = (e) => {
     const { scrollTop, clientHeight, scrollHeight } = e.currentTarget;
     if (scrollHeight - scrollTop === clientHeight) {
-      setPage((prevPage) => prevPage - 1);
-    }
-  };
-  const addBookmark = async (transcriptionId) => {
-    try {
-      const response = await axios.post(
-        '/v1/scraps',
-        { transcriptionId },
-        {
-          headers: {
-            Authorization: `${user.accessToken}`,
-          },
-        }
-      );
-      const newScrap = { id: response.data.id, url: '', transcriptionId };
-      setVideos((prevVideos) => [...prevVideos, newScrap]);
-    } catch (error) {
-      console.error('Error adding bookmark:', error);
-    }
-  };
-
-  const deleteBookmark = async (scrapId) => {
-    const confirmed = window.confirm('스크랩을 취소하시겠습니까?');
-    if (confirmed) {
-      try {
-        await axios.delete(`/v1/scraps/${scrapId}`, {
-          headers: {
-            Authorization: `${user.accessToken}`,
-          },
-        });
-        setVideos((prevVideos) => prevVideos.filter((video) => video.id !== scrapId));
-      } catch (error) {
-        console.error('Error deleting bookmark:', error);
-      }
-    }
-  };
-
-  const toggleBookmark = (videoId, transcriptionId, isBookmarked) => {
-    if (isBookmarked) {
-      deleteBookmark(videoId);
-    } else {
-      addBookmark(transcriptionId);
+      setPage((prevPage) => prevPage + 1);
     }
   };
 
@@ -96,18 +73,6 @@ function App() {
     }, 300); // 애니메이션 시간과 동일하게 설정
   };
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (containerRef.current && !containerRef.current.contains(event.target)) {
-        closeModal();
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [containerRef]);
 
   return (
     <Wrapper>
@@ -115,9 +80,6 @@ function App() {
         {videos.map((vid) => (
           <React.Fragment key={vid.id}>
             <VideoItem onClick={() => handleVideoClick(vid)}>
-              <ButtonContainer onClick={(e) => { e.stopPropagation(); toggleBookmark(vid.id, vid.transcriptionId, vid.isBookmarked); }}>
-                <BookMarkAfter />
-              </ButtonContainer>
               <Thumbnail src={vid.thumbnail} alt={vid.title} />
               <Title>{vid.title}</Title>
             </VideoItem>
@@ -126,10 +88,12 @@ function App() {
         ))}
         {loading && <Loading>Loading...</Loading>}
       </Container>
-      {selectedVideo && (
-        <SideModalWrapper onClick={(e) => e.stopPropagation()}>
-          <SideModal video={selectedVideo} onClose={closeModal} isVisible={isModalVisible} />
-        </SideModalWrapper>
+      {isModalVisible && selectedVideo && (
+        <SideModal
+          video={selectedVideo}
+          isVisible={isModalVisible}
+          onClose={closeModal}
+        />
       )}
     </Wrapper>
   );
@@ -156,14 +120,6 @@ const Container = styled.div`
   padding: 30px;
   overflow-y: auto; 
   position: relative;
-`;
-
-const SideModalWrapper = styled.div`
-  width: 35%;
-  height: 100%;
-  position: absolute;
-  right: 0;
-  top: 0;
 `;
 
 const VideoItem = styled.div`
@@ -193,14 +149,4 @@ const Loading = styled.div`
   margin: 20px 0;
   font-size: 1rem;
   color: #888888;
-`;
-
-export const ButtonContainer = styled.div`
-  width: 3%;
-  position: relative;
-  right: 0;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  margin: 0 30px 0 30px;
 `;
