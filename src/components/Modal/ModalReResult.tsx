@@ -7,6 +7,7 @@ import { recordingState, secondAudioUrl } from 'src/recoil/states';
 import { useModalStack } from 'src/utils/useModalStack';
 import ReSpeechBtn from './ModalButtons/ReSpeechBtn';
 import PlaySpeechBtn from './ModalButtons/PlaySpeechBtn';
+import { TitleBox } from './Styles';
 
 interface Prop {
   word: string;
@@ -25,14 +26,18 @@ function ModalReResult({ word, isMatched }: Prop) {
   return (
     <Layout>
       {isMatched ? (
-        <TextLayout>
-          <TextBox>{word}</TextBox>
+        <>
+          <TitleBox>* 단어를 완벽하게 발음했어요!</TitleBox>
           <IconLayout>
             <Checkmark size="large" color="#0AC78E" />
           </IconLayout>
-        </TextLayout>
+          <MatchedText>{word}</MatchedText>
+        </>
       ) : (
-        <MisMatchText>{word}</MisMatchText>
+        <Layout>
+          <TitleBox>* AI가 내 발음을 이렇게 평가했어요!</TitleBox>
+          <MisMatchText>{word}</MisMatchText>
+        </Layout>
       )}
       <BtnLayout>
         <PlaySpeechBtn url={audioUrl} />
@@ -51,32 +56,20 @@ const Layout = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 3rem;
-`;
-
-const TextLayout = styled.div`
-  width: 40vw;
-  display: flex;
-  word-break: break-all;
-  align-items: center;
-  justify-content: center;
-  border-radius: 0.9375rem;
-  padding: 2vw 3vw;
-  box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, 0.25);
-  font-size: 3rem;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 1.3;
-  color: #0ac78e;
   gap: 1.5rem;
 `;
 
-const TextBox = styled.div`
-  width: 100%;
-  padding-top: 1rem;
+const MatchedText = styled.div`
+  word-break: break-all;
+  font-size: 3rem;
+  font-style: normal;
+  font-weight: 600;
+  color: #0ac78e;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
 `;
 
-const MisMatchText = styled(TextLayout)`
+const MisMatchText = styled(MatchedText)`
   color: #ff5c5c;
 `;
 

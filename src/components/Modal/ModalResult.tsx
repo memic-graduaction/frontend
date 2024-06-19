@@ -9,6 +9,7 @@ import { isAllMatched } from 'src/recoil/selectors';
 import PlaySpeechBtn from './ModalButtons/PlaySpeechBtn';
 import ReSpeechBtn from './ModalButtons/ReSpeechBtn';
 import ModalReSpeech from './ModalReSpeech';
+import * as S from './Styles';
 
 function ModalResult() {
   const setRecordStatus = useSetRecoilState(recordingState);
@@ -32,23 +33,22 @@ function ModalResult() {
 
   return (
     <Layout>
-      <TextContainer>
-        <OriginalTextTitle>* 기존 문장</OriginalTextTitle>
-        <OriginalText>{originalStr}</OriginalText>
-      </TextContainer>
-      <TextContainer>
-        <ResultTextTitle>* 내가 말한 문장</ResultTextTitle>
-        {allMatched ? (
-          <TextBox>
-            <IconBox>
-              <Checkmark size="small" color="#0AC78E" />
-            </IconBox>
+      {allMatched ? (
+        <Layout>
+          <S.TitleBox>* 모든 단어를 완벽하게 발음했어요!</S.TitleBox>
+          <IconBox>
+            <Checkmark size="large" color="#0AC78E" />
+          </IconBox>
+          <FlexLayout style={{ gap: '0.2rem' }}>
             {wordList.map((v) => (
               <CorrectText>{v.word}&nbsp;</CorrectText>
             ))}
-          </TextBox>
-        ) : (
-          <TextBox>
+          </FlexLayout>
+        </Layout>
+      ) : (
+        <Layout>
+          <S.TitleBox>* AI가 내 발음을 이렇게 평가했어요!</S.TitleBox>
+          <FlexLayout style={{ gap: '0.2rem' }}>
             {wordList.map((v, i) =>
               v.isMatchedWithTranscription ? (
                 <ResultText>{v.word}&nbsp;</ResultText>
@@ -62,13 +62,19 @@ function ModalResult() {
                 </WrongText>
               ),
             )}
-          </TextBox>
-        )}
-      </TextContainer>
-      <BtnLayout>
+          </FlexLayout>
+          <TitleBox>* 틀린 발음을 다시 발음해보세요!</TitleBox>
+          <FlexLayout>
+            <WordBox>morning</WordBox>
+            <WordBox>hour</WordBox>
+            <WordBox>earthquake</WordBox>
+          </FlexLayout>
+        </Layout>
+      )}
+      <FlexLayout>
         <PlaySpeechBtn url={audioUrl} />
         <ReSpeechBtn onClick={handleClickReSpeech} />
-      </BtnLayout>
+      </FlexLayout>
     </Layout>
   );
 }
@@ -82,49 +88,15 @@ const Layout = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2.5rem;
+  gap: 1.8rem;
 `;
 
-const TextContainer = styled.div`
-  width: 42rem;
-`;
-
-const OriginalTextTitle = styled.div`
-  width: 100%;
-  color: #6a6a6a;
-  font-size: 1rem;
+const ResultText = styled.div`
+  font-size: 1.625rem;
   font-style: normal;
-  font-weight: 400;
-  margin-bottom: 1rem;
-`;
-
-const ResultTextTitle = styled(OriginalTextTitle)`
-  color: #ff5c5c;
-`;
-
-const TextBox = styled.div`
-  width: 42rem;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  border-radius: 0.9375rem;
-  box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, 0.25);
-  padding: 2rem;
-`;
-
-const OriginalText = styled.div`
-  padding-left: 1rem;
-  font-size: 1.125rem;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 1.3;
-`;
-
-const ResultText = styled(OriginalText)`
-  color: black;
-  font-size: 1.25rem;
+  font-weight: 500;
   line-height: 1.5;
-  padding: 0;
+  color: black;
 `;
 
 const WrongText = styled(ResultText)`
@@ -137,13 +109,33 @@ const CorrectText = styled(ResultText)`
   color: #0ac78e;
 `;
 
-const BtnLayout = styled.div`
+const FlexLayout = styled.div`
   width: 100%;
-  justify-content: center;
   display: flex;
-  gap: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
 `;
 
 const IconBox = styled.div`
   margin-right: 0.5rem;
+`;
+
+const TitleBox = styled.div`
+  color: #ff5c5c;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+`;
+
+const WordBox = styled.div`
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  border-radius: 0.625rem;
+  background: #fff6c6;
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 700;
 `;

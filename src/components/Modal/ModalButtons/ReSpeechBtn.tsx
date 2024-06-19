@@ -8,9 +8,9 @@ interface Props {
 
 function ReSpeechBtn({ onClick }: Props) {
   return (
-    <S.SquareBtnBox onClick={() => onClick()}>
+    <S.ResultBtnBox onClick={() => onClick()}>
       <Microphone width="27px" height="27px" /> 다시 녹음하기
-    </S.SquareBtnBox>
+    </S.ResultBtnBox>
   );
 }
 export default ReSpeechBtn;
