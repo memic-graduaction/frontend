@@ -1,6 +1,6 @@
 import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
-import { ModalStateType, Tag, User, recognizedWordsType, scrapedPhrase, youtubeId } from './types';
+import { ModalStateType, Tag, User, recognizedWordsType, scrapedPhrase, youtubeId, UserAmount} from './types';
 
 const { persistAtom } = recoilPersist({
   key: 'localStorage',
@@ -148,4 +148,14 @@ export const forceRefresh = atom<number>({
 export const selectedDateState = atom({
   key: 'selectedDateState',
   default: new Date(), // 현재 날짜로 초기화
+});
+
+export const amountState = atom<UserAmount>({
+  key: 'amountState',
+  default: {
+    visitedDays: [],
+    records: 0,
+    convert: 0,
+    accessToken: '',
+  },
 });

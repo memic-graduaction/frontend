@@ -34,3 +34,13 @@ export interface scrapedPhrase {
 }
 
 export type SelectedDate = Date;
+
+export interface Amount {
+  visitedDays: number[];
+  records: number;
+  convert: number;
+}
+
+export interface UserAmount extends Amount {
+  accessToken: string;
+}

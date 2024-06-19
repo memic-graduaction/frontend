@@ -31,6 +31,7 @@ function Script() {
   const [videoDuration, setVideoDuration] = useRecoilState(state.videoDurationState);
   const [datas, setDatas] = useState<Props[] | null>(null);
   const resetSideBar = useResetRecoilState(state.showOverall);
+  const user = useRecoilValue(state.UUid);
   useSetScrapFunc();
 
   const handleGetScript = async () => {
@@ -45,7 +46,11 @@ function Script() {
         response = await axios.get(`/v1/transcriptions/${urlId}`);
         console.log(response.data);
       } else {
-        response = await axios.post('/v1/transcriptions', formData);
+        response = await axios.post('/v1/transcriptions', formData, {
+          headers: {
+            Authorization: `${user.accessToken}`,
+          },
+        });
         const newYoutubeId = [...youtubeId];
         newYoutubeId.push({ url: response.data.url, id: response.data.id });
         setYoutubeId(newYoutubeId);
