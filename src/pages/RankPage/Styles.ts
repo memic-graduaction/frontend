@@ -28,15 +28,21 @@ export const Title = styled.div`
   text-align: center;
 `;
 
-export const ThumbnailBox = styled.div`
+export const ThumbnailLayout = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   gap: 5rem;
+  color: white;
 `;
-export const Thumbnail = styled.a`
-  width: 15rem;
-  height: 13rem;
+
+export const ThumbnailBox = styled.a`
+  text-decoration: none;
+`;
+
+export const Thumbnail = styled.img`
+  width: 17rem;
+  height: 14rem;
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
 `;
