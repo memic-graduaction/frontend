@@ -76,4 +76,5 @@ const TextLayout = styled.div`
   font-weight: 350;
   line-height: 1.5;
   margin-top: 1rem;
+  text-align: center;
 `;
