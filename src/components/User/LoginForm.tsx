@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { FaEye, FaEyeSlash, FaCheckSquare, FaRegSquare } from 'react-icons/fa';
 import { useSetRecoilState } from 'recoil';
-import { UUid, isLoggedInState } from '../../recoil/states';
+import { UUid, account, isLoggedInState } from '../../recoil/states';
 import * as S from './Styles';
 
 function LoginForm() {
@@ -13,6 +13,7 @@ function LoginForm() {
   const [password, setPassword] = useState('');
   const loginUrl = `/v1/members/sign-in`;
   const setIsLoggedIn = useSetRecoilState(isLoggedInState);
+  const setAccount = useSetRecoilState(account);
 
   const handleLoginClick = async () => {
     try {
@@ -22,6 +23,7 @@ function LoginForm() {
       const previousPage = getCookie('previousPage');
       window.location.href = previousPage || '/';
       alert('로그인 되었습니다!');
+      setAccount(email);
     } catch (e) {
       console.log('로그인 실패:', e);
       alert('로그인에 실패했습니다. 다시 시도해주세요.');

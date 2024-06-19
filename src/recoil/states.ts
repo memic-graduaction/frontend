@@ -17,6 +17,13 @@ export const UUid = atom<User>({
   effects_UNSTABLE: [persistAtom],
 });
 
+// 로그인한 아이디
+export const account = atom<string>({
+  key: 'account',
+  default: '',
+  effects_UNSTABLE: [persistAtom],
+});
+
 // 로그인 상태 확인
 export const isLoggedInState = atom({
   key: 'isLoggedInState',
