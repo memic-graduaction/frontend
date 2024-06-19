@@ -47,8 +47,8 @@ function TopTitleIndex() {
   const [selectedDate, setSelectedDate] = useRecoilState(selectedDateState);
   const menu = useRecoilValue(menuState);
 
-  const isShortMenu = menu === '개인정보 수정' || menu === 'Words';
-  const isDatePickerVisible = () => menu !== '개인정보 수정' && menu !== 'Words';
+  const isShortMenu = menu === '개인정보 수정' || menu === 'Words' || menu === 'Scrap Videos';
+  const isDatePickerVisible = () => menu !== '개인정보 수정' && menu !== 'Words' && menu !== 'Scrap Videos';;
 
   useEffect(() => {
     if (selectedDate === null) {
