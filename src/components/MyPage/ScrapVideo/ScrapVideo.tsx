@@ -1,11 +1,8 @@
-
 import React, { useState, useEffect, useRef } from 'react';
-import { useRecoilValue } from 'recoil';
-import axios from 'axios';
-import { UUid } from 'src/recoil/states';
 import { BookMarkAfter } from 'src/assets/Icons';
 import styled from 'styled-components';
 import SideModal from "./SideModal";
+// import axios from 'axios';
 
 function App() {
   const [videos, setVideos] = useState([]);
@@ -14,23 +11,23 @@ function App() {
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [isModalVisible, setModalVisible] = useState(false);
   const containerRef = useRef(null);
-  const user = useRecoilValue(UUid);
 
   useEffect(() => {
     const fetchVideos = async () => {
       setLoading(true);
-      try {
-        const response = await axios.get('/v1/scraps', {
-          headers: {
-            Authorization: `${user.accessToken}`,
-          },
-        });
-        setVideos(response.data);
-      } catch (error) {
-        console.error('Error fetching videos:', error);
-      } finally {
-        setLoading(false);
-      }
+      const newVideos = [
+        // 더미 데이터
+        { id: 1, thumbnail: 'https://via.placeholder.com/120x90', title: 'Video 1' },
+        { id: 2, thumbnail: 'https://via.placeholder.com/120x90', title: 'Video 2' },
+        { id: 3, thumbnail: 'https://via.placeholder.com/120x90', title: 'Video 3' },
+        { id: 4, thumbnail: 'https://via.placeholder.com/120x90', title: 'Video 4' },
+        { id: 5, thumbnail: 'https://via.placeholder.com/120x90', title: 'Video 5' },
+        { id: 6, thumbnail: 'https://via.placeholder.com/120x90', title: 'Video 6' },
+        { id: 7, thumbnail: 'https://via.placeholder.com/120x90', title: 'Video 7' },
+        { id: 8, thumbnail: 'https://via.placeholder.com/120x90', title: 'Video 8' },
+      ];
+      setVideos((prevVideos) => [...prevVideos, ...newVideos]);
+      setLoading(false);
     };
 
     fetchVideos();
@@ -42,45 +39,20 @@ function App() {
       setPage((prevPage) => prevPage - 1);
     }
   };
-  const addBookmark = async (transcriptionId) => {
-    try {
-      const response = await axios.post(
-        '/v1/scraps',
-        { transcriptionId },
-        {
-          headers: {
-            Authorization: `${user.accessToken}`,
-          },
-        }
-      );
-      const newScrap = { id: response.data.id, url: '', transcriptionId };
-      setVideos((prevVideos) => [...prevVideos, newScrap]);
-    } catch (error) {
-      console.error('Error adding bookmark:', error);
-    }
-  };
 
-  const deleteBookmark = async (scrapId) => {
+  const toggleBookmark = (id) => {
     const confirmed = window.confirm('스크랩을 취소하시겠습니까?');
     if (confirmed) {
-      try {
-        await axios.delete(`/v1/scraps/${scrapId}`, {
-          headers: {
-            Authorization: `${user.accessToken}`,
-          },
-        });
-        setVideos((prevVideos) => prevVideos.filter((video) => video.id !== scrapId));
-      } catch (error) {
-        console.error('Error deleting bookmark:', error);
-      }
-    }
-  };
-
-  const toggleBookmark = (videoId, transcriptionId, isBookmarked) => {
-    if (isBookmarked) {
-      deleteBookmark(videoId);
-    } else {
-      addBookmark(transcriptionId);
+      // try {
+      //   await axios.delete(`/v1/스크랩목록`);
+      //   setVideos((prevVideos) => prevVideos.filter((video => video.id != id)));
+      // window.location.reload();
+      // }
+      setVideos((prevVideos) =>
+        prevVideos.map((video) =>
+          video.id === id ? { ...video, isBookmarked: false } : video
+        )
+      );
     }
   };
 
@@ -112,14 +84,14 @@ function App() {
   return (
     <Wrapper>
       <Container ref={containerRef} onScroll={handleScroll}>
-        {videos.map((vid) => (
-          <React.Fragment key={vid.id}>
-            <VideoItem onClick={() => handleVideoClick(vid)}>
-              <ButtonContainer onClick={(e) => { e.stopPropagation(); toggleBookmark(vid.id, vid.transcriptionId, vid.isBookmarked); }}>
+        {videos.map((video) => (
+          <React.Fragment key={video.id}>
+            <VideoItem onClick={() => handleVideoClick(video)}>
+              <ButtonContainer onClick={(e) => { e.stopPropagation(); toggleBookmark(video.id); }}>
                 <BookMarkAfter />
               </ButtonContainer>
-              <Thumbnail src={vid.thumbnail} alt={vid.title} />
-              <Title>{vid.title}</Title>
+              <Thumbnail src={video.thumbnail} alt={video.title} />
+              <Title>{video.title}</Title>
             </VideoItem>
             <Separator />
           </React.Fragment>
