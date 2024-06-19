@@ -6,6 +6,7 @@ export const Layout = styled.div`
   align-items: center;
   border-bottom: 1px solid white;
   height: 4.4rem;
+  width: 100%;
   padding: 0 3rem;
   color: white;
 `;
