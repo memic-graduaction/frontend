@@ -1,6 +1,13 @@
 import axios from 'axios';
 import { selector, selectorFamily } from 'recoil';
-import { UUid, recognizedWords, youtubeIDstate, youtubeLinkState, selectedDateState } from './states';
+import {
+  UUid,
+  recognizedWords,
+  youtubeIDstate,
+  youtubeLinkState,
+  selectedDateState,
+  scriptSentencestate,
+} from './states';
 import { SelectedDate } from './types';
 
 // selector
@@ -8,11 +15,13 @@ export const isAllMatched = selector({
   key: 'isAllMatched',
   get: ({ get }) => {
     const wordList = get(recognizedWords);
+    const originalSentence = get(scriptSentencestate).split(' ');
     let allMatched = true;
     wordList.forEach((v) => {
       if (v.isMatchedWithTranscription === false) allMatched = false;
     });
-    return allMatched;
+    const allSpoken = wordList.length === originalSentence.length;
+    return allMatched && allSpoken;
   },
 });
 
@@ -73,7 +82,6 @@ export const scrapedListById = selectorFamily({
       return data;
     },
 });
-
 
 export const formattedSelectedDateSelector = selector({
   key: 'formattedSelectedDateSelector',

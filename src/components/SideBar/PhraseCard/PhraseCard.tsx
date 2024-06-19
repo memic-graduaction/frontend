@@ -1,5 +1,4 @@
 import React, { Ref, forwardRef, useEffect, useState } from 'react';
-import { Edit } from 'src/assets/Icons';
 import { getTagColor } from 'src/utils/getTagColor';
 import { useRecoilValue } from 'recoil';
 import { selectedHighLight, sideBarOpenState } from 'src/recoil/states';
@@ -29,9 +28,6 @@ const PhraseCard = forwardRef(({ sentenceId, phrase, meaning, TagIds }: Props, r
 
   return (
     <S.Layout $isselected={isHighLighted} ref={ref}>
-      <S.IconBox>
-        <Edit />
-      </S.IconBox>
       <S.PhraseBox $isselected={isHighLighted}>{phrase}</S.PhraseBox>
       <S.MeaningBox>{meaning}</S.MeaningBox>
       <S.HashTagBox>

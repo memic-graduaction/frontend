@@ -33,7 +33,7 @@ const TagSelector = () => {
       {isOpen ? (
         <OptionList>
           {options.map((v) => (
-            <OptionItem key={v.id} value={v.name} onClick={() => handleClickOption(v.id, v.name)}>
+            <OptionItem key={v.id} onClick={() => handleClickOption(v.id, v.name)}>
               {v.name}
             </OptionItem>
           ))}
@@ -50,7 +50,7 @@ const SelectBox = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
-  width: 5rem;
+  width: 6rem;
   height: 1.7rem;
   gap: 0.625rem;
   border-radius: 3rem;
@@ -58,26 +58,27 @@ const SelectBox = styled.div`
   color: white;
 `;
 
-const OptionList = styled.ul`
+const OptionList = styled.div`
   position: absolute;
   top: 1.7rem;
   left: 0.1rem;
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: flex-start;
-  width: 8rem;
+  width: 21rem;
   border: 1px solid #858585;
+  border-radius: 0.2rem;
   background: white;
   color: #858585;
   padding: 0 0.1rem;
   z-index: 1;
 `;
 
-const OptionItem = styled.li`
-  height: 1.7rem;
-  width: 100%;
-  padding-top: 0.3rem;
+const OptionItem = styled.div`
+  height: 2rem;
+  padding: 0 1rem;
+  padding-top: 0.5rem;
   text-align: center;
   &:hover {
     background: rgba(133, 133, 133, 0.24);

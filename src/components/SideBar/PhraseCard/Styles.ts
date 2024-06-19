@@ -56,20 +56,29 @@ export const HashTag = styled.div`
 
 export const ButtonBox = styled.div`
   display: flex;
-  gap: 1rem;
+  gap: 0.7rem;
   justify-content: flex-end;
+  padding-right: 0.5rem;
 `;
 
-export const SubmitBtn = styled.button`
+export const CancelBtn = styled.button`
   display: flex;
-  width: 4.2rem;
-  height: 1.44rem;
+  width: 5rem;
+  height: 1.5rem;
   padding: 0.5rem 0.75rem;
   justify-content: center;
   align-items: center;
-  border-radius: 0.625rem;
-  background: #9f93af;
+  border-radius: 0.5rem;
+  border: 1px solid #5a4e6a;
+  color: #5a4e6a;
+  font-size: 1rem;
+  font-weight: 500;
+  box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.25);
+`;
+
+export const SubmitBtn = styled(CancelBtn)`
   color: white;
+  background: #5a4e6a;
 `;
 
 export const InputBox = styled.div`
@@ -81,4 +90,5 @@ export const InputBox = styled.div`
 export const Input = styled.input`
   width: 90%;
   height: 2rem;
+  font-size: 1rem;
 `;

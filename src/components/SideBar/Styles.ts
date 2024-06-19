@@ -34,8 +34,8 @@ export const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 2.1875rem;
-  color: #4f4957;
+  height: 2.2rem;
+  color: #5a4e6a;
   font-size: 1.25rem;
   font-weight: 500;
 `;
@@ -65,21 +65,23 @@ export const Title = styled.div`
 
 export const NullLayout = styled.div`
   width: 90%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
+  gap: 3rem;
   margin-top: 10rem;
-  color: #9f93af;
-  font-size: 1.1rem;
-  font-weigth: 400;
+  color: #5a4e6a;
+  font-size: 1.3rem;
+  font-weight: 500;
 `;
 
 export const LoginBtn = styled.button`
-  width: 7rem;
-  height: 2rem;
-  border-radius: 3.125rem;
-  background: #9f93af;
-  color: white;
+  width: 10rem;
+  height: 2.4rem;
+  border-radius: 3rem;
+  background: white;
+  color: #5a4e6a;
+  font-size: 1.2rem;
+  font-weight: 400;
+  box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.25);
 `;

@@ -2,27 +2,27 @@ import styled from 'styled-components';
 import Colors from 'src/styles/Colors';
 
 export const Layout = styled.div`
-    background: ${Colors.BgMPMain};
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  background: ${Colors.BgMPMain};
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const Container = styled.div`
-    display: flex;
-    width: 100%;
-    height: 100%;
-`
+  display: flex;
+  width: 100%;
+  height: 100%;
+`;
 
 export const IndexContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    background: #607D8B;
-    width: auto;
-    flex-grow: 1;
-    height: 100%;
-    padding-top: 15px;
+  display: flex;
+  flex-direction: column;
+  background: #607d8b;
+  width: auto;
+  flex-grow: 1;
+  height: 100%;
+  padding-top: 15px;
 `;
 
 export const LogoLayout = styled.div`
@@ -44,7 +44,7 @@ export const ContentsContainer = styled.div`
   border-radius: 20px;
   padding: 13px 80px;
   overflow: auto;
-`
+`;
 
 export const BoardContainer = styled.div`
   display: flex;
@@ -52,7 +52,7 @@ export const BoardContainer = styled.div`
   width: 50%;
   height: 100%;
   gap: 15px;
-`
+`;
 
 export const OuterContainer = styled.div`
   display: flex;
@@ -74,6 +74,6 @@ export const ScrollableContainer = styled.div`
   }
 
   /* Hide scrollbar for IE, Edge and Firefox */
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 `;

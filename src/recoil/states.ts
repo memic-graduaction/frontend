@@ -17,6 +17,13 @@ export const UUid = atom<User>({
   effects_UNSTABLE: [persistAtom],
 });
 
+// 로그인한 아이디
+export const account = atom<string>({
+  key: 'account',
+  default: '',
+  effects_UNSTABLE: [persistAtom],
+});
+
 // 로그인 상태 확인
 export const isLoggedInState = atom({
   key: 'isLoggedInState',
@@ -155,6 +162,7 @@ export const selectedDateState = atom({
   default: new Date(), // 현재 날짜로 초기화
 });
 
+
 export const amountState = atom<UserAmount>({
   key: 'amountState',
   default: {
@@ -164,3 +172,9 @@ export const amountState = atom<UserAmount>({
     accessToken: '',
   },
 });
+
+export const wordColorPalette = atom<string[]>({
+  key: 'wordColorPalette',
+  default: ['#FFF6C6', '#FBF0FF', '#EFFFD5', '#DAFFF6', '#E0EAFF', '#FFE8BC', '#D4F7FF', '#FFD9DB'],
+});
+

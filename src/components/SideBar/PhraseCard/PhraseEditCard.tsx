@@ -97,10 +97,10 @@ const PhraseEditCard = () => {
               <Close width={12} height={12} onClick={() => handleDeleteTag(i)} style={{ cursor: 'pointer' }} />
             </S.HashTag>
           ))}
-        <TagSelector />
       </S.HashTagBox>
+      <TagSelector />
       <S.ButtonBox>
-        <S.SubmitBtn onClick={() => setPhrase('')}>취소</S.SubmitBtn>
+        <S.CancelBtn onClick={() => setPhrase('')}>취소</S.CancelBtn>
         <S.SubmitBtn onClick={() => handleSubmit()}>완료</S.SubmitBtn>
       </S.ButtonBox>
     </S.Layout>
