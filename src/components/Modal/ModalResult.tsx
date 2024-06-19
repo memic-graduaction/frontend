@@ -1,24 +1,30 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 import React from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { audioUrlState, recognizedWords, recordingState, scriptSentencestate } from 'src/recoil/states';
+import {
+  audioUrlState,
+  recognizedWords,
+  recordingState,
+  scriptSentencestate,
+  wordColorPalette,
+} from 'src/recoil/states';
 import styled from 'styled-components';
 import { Checkmark } from 'react-checkmark';
 import { useModalStack } from 'src/utils/useModalStack';
 import { isAllMatched } from 'src/recoil/selectors';
 import PlaySpeechBtn from './ModalButtons/PlaySpeechBtn';
 import ReSpeechBtn from './ModalButtons/ReSpeechBtn';
-import ModalReSpeech from './ModalReSpeech';
 import * as S from './Styles';
+import ModalReSpeech from './ModalReSpeech';
 
 function ModalResult() {
   const setRecordStatus = useSetRecoilState(recordingState);
-  const originalStr = useRecoilValue(scriptSentencestate);
-  const originalWords = originalStr.split(' ');
+  const originalWords = useRecoilValue(scriptSentencestate).split(' ');
   const wordList = useRecoilValue(recognizedWords);
   const { push, pop } = useModalStack();
   const audioUrl = useRecoilValue(audioUrlState);
   const allMatched = useRecoilValue(isAllMatched);
+  const colors = useRecoilValue(wordColorPalette);
 
   const handleClickReSpeech = () => {
     setRecordStatus('inactive');
@@ -26,8 +32,8 @@ function ModalResult() {
     pop();
   };
 
-  const handleClickWrongText = (id: number) => {
-    const word = originalWords[id];
+  const handleClickWrongText = (i: number) => {
+    const word = originalWords[i];
     push({ key: 'modal-respeech', Component: ModalReSpeech, Props: { word }, popOnce: true });
   };
 
@@ -49,25 +55,24 @@ function ModalResult() {
         <Layout>
           <S.TitleBox>* AI가 내 발음을 이렇게 평가했어요!</S.TitleBox>
           <FlexLayout style={{ gap: '0.2rem' }}>
-            {wordList.map((v, i) =>
+            {wordList.map((v) =>
               v.isMatchedWithTranscription ? (
                 <ResultText>{v.word}&nbsp;</ResultText>
               ) : (
-                <WrongText
-                  onClick={() => {
-                    handleClickWrongText(i);
-                  }}
-                >
-                  {v.word}&nbsp;
-                </WrongText>
+                <WrongText>{v.word}&nbsp;</WrongText>
               ),
             )}
           </FlexLayout>
-          <TitleBox>* 틀린 발음을 다시 발음해보세요!</TitleBox>
+          <TitleBox>* 놓친 단어들을 다시 발음해보세요!</TitleBox>
           <FlexLayout>
-            <WordBox>morning</WordBox>
-            <WordBox>hour</WordBox>
-            <WordBox>earthquake</WordBox>
+            {wordList.map(
+              (v, i) =>
+                !v.isMatchedWithTranscription && (
+                  <WordBox style={{ background: `${colors[i % 7]}` }} onClick={() => handleClickWrongText(i)}>
+                    {originalWords[i]}
+                  </WordBox>
+                ),
+            )}
           </FlexLayout>
         </Layout>
       )}
@@ -102,7 +107,6 @@ const ResultText = styled.div`
 const WrongText = styled(ResultText)`
   color: #ff5c5c;
   font-weight: 500;
-  cursor: pointer;
 `;
 
 const CorrectText = styled(ResultText)`
@@ -134,8 +138,8 @@ const WordBox = styled.div`
   align-items: center;
   padding: 0 1rem;
   border-radius: 0.625rem;
-  background: #fff6c6;
   font-size: 1.5rem;
   font-style: normal;
   font-weight: 700;
+  cursor: pointer;
 `;
