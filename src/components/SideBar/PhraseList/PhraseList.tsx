@@ -63,7 +63,7 @@ const PhraseList = () => {
           />
         ))
       ) : (
-        <NullLayout>스크립트에서 표현을 저장해보세요 !</NullLayout>
+        <NullLayout>스크립트에서 표현을 저장해보세요!</NullLayout>
       )}
     </Layout>
   );
@@ -92,9 +92,10 @@ const Layout = styled.div`
 const NullLayout = styled.div`
   width: 90%;
   height: 100%;
-  color: #9f93af;
-  font-size: 1.1rem;
+  color: #5a4e6a;
+  font-size: 1.2rem;
+  font-weight: 500;
   display: flex;
   justify-content: center;
-  margin-top: 4rem;
+  margin-top: 10rem;
 `;

@@ -26,7 +26,7 @@ export default ToggleBtn;
 const ToggleSwitch = styled.label<Props>`
   width: 25rem;
   height: 2.25rem;
-  border-radius: 3.125rem;
+  border-radius: 3rem;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -40,12 +40,12 @@ const ToggleSwitch = styled.label<Props>`
 const ToggleButton = styled.span<Props>`
   width: 13rem;
   height: 2.25rem;
-  border-radius: 3.125rem;
+  border-radius: 3rem;
   position: absolute;
   top: 50%;
   left: ${(props) => (props.$overall ? '12.5rem' : '0')};
   transform: translateY(-50%);
-  background: #9f93af;
+  background: #5a4e6a;
   transition: all 0.2s ease-in;
 `;
 
@@ -55,8 +55,8 @@ const CheckBox = styled.input.attrs({ type: 'checkbox' })`
 
 const Text = styled.div<Props>`
   font-size: 1.1rem;
-  font-weight: ${(props) => (props.$overall ? '500' : '300')};
-  color: ${(props) => (props.$overall ? 'white' : '#9f93af')};
+  font-weight: 500;
+  color: ${(props) => (props.$overall ? 'white' : '#5a4e6a;')};
   transition: all 0.2s ease-in;
   z-index: 1;
 `;
