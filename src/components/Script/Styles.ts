@@ -87,15 +87,6 @@ export const ScriptSmall = styled.div`
   margin-left: 1rem;
 `;
 
-export const DownLoadBtn = styled.button`
-  color: #6c6c6c;
-  font-size: 1.25rem;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-  text-decoration-line: underline;
-`;
-
 export const Border = styled.div`
   width: 100%;
   height: 1px;

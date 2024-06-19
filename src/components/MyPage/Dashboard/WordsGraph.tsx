@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import { Bar } from 'react-chartjs-2';
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import { useRecoilValue } from 'recoil';
 import { selectedDateState, UUid } from '../../../recoil/states';
+
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 interface DataItem {
   date: number;
@@ -18,6 +22,7 @@ function WordsGraph() {
     const fetchData = async () => {
       const year = selectedDate.getFullYear();
       const month = selectedDate.getMonth() + 1;
+      const lastDay = new Date(year, month, 0).getDate(); // Get the last day of the month
 
       try {
         const response = await axios.get<DataItem[]>(`/v1/recognized-sentences/counts?year=${year}&month=${month}`, {
@@ -27,32 +32,72 @@ function WordsGraph() {
         });
 
         if (Array.isArray(response.data)) {
-          setData(response.data);
+          const completeData = Array.from({ length: lastDay }, (_, index) => {
+            const date = index + 1;
+            const dataItem = response.data.find((item) => item.date === date);
+            return {
+              date,
+              count: dataItem ? dataItem.count : 0,
+            };
+          });
+          setData(completeData);
         } else {
           console.error('Unexpected response data format:', response.data);
         }
-
       } catch (error) {
         console.error(error);
       }
     };
 
-    if (user.accessToken) {
+    if (user.accessToken && selectedDate) {
       fetchData();
     }
   }, [selectedDate, user.accessToken]);
 
+  const chartData = {
+    labels: data.map((item) => item.date.toString()),
+    datasets: [
+      {
+        label: 'Count',
+        data: data.map((item) => item.count),
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const options = {
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: 'Date',
+        },
+      },
+      y: {
+        title: {
+          display: true,
+          text: 'Count',
+        },
+        beginAtZero: true,
+        max: 30,
+        ticks: {
+          stepSize: 5,
+        },
+      },
+    },
+  };
+
   return (
     <Container>
-      <Title>My Study Chart</Title>
+      <MainTitle>My Study Chart</MainTitle>
       <Separator />
-      <DataList>
-        {data.map((item) => (
-          <StyledDataItem key={item.date}>
-            Date: {item.date}, Count: {item.count}
-          </StyledDataItem>
-        ))}
-      </DataList>
+      <ChartWrapper>
+        <ChartContainer>
+          <Bar data={chartData} options={options} />
+        </ChartContainer>
+      </ChartWrapper>
     </Container>
   );
 }
@@ -67,21 +112,27 @@ const Container = styled.div`
   background: #fff;
   border-radius: 20px;
   padding: 20px 40px;
+  margin: 0;
 `;
 
-const DataList = styled.div`
-  margin-top: 20px;
+const ChartWrapper = styled.div`
+  flex: 1; 
+  display: flex;
+  width: 100%;
+  overflow-x: auto;
 `;
 
-const StyledDataItem = styled.div`
-  margin-bottom: 10px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  color: #000000;
+const ChartContainer = styled.div`
+  flex: 1;
+  display: flex;
+  width: 100%;
+  height: auto; 
+  padding-bottom: 20px;
+  position: relative;
+  justify-content: center;
 `;
 
-const Title = styled.div`
+const MainTitle = styled.div`
   font-size: 1.5rem;
   font-weight: 600;
   margin: 5px;

@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { BookMarkAfter } from 'src/assets/Icons';
+import { useRecoilValue } from 'recoil';
+import axios from 'axios';
+import { UUid } from 'src/recoil/states';
 import styled from 'styled-components';
 import SideModal from "./SideModal";
-// import axios from 'axios';
 
 function App() {
   const [videos, setVideos] = useState([]);
@@ -11,48 +12,52 @@ function App() {
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [isModalVisible, setModalVisible] = useState(false);
   const containerRef = useRef(null);
+  const user = useRecoilValue(UUid);
 
   useEffect(() => {
     const fetchVideos = async () => {
       setLoading(true);
-      const newVideos = [
-        // 더미 데이터
-        { id: 1, thumbnail: 'https://via.placeholder.com/120x90', title: 'Video 1' },
-        { id: 2, thumbnail: 'https://via.placeholder.com/120x90', title: 'Video 2' },
-        { id: 3, thumbnail: 'https://via.placeholder.com/120x90', title: 'Video 3' },
-        { id: 4, thumbnail: 'https://via.placeholder.com/120x90', title: 'Video 4' },
-        { id: 5, thumbnail: 'https://via.placeholder.com/120x90', title: 'Video 5' },
-        { id: 6, thumbnail: 'https://via.placeholder.com/120x90', title: 'Video 6' },
-        { id: 7, thumbnail: 'https://via.placeholder.com/120x90', title: 'Video 7' },
-        { id: 8, thumbnail: 'https://via.placeholder.com/120x90', title: 'Video 8' },
-      ];
-      setVideos((prevVideos) => [...prevVideos, ...newVideos]);
-      setLoading(false);
+      try {
+        const response = await axios.get('/v1/scraps', {
+          headers: {
+            Authorization: `${user.accessToken}`,
+          },
+        });
+
+        const videosWithDetails = await Promise.all(response.data.map(async (video) => {
+          const videoDetails = await fetchVideoDetails(video.url);
+          return { ...video, ...videoDetails };
+        }));
+
+        setVideos(videosWithDetails);
+      } catch (error) {
+        console.error('Error fetching videos:', error);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchVideos();
   }, [page]);
 
-  const handleScroll = (e) => {
-    const { scrollTop, clientHeight, scrollHeight } = e.currentTarget;
-    if (scrollHeight - scrollTop === clientHeight) {
-      setPage((prevPage) => prevPage - 1);
+  const fetchVideoDetails = async (url) => {
+    try {
+      const response = await fetch(`https://noembed.com/embed?url=${url}`);
+      const data = await response.json();
+      return {
+        title: data.title,
+        thumbnail: data.thumbnail_url,
+        uploader: data.author_name,
+      };
+    } catch (error) {
+      console.error('Error fetching video details:', error);
     }
   };
 
-  const toggleBookmark = (id) => {
-    const confirmed = window.confirm('스크랩을 취소하시겠습니까?');
-    if (confirmed) {
-      // try {
-      //   await axios.delete(`/v1/스크랩목록`);
-      //   setVideos((prevVideos) => prevVideos.filter((video => video.id != id)));
-      // window.location.reload();
-      // }
-      setVideos((prevVideos) =>
-        prevVideos.map((video) =>
-          video.id === id ? { ...video, isBookmarked: false } : video
-        )
-      );
+  const handleScroll = (e) => {
+    const { scrollTop, clientHeight, scrollHeight } = e.currentTarget;
+    if (scrollHeight - scrollTop === clientHeight) {
+      setPage((prevPage) => prevPage + 1);
     }
   };
 
@@ -68,40 +73,27 @@ function App() {
     }, 300); // 애니메이션 시간과 동일하게 설정
   };
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (containerRef.current && !containerRef.current.contains(event.target)) {
-        closeModal();
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [containerRef]);
 
   return (
     <Wrapper>
       <Container ref={containerRef} onScroll={handleScroll}>
-        {videos.map((video) => (
-          <React.Fragment key={video.id}>
-            <VideoItem onClick={() => handleVideoClick(video)}>
-              <ButtonContainer onClick={(e) => { e.stopPropagation(); toggleBookmark(video.id); }}>
-                <BookMarkAfter />
-              </ButtonContainer>
-              <Thumbnail src={video.thumbnail} alt={video.title} />
-              <Title>{video.title}</Title>
+        {videos.map((vid) => (
+          <React.Fragment key={vid.id}>
+            <VideoItem onClick={() => handleVideoClick(vid)}>
+              <Thumbnail src={vid.thumbnail} alt={vid.title} />
+              <Title>{vid.title}</Title>
             </VideoItem>
             <Separator />
           </React.Fragment>
         ))}
         {loading && <Loading>Loading...</Loading>}
       </Container>
-      {selectedVideo && (
-        <SideModalWrapper onClick={(e) => e.stopPropagation()}>
-          <SideModal video={selectedVideo} onClose={closeModal} isVisible={isModalVisible} />
-        </SideModalWrapper>
+      {isModalVisible && selectedVideo && (
+        <SideModal
+          video={selectedVideo}
+          isVisible={isModalVisible}
+          onClose={closeModal}
+        />
       )}
     </Wrapper>
   );
@@ -128,14 +120,6 @@ const Container = styled.div`
   padding: 30px;
   overflow-y: auto; 
   position: relative;
-`;
-
-const SideModalWrapper = styled.div`
-  width: 35%;
-  height: 100%;
-  position: absolute;
-  right: 0;
-  top: 0;
 `;
 
 const VideoItem = styled.div`
@@ -165,14 +149,4 @@ const Loading = styled.div`
   margin: 20px 0;
   font-size: 1rem;
   color: #888888;
-`;
-
-export const ButtonContainer = styled.div`
-  width: 3%;
-  position: relative;
-  right: 0;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  margin: 0 30px 0 30px;
 `;

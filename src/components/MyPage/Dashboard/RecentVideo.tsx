@@ -1,24 +1,45 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useRecoilValue } from 'recoil';
+import { UUid } from 'src/recoil/states';
 import styled from 'styled-components';
 
 function App() {
   const [videos, setVideos] = useState([]);
+  const user = useRecoilValue(UUid);
 
   useEffect(() => {
     const fetchVideos = async () => {
-      const newVideos = [
-        // Dummy data
-        { id: 1, thumbnail: 'https://via.placeholder.com/120x90', title: 'Video 1' },
-        { id: 2, thumbnail: 'https://via.placeholder.com/120x90', title: 'Video 2' },
-        { id: 3, thumbnail: 'https://via.placeholder.com/120x90', title: 'Video 3' },
-        { id: 4, thumbnail: 'https://via.placeholder.com/120x90', title: 'Video 4' },
-        { id: 5, thumbnail: 'https://via.placeholder.com/120x90', title: 'Video 5' },
-        { id: 6, thumbnail: 'https://via.placeholder.com/120x90', title: 'Video 6' },
-      ];
-      setVideos(newVideos);
+      try {
+        const response = await axios.get('/v1/transcriptions/my/all', {
+          headers: {
+            Authorization: `${user.accessToken}`,
+          },
+        });
+        const videoUrls = response.data.slice(0, 10).map((video) => video.url);
+        const videoDetails = await Promise.all(videoUrls.map(async (url) => {
+          const videoData = await fetchVideoTitle(url);
+          return { ...videoData, url };
+        }));
+
+        setVideos(videoDetails);
+      } catch (e) {
+        console.error('Error fetching videos:', e);
+      }
     };
     fetchVideos();
-  }, []);
+  }, [user.accessToken]);
+
+  async function fetchVideoTitle(youtubeLink) {
+    try {
+      const response = await fetch(`https://noembed.com/embed?url=${youtubeLink}`);
+      const data = await response.json();
+      return { title: data.title, thumbnail: data.thumbnail_url };
+    } catch (e) {
+      console.error('Error fetching video:', e);
+      return { title: 'Error fetching video title', thumbnail: '' };
+    }
+  }
 
   return (
     <Wrapper>
@@ -29,7 +50,7 @@ function App() {
       <Container>
         {videos.map((video) => (
           <React.Fragment key={video.id}>
-            <VideoItem>
+            <VideoItem href={video.url} target="_blank" rel="noopener noreferrer">
               <Thumbnail src={video.thumbnail} alt={video.title} />
               <VideoTitle>{video.title}</VideoTitle>
             </VideoItem>
@@ -78,9 +99,10 @@ const Container = styled.div`
   border-bottom-right-radius: 20px;
 `;
 
-const VideoItem = styled.div`
+const VideoItem = styled.a`
   display: flex;
   align-items: center;
+  text-decoration: none;
 `;
 
 const Thumbnail = styled.img`

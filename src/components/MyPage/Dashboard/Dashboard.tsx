@@ -8,7 +8,7 @@ import Calendar from './Calendar';
 const MainContainer = styled.div`
     display: flex;
     width: 100%;
-    height: 100vh;
+    height: 150%;
     flex-direction: column;
     background: none;
     gap: 25px;
@@ -17,7 +17,7 @@ const MainContainer = styled.div`
 
 const GraphCalContainer = styled.div`
   width: 100%;
-  height: 60%;
+  height: auto;
   gap: 20px;
   display: flex;
   flex-direction: row;
@@ -25,7 +25,7 @@ const GraphCalContainer = styled.div`
 
 const RecentVideoContainer = styled.div`
   width: 100%;
-  height: 80%;
+  height: 90%;
   overflow: auto;
 `;
 

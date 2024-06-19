@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { BookMarkBefore, BookMarkAfter } from 'src/assets/Icons';
-import { youtubeLinkState } from 'src/recoil/states';
+import { youtubeLinkState, UUid, scrapState } from 'src/recoil/states';
+import { youtubeIDSelector } from 'src/recoil/selectors';
 import { extractVideoIdFromLink } from 'src/utils/extractVideoId';
+import axios from 'axios';
 import * as S from './Styles';
 
 function PlayerInfo() {
   const youtubeLink = useRecoilValue(youtubeLinkState);
+  const transcriptionId = useRecoilValue(youtubeIDSelector);
   const [videoTitle, setVideoTitle] = useState('');
   const [authorName, setAuthorName] = useState('');
   const [authorProfileImage, setAuthorProfileImage] = useState('');
   const [isBookmarked, setIsBookmarked] = useState(false);
+  const [scrapId, setScrapId] = useState<number | null>(null);
+  const user = useRecoilValue(UUid);
+  const setScrapState = useSetRecoilState(scrapState);
 
   useEffect(() => {
     async function fetchVideoTitle() {
@@ -38,6 +44,31 @@ function PlayerInfo() {
       fetchVideoTitle();
     }
   }, [youtubeLink]);
+
+
+  useEffect(() => {
+    async function checkIfBookmarked() {
+      try {
+        const response = await axios.get('/v1/scraps', {
+          headers: {
+            Authorization: `${user.accessToken}`,
+          },
+        });
+        const scrapItem = response.data.find((scrap) => scrap.transcriptionId === transcriptionId);
+        if (scrapItem) {
+          setIsBookmarked(true);
+          setScrapId(scrapItem.id);
+          setScrapState((prev) => [...prev, transcriptionId]);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    if (transcriptionId) {
+      checkIfBookmarked();
+    }
+  }, [transcriptionId, user, setScrapState]);
 
   // 채널 id 가져오는 함수
   async function fetchChannelId(videoId) {
@@ -70,8 +101,48 @@ function PlayerInfo() {
     }
   }
 
-  const toggleBookmark = () => {
-    setIsBookmarked(!isBookmarked);
+  const toggleBookmark = async () => {
+    if (!isBookmarked) {
+      const confirmBookmark = window.confirm('스크랩 하시겠습니까?');
+      if (confirmBookmark && transcriptionId) {
+        try {
+          const response = await axios.post(
+            '/v1/scraps',
+            { transcriptionId },
+            {
+              headers: {
+                Authorization: `${user.accessToken}`,
+              },
+            }
+          );
+          setIsBookmarked(true);
+          setScrapId(response.data.id);
+          setScrapState((prev) => [...prev, transcriptionId]);
+          console.log(`Bookmark added: id=${response.data.id}, transcriptionId=${transcriptionId}`);
+          console.log('북마크 추가됨:', response.data);
+          window.location.reload();
+        } catch (error) {
+          console.error('북마크 등록 중 에러 :', error);
+        }
+      }
+    } else {
+      const confirmRemoveBookmark = window.confirm('스크랩을 삭제하시겠습니까?');
+      if (confirmRemoveBookmark && scrapId !== null) {
+        try {
+          await axios.delete(`/v1/scraps/${scrapId}`, {
+            headers: {
+              Authorization: `${user.accessToken}`,
+            },
+          });
+          setIsBookmarked(false);
+          setScrapState((prev) => prev.filter((id) => id !== transcriptionId));
+          console.log('북마크 삭제됨!');
+          console.log(`Bookmark removed: id=${scrapId}, transcriptionId=${transcriptionId}`);
+        } catch (error) {
+          console.error('북마크 삭제 중 에러:', error);
+        }
+      }
+    }
   };
 
   return (
