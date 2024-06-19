@@ -1,33 +1,91 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { selectedDateState, amountState, UUid } from 'src/recoil/states';
 import 'react-calendar/dist/Calendar.css';
 import styled, { ThemeProvider, DefaultTheme } from 'styled-components';
-
-export type DatePiece = Date | null;
-export type SelectedDate = DatePiece | [DatePiece, DatePiece];
+import axios from 'axios';
 
 const appTheme: DefaultTheme = {
   color: {
     pink: '#dbf1ff',
-    brown: '#604a4a'
-  }
+    brown: '#604a4a',
+  },
 };
 
 function App() {
-  const [selectedDate, setSelectedDate] = useState<SelectedDate>(new Date());
+  const [selectedDate, setSelectedDate] = useRecoilState(selectedDateState);
+  const [amount, setAmount] = useRecoilState(amountState);
+  const user = useRecoilValue(UUid);
+  const [refresh, setRefresh] = useState(0);
+
+  const fetchData = async (date: Date) => {
+    if (!date) return;
+
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+
+    try {
+      const response = await axios.get(`/v1/statistics?year=${year}&month=${month}`, {
+        headers: {
+          Authorization: `${user.accessToken}`,
+        },
+      });
+
+      const { visitedDays, records, convert } = response.data;
+      setAmount((prev) => ({
+        ...prev,
+        visitedDays,
+        records,
+        convert,
+      }));
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData(selectedDate);
+  }, [selectedDate, user.accessToken, setAmount, refresh]);
+
+  const handleDateChange = (value: Date | Date[]) => {
+    if (Array.isArray(value)) {
+      setSelectedDate(value[0]);
+    } else {
+      setSelectedDate(value);
+    }
+    setRefresh((prev) => prev + 1); // Refresh 상태 변경
+  };
+
+  const handleActiveStartDateChange = ({ activeStartDate }: { activeStartDate: Date }) => {
+    setSelectedDate(activeStartDate);
+    setRefresh((prev) => prev + 1); // Refresh 상태 변경
+  };
+
+  const tileContent = ({ date, view }: { date: Date; view: string }) => {
+    if (view === 'month') {
+      const day = date.getDate();
+      if (amount.visitedDays.includes(day)) {
+        return <VisitedMarker />;
+      }
+    }
+    return null;
+  };
 
   return (
     <ThemeProvider theme={appTheme}>
       <Container>
         <CustomCalendar
           locale="en"
-          onChange={setSelectedDate}
+          onChange={handleDateChange}
+          onActiveStartDateChange={handleActiveStartDateChange}
           value={selectedDate}
           calendarType="gregory"
           view="month"
           prev2Label={null}
           next2Label={null}
           showNeighboringMonth={false}
+          tileContent={tileContent}
         />
       </Container>
     </ThemeProvider>
@@ -53,11 +111,12 @@ const CustomCalendar = styled(Calendar)`
   border-radius: 20px;
 
   .react-calendar__viewContainer {
-    height: 75%;
+    height: 100%;
+    padding: 30px 0;
   }
   .react-calendar__month-view {
-    height: 100%;
-    display:flex;
+    height: auto;
+    display: flex;
     align-items: center;
   }
 
@@ -88,25 +147,33 @@ const CustomCalendar = styled(Calendar)`
 
   .react-calendar__tile {
     text-align: center;
-    height: 45px;
+    height: auto;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    position: relative;
   }
 
-  .react-calendar__month-view__days__day{
+  .react-calendar__month-view__days__day {
     border: none;
-    height: 45px;
+    height: auto;
   }
 
   .react-calendar__tile:enabled:hover,
   .react-calendar__tile:enabled:focus {
     border: 1px solid #ccc;
-
   }
 
   .react-calendar__tile--active {
     border: none;
   }
+`;
+
+const VisitedMarker = styled.div`
+  width: 6px;
+  height: 6px;
+  background-color: red;
+  border-radius: 50%;
+  margin-top: 4px;
 `;
