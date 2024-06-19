@@ -149,3 +149,8 @@ export const selectedDateState = atom({
   key: 'selectedDateState',
   default: new Date(), // 현재 날짜로 초기화
 });
+
+export const wordColorPalette = atom<string[]>({
+  key: 'wordColorPalette',
+  default: ['#FFF6C6', '#FBF0FF', '#EFFFD5', '#DAFFF6', '#E0EAFF', '#FFE8BC', '#D4F7FF', '#FFD9DB'],
+});

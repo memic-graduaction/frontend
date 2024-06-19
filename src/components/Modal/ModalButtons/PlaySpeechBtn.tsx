@@ -23,10 +23,10 @@ function PlaySpeechBtn({ url }: Props) {
   return (
     <>
       <audio ref={myRef} src={url} />
-      <S.SquareBtnBox onClick={() => setIsClicked(true)}>
+      <S.ResultBtnBox onClick={() => setIsClicked(true)}>
         <PlayBtn />
         나의 발음 듣기
-      </S.SquareBtnBox>
+      </S.ResultBtnBox>
     </>
   );
 }

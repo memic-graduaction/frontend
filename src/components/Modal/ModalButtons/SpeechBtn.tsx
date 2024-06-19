@@ -8,9 +8,10 @@ interface Props {
 
 function SpeechBtn({ onClick }: Props) {
   return (
-    <S.RoundBtn onClick={() => onClick()}>
+    <S.RecordBtn onClick={() => onClick()}>
+      REC
       <Microphone />
-    </S.RoundBtn>
+    </S.RecordBtn>
   );
 }
 

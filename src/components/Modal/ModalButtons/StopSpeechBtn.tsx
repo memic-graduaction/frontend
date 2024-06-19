@@ -8,9 +8,10 @@ interface Props {
 
 function StopSpeechBtn({ onClick }: Props) {
   return (
-    <S.RoundBtn onClick={() => onClick()}>
+    <S.RecordBtn onClick={() => onClick()}>
+      STOP
       <Stop />
-    </S.RoundBtn>
+    </S.RecordBtn>
   );
 }
 
