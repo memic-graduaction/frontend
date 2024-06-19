@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import DashboardIcon from '../../assets/dashboard.png';
@@ -48,6 +49,15 @@ const Icon = styled.img<{ isActive?: boolean }>`
 
 function MenuBar({ setActiveComponent }) {
   const [activeMenu, setActiveMenu] = useRecoilState(menuState);
+
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname === '/mypage') {
+      setActiveMenu('Dashboard');
+      setActiveComponent('Dashboard');
+    }
+  }, [location, setActiveMenu, setActiveComponent]);
 
   const handleClick = (menu: string) => {
     setActiveMenu(menu);

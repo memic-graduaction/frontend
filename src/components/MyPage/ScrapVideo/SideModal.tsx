@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { UUid } from 'src/recoil/states';
+import { UUid, youtubeLinkState } from 'src/recoil/states';
 import styled, { keyframes } from 'styled-components';
 
 interface SideModalProps {
@@ -38,6 +38,7 @@ const slideOut = keyframes`
 function SideModal({ video, onClose, isVisible }: SideModalProps) {
   const [isRendered, setIsRendered] = useState(isVisible);
   const modalRef = useRef(null);
+  const setYoutubeLink = useSetRecoilState(youtubeLinkState);
   const user = useRecoilValue(UUid);
   const navigate = useNavigate();
 
@@ -81,7 +82,8 @@ function SideModal({ video, onClose, isVisible }: SideModalProps) {
   };
 
   const handleVideoScript = () => {
-    navigate(`/script/${video.url}`);
+    setYoutubeLink(video.url);
+    navigate(`/script`);
   };
 
   const animationEndHandler = () => {
