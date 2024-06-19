@@ -32,9 +32,9 @@ function ModalResult() {
     pop();
   };
 
-  const handleClickWrongText = (i: number) => {
+  const handleClickWrongText = (i: number, color: string) => {
     const word = originalWords[i];
-    push({ key: 'modal-respeech', Component: ModalReSpeech, Props: { word }, popOnce: true });
+    push({ key: 'modal-respeech', Component: ModalReSpeech, Props: { word, color }, popOnce: true });
   };
 
   return (
@@ -68,7 +68,10 @@ function ModalResult() {
             {wordList.map(
               (v, i) =>
                 !v.isMatchedWithTranscription && (
-                  <WordBox style={{ background: `${colors[i % 7]}` }} onClick={() => handleClickWrongText(i)}>
+                  <WordBox
+                    style={{ background: `${colors[i % 7]}` }}
+                    onClick={() => handleClickWrongText(i, colors[i % 7])}
+                  >
                     {originalWords[i]}
                   </WordBox>
                 ),

@@ -13,9 +13,14 @@ import * as S from './Styles';
 
 interface Prop {
   word: string;
+  color: string;
 }
 
-function ModalReSpeech({ word }: Prop) {
+interface TextProp {
+  $color?: string;
+}
+
+function ModalReSpeech({ word, color }: Prop) {
   const [recordingStatus, setRecordingStatus] = useRecoilState(recordingState);
   const [recorder, setRecorder] = useState(null);
   const setAudioUrl = useSetRecoilState(secondAudioUrl);
@@ -54,7 +59,7 @@ function ModalReSpeech({ word }: Prop) {
   return (
     <Layout>
       <S.TitleBox>* 단어를 다시 한 번 발음해 보세요</S.TitleBox>
-      <TextLayout>{word}</TextLayout>
+      <TextLayout $color={color}>{word}</TextLayout>
       {recordingStatus === 'inactive' ? <SpeechBtn onClick={() => startRecording(setRecorder)} /> : null}
       {recordingStatus === 'recording' ? <StopSpeechBtn onClick={handleStopBtnClick} /> : null}
     </Layout>
@@ -73,14 +78,14 @@ const Layout = styled.div`
   gap: 2.5rem;
 `;
 
-const TextLayout = styled.div`
+const TextLayout = styled.div<TextProp>`
   height: 4rem;
   width: 21rem;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 0.625rem;
-  background: #fff6c6;
+  background: ${(props) => props.$color};
   font-size: 2rem;
   font-style: normal;
   font-weight: 700;
