@@ -8,8 +8,8 @@ import axios from 'axios';
 
 const appTheme: DefaultTheme = {
   color: {
-    pink: '#dbf1ff',
-    brown: '#604a4a',
+    pink: '#665f6e',
+    brown: '#ffffff',
   },
 };
 
@@ -173,7 +173,7 @@ const CustomCalendar = styled(Calendar)`
 const VisitedMarker = styled.div`
   width: 6px;
   height: 6px;
-  background-color: red;
+  background-color: #ff4c4c;
   border-radius: 50%;
   margin-top: 4px;
 `;

@@ -48,51 +48,51 @@ const WordTable = ({ queries }: Prop) => {
       </Row>
       {queries.length > 0
         ? filteredList.map((v, i) => (
-            <Row key={v.id} style={{ background: i % 2 === 0 ? 'white' : '#F1F0FA' }}>
-              <Content>
-                <Highlighter
-                  searchWords={queries}
-                  textToHighlight={v.phrase}
-                  highlightStyle={{ background: '#ffe9b0' }}
-                  autoEscape
-                />
-              </Content>
-              <Content>
-                <Highlighter
-                  searchWords={queries}
-                  textToHighlight={v.meaning}
-                  highlightStyle={{ background: '#ffe9b0' }}
-                  autoEscape
-                />
-              </Content>
-              <Content>
-                {v.tags.map((tag) => (
-                  <HashTag key={tag.name} style={{ background: getTagColor() }}>
-                    # {tag.name}
-                  </HashTag>
-                ))}
-              </Content>
-              <Content>
-                <a href={v.url}>링크</a>
-              </Content>
-            </Row>
-          ))
+          <Row key={v.id} style={{ background: i % 2 === 0 ? 'white' : '#F1F0FA' }}>
+            <Content>
+              <Highlighter
+                searchWords={queries}
+                textToHighlight={v.phrase}
+                highlightStyle={{ background: '#ffe9b0' }}
+                autoEscape
+              />
+            </Content>
+            <Content>
+              <Highlighter
+                searchWords={queries}
+                textToHighlight={v.meaning}
+                highlightStyle={{ background: '#ffe9b0' }}
+                autoEscape
+              />
+            </Content>
+            <Content>
+              {v.tags.map((tag) => (
+                <HashTag key={tag.name} style={{ background: getTagColor() }}>
+                  # {tag.name}
+                </HashTag>
+              ))}
+            </Content>
+            <Content>
+              <a href={v.url}>링크</a>
+            </Content>
+          </Row>
+        ))
         : list.map((v, i) => (
-            <Row key={v.id} style={{ background: i % 2 === 0 ? 'white' : '#F1F0FA' }}>
-              <Content>{v.phrase}</Content>
-              <Content>{v.meaning}</Content>
-              <Content>
-                {v.tags.map((tag) => (
-                  <HashTag key={tag.name} style={{ background: getTagColor() }}>
-                    # {tag.name}
-                  </HashTag>
-                ))}
-              </Content>
-              <Content>
-                <a href={v.url}>링크</a>
-              </Content>
-            </Row>
-          ))}
+          <Row key={v.id} style={{ background: i % 2 === 0 ? 'white' : '#F1F0FA' }}>
+            <Content>{v.phrase}</Content>
+            <Content>{v.meaning}</Content>
+            <Content>
+              {v.tags.map((tag) => (
+                <HashTag key={tag.name} style={{ background: getTagColor() }}>
+                  # {tag.name}
+                </HashTag>
+              ))}
+            </Content>
+            <Content>
+              <a href={v.url}>링크</a>
+            </Content>
+          </Row>
+        ))}
     </Layout>
   );
 };
@@ -136,7 +136,7 @@ const Content = styled.div`
 `;
 
 const Title = styled(Content)`
-  color: #766daa;
+  color: #433E49;
   font-size: 1.2rem;
 `;
 

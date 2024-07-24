@@ -86,9 +86,9 @@ const Container = styled.div`
     flex-direction: row;
     background: #fff;
     color: #2C3E50;
-    border-radius: 20px;
-    padding: 20px;
-    border: 2px solid #dfdfdf;
+    padding: 10px;
+    border-top: 1px solid #dfdfdf;
+    border-bottom: 1px solid #dfdfdf;
     align-items: center;
 `
 const Content = styled.div`

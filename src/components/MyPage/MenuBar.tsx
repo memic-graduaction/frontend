@@ -45,6 +45,7 @@ const Icon = styled.img<{ isActive?: boolean }>`
   max-height: 100%;
   object-fit: contain;
   opacity: ${(props) => (props.isActive ? '1' : '0.3')};
+  filter: invert(1);
 `;
 
 function MenuBar({ setActiveComponent }) {

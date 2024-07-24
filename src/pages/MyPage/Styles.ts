@@ -18,7 +18,7 @@ export const Container = styled.div`
 export const IndexContainer = styled.div`
   display: flex;
   flex-direction: column;
-  background: #607d8b;
+  background: #433E49;
   width: auto;
   flex-grow: 1;
   height: 100%;
