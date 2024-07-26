@@ -163,7 +163,7 @@ const Button = styled.button`
   width: 100%;
   padding: 15px;
   margin: 10px 0;
-  background: #008080;
+  background: #7a5e7b;
   color: #fff;
   border: none;
   cursor: pointer;
@@ -171,7 +171,9 @@ const Button = styled.button`
   font-size: 1.3rem;
 
   &:hover {
-    background:#005757;
+    background:white;
+    color: #7a5e7b;
+    border: 1px solid #bb9cbc;
   }
 `;
 
@@ -180,14 +182,14 @@ const ScrapButton = styled.button`
   padding: 15px;
   margin: 10px 0;
   background: none;
-  color: #008080;
-  border: 1px solid #008080;
+  color: #7a5e7b;
+  border: 1px solid #bb9cbc;
   cursor: pointer;
   border-radius: 5px;
   font-size: 1.3rem;
 
   &:hover {
-    background:#005757;
+    background:#7a5e7b;
     color: white;
   }
 `;
