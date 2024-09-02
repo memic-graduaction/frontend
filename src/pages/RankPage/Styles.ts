@@ -1,5 +1,16 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import Colors from 'src/styles/Colors';
+
+const ThumbnailAnimation = keyframes`
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+`;
 
 export const Layout = styled.div`
   background: ${Colors.BgMain2};
@@ -19,6 +30,11 @@ export const Container = styled.div`
   background: white;
   gap: 5rem;
   margin-top: 3rem;
+  border-radius: 1rem;
+  box-shadow:
+    1px 1px 10px rgba(0, 0, 0, 0.3),
+    inset -1px -1px 10px rgba(0, 0, 0, 0.3),
+    inset 1px 1px 10px rgba(255, 255, 255, 0.2);
 `;
 
 export const Title = styled.div`
@@ -26,6 +42,7 @@ export const Title = styled.div`
   font-size: 4rem;
   line-height: 1.5;
   text-align: center;
+  animation: ${ThumbnailAnimation} 0.5s ease-out forwards;
 `;
 
 export const ThumbnailLayout = styled.div`
@@ -38,6 +55,7 @@ export const ThumbnailLayout = styled.div`
 
 export const ThumbnailBox = styled.a`
   text-decoration: none;
+  animation: ${ThumbnailAnimation} 0.5s ease-out forwards;
 `;
 
 export const Thumbnail = styled.img`
