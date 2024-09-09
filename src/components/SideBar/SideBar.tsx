@@ -25,28 +25,35 @@ const SideBar = () => {
     <>
       {isOpen ? <S.BackLayout onClick={handleBackGroundClick} /> : null}
       <S.Layout $isopen={isOpen}>
-        {!isOpen ? (
-          <S.IconBox onClick={() => setIsOpen(!isOpen)}>
-            <SideBarBtn />
-            click!
-          </S.IconBox>
-        ) : null}
-        <S.Header>
-          <S.Title>
-            표현 저장소
-            <Write />
-          </S.Title>
-        </S.Header>
-        <ToggleBtn />
-        {isLogin ? (
+        {isOpen ? (
           <>
-            {phrase !== '' && <PhraseEditCard />}
-            {isOverall ? <PhraseAllList /> : <PhraseList />}
+            <S.Header $isopen={isOpen}>
+              <S.Title>
+                <Write />
+                표현 저장소
+              </S.Title>
+              <SideBarBtn onClick={() => setIsOpen(false)} style={{ cursor: 'pointer' }} />
+            </S.Header>
+            <ToggleBtn />
+            {isLogin ? (
+              <>
+                {phrase !== '' && <PhraseEditCard />}
+                {isOverall ? <PhraseAllList /> : <PhraseList />}
+              </>
+            ) : (
+              <S.NullLayout>
+                표현을 저장 하려면 로그인 하세요!<S.LoginBtn onClick={() => navigate('/login')}>로그인 하기</S.LoginBtn>
+              </S.NullLayout>
+            )}
           </>
         ) : (
-          <S.NullLayout>
-            표현을 저장 하려면 로그인 하세요!<S.LoginBtn onClick={() => navigate('/login')}>로그인 하기</S.LoginBtn>
-          </S.NullLayout>
+          <S.Header $isopen={isOpen}>
+            <S.Title>
+              <Write width="15%" />
+              표현 저장소
+            </S.Title>
+            <SideBarBtn onClick={() => setIsOpen(true)} style={{ width: '15', cursor: 'pointer' }} />
+          </S.Header>
         )}
       </S.Layout>
       {isOpen ? <style>{'body { overflow: hidden; }'}</style> : null}

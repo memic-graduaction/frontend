@@ -1,6 +1,6 @@
 import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
-import { ModalStateType, Tag, User, recognizedWordsType, scrapedPhrase, youtubeId, UserAmount} from './types';
+import { ModalStateType, Tag, User, recognizedWordsType, scrapedPhrase, youtubeId, UserAmount } from './types';
 
 const { persistAtom } = recoilPersist({
   key: 'localStorage',
@@ -162,7 +162,6 @@ export const selectedDateState = atom({
   default: new Date(), // 현재 날짜로 초기화
 });
 
-
 export const amountState = atom<UserAmount>({
   key: 'amountState',
   default: {
@@ -177,4 +176,3 @@ export const wordColorPalette = atom<string[]>({
   key: 'wordColorPalette',
   default: ['#FFF6C6', '#FBF0FF', '#EFFFD5', '#DAFFF6', '#E0EAFF', '#FFE8BC', '#D4F7FF', '#FFD9DB'],
 });
-

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Close } from 'src/assets/Icons';
+import { Close, Index } from 'src/assets/Icons';
 import {
   forceRefresh,
   scriptIDstate,
@@ -9,7 +9,6 @@ import {
   sideBarOpenState,
 } from 'src/recoil/states';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { getTagColor } from 'src/utils/getTagColor';
 import axios from 'axios';
 import { getSelectedPhrase } from 'src/utils/getSelectedPhrase';
 import { getPhraseIndex } from 'src/utils/getPhraseIndex';
@@ -84,24 +83,29 @@ const PhraseEditCard = () => {
   return (
     <S.Layout $isselected={false}>
       <S.IconBox>
-        <Close width={15} height={15} onClick={handleClose} />
+        <Index />
+        <Close onClick={handleClose} />
       </S.IconBox>
-      <S.PhraseBox $isselected={false}>{phrase}</S.PhraseBox>
-      <MeaningInput defaultMean={defaultMean} setMeaning={setMeaning} />
+
+      <S.HashTagBox>
+        태그 추가 :
+        <TagSelector />
+      </S.HashTagBox>
       <S.HashTagBox>
         {tags
           .map((v) => v.name)
           .map((v, i) => (
-            <S.HashTag key={v} style={{ background: getTagColor() }}>
+            <S.HashTag key={v}>
               #{v}
               <Close width={12} height={12} onClick={() => handleDeleteTag(i)} style={{ cursor: 'pointer' }} />
             </S.HashTag>
           ))}
       </S.HashTagBox>
-      <TagSelector />
+      <S.PhraseBox $isselected={false}>{phrase}</S.PhraseBox>
+      <MeaningInput defaultMean={defaultMean} setMeaning={setMeaning} />
       <S.ButtonBox>
-        <S.CancelBtn onClick={() => setPhrase('')}>취소</S.CancelBtn>
-        <S.SubmitBtn onClick={() => handleSubmit()}>완료</S.SubmitBtn>
+        <S.Button onClick={() => setPhrase('')}>취소</S.Button>
+        <S.Button onClick={() => handleSubmit()}>완료</S.Button>
       </S.ButtonBox>
     </S.Layout>
   );

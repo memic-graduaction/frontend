@@ -11,3 +11,4 @@ export { ReactComponent as Write } from './Write.svg';
 export { ReactComponent as SideBarBtn } from './SideBarBtn.svg';
 export { ReactComponent as Pin } from './Pin.svg';
 export { ReactComponent as User } from './User.svg';
+export { ReactComponent as Index } from './Index.svg';

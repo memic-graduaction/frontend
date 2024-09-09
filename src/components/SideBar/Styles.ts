@@ -16,28 +16,34 @@ export const BackLayout = styled.div`
 
 export const Layout = styled.div<Props>`
   position: fixed;
-  top: 0;
-  left: ${(props) => (props.$isopen ? '0' : '-30rem')};
+  top: ${(props) => (props.$isopen ? '1%' : '95%')};
+  left: 0.5rem;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 1.5rem;
-  border-radius: 0 0.625rem 0.625rem 0;
-  height: 100vh;
-  width: 30rem;
-  background: #efefef;
-  padding: 1.5rem 0 1.5rem 2rem;
+  border-radius: 0.625rem;
+  height: ${(props) => (props.$isopen ? '98vh' : '2rem')};
+  width: ${(props) => (props.$isopen ? '26rem' : '10rem')};
+  background: white;
+  padding-top: ${(props) => (props.$isopen ? '3rem' : '0')};
   transition: all 0.2s ease-in;
   z-index: 3;
+  box-shadow:
+    2px 2px 5px rgba(0, 0, 0, 0.3),
+    inset -2px -2px 5px rgba(0, 0, 0, 0.1),
+    inset 2px 2px 5px rgba(255, 255, 255, 0.2);
 `;
 
-export const Header = styled.div`
+export const Header = styled.div<Props>`
+  width: 80%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 2.2rem;
   color: #5a4e6a;
-  font-size: 1.25rem;
-  font-weight: 500;
+  font-size: ${(props) => (props.$isopen ? '1.5rem' : '0.9rem')};
+  font-weight: 700;
 `;
 
 export const IconBox = styled.button`
@@ -53,7 +59,7 @@ export const IconBox = styled.button`
   color: #4f4957;
   padding-top: 0.5rem;
   position: absolute;
-  right: -2.7rem;
+  right: -7rem;
   top: 45%;
 `;
 

@@ -50,24 +50,26 @@ const SelectBox = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
-  width: 6rem;
-  height: 1.7rem;
+  width: 4.5rem;
+  height: 1.3rem;
   gap: 0.625rem;
   border-radius: 3rem;
-  background: #858585;
+  background: #4f4957;
   color: white;
+  box-shadow:
+    2px 2px 5px rgba(0, 0, 0, 0.3),
+    inset -2px -2px 5px rgba(0, 0, 0, 0.3),
+    inset 2px 2px 5px rgba(255, 255, 255, 0.2);
 `;
 
 const OptionList = styled.div`
   position: absolute;
   top: 1.7rem;
   left: 0.1rem;
-  display: flex;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: flex-start;
-  width: 21rem;
-  border: 1px solid #858585;
+  width: 8rem;
+  border: 1px solid #d7d7d7;
   border-radius: 0.2rem;
   background: white;
   color: #858585;

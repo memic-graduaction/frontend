@@ -21,10 +21,13 @@ export const Layout = styled.div`
   width: 100%;
   height: 42.9rem;
   background: white;
-  padding: 1.5rem;
+  padding: 1rem 1.5rem;
   overflow-y: auto;
   border-radius: 1rem;
-  box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.25);
+  box-shadow:
+    2px 2px 10px rgba(0, 0, 0, 0.3),
+    inset -2px -2px 10px rgba(0, 0, 0, 0.3),
+    inset 2px 2px 10px rgba(255, 255, 255, 0.2);
   &::-webkit-scrollbar {
     width: 4px;
     height: 4px;
@@ -43,8 +46,8 @@ export const TextLayout = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
-  margin-top: 1.5rem;
-  margin-bottom: 1.5rem;
+  margin-top: 1.2rem;
+  margin-bottom: 1.2rem;
 `;
 
 export const TimeBox = styled.div`
@@ -62,12 +65,16 @@ export const ScrapButton = styled.button<buttonProps>`
   top: ${(props) => `${props.$xy.y}px`};
   border-radius: 1rem;
   color: white;
-  background: #ff5c5c;
+  background: #c56697;
   padding: 0.3rem 0.5rem;
   font-weight: 500;
   animation: ${fadeIn} 0.1s ease-in-out;
   gap: 0.5rem;
   z-index: 1;
+  box-shadow:
+    2px 2px 5px rgba(0, 0, 0, 0.3),
+    inset -2px -2px 5px rgba(0, 0, 0, 0.1),
+    inset 2px 2px 5px rgba(255, 255, 255, 0.2);
 `;
 
 export const ButtonContainer = styled.div`
@@ -80,11 +87,10 @@ export const ButtonContainer = styled.div`
 
 export const ScriptSmall = styled.div`
   color: #222222;
-  font-size: 2rem;
+  font-size: 1.7rem;
   font-style: normal;
-  font-weight: 800;
-  line-height: normal;
-  margin-left: 1rem;
+  font-weight: 600;
+  margin-left: 0.5rem;
 `;
 
 export const Border = styled.div`
@@ -96,7 +102,7 @@ export const Border = styled.div`
 
 // 녹음버튼 레이아웃
 export const RecBtnLayout = styled.div`
-  width: 13%;
+  width: 12%;
   right: 0;
   height: 1.875rem;
   display: flex;

@@ -24,29 +24,33 @@ const ToggleBtn = () => {
 export default ToggleBtn;
 
 const ToggleSwitch = styled.label<Props>`
-  width: 25rem;
-  height: 2.25rem;
-  border-radius: 3rem;
+  width: 18rem;
+  height: 2rem;
+  border-radius: 0.8rem;
   display: flex;
   justify-content: space-around;
   align-items: center;
   position: relative;
   background: white;
-  box-shadow: 1px 1px 10px rgba(0 0 0 / 15%);
   cursor: pointer;
   transition: all 0.1s ease-in;
+  border: 1px solid #d7d7d7;
 `;
 
 const ToggleButton = styled.span<Props>`
-  width: 13rem;
-  height: 2.25rem;
-  border-radius: 3rem;
+  width: 10rem;
+  height: 2rem;
+  border-radius: 0.8rem;
   position: absolute;
   top: 50%;
-  left: ${(props) => (props.$overall ? '12.5rem' : '0')};
+  left: ${(props) => (props.$overall ? '9rem' : '0')};
   transform: translateY(-50%);
-  background: #5a4e6a;
+  background: #c56697;
   transition: all 0.2s ease-in;
+  box-shadow:
+    2px 2px 5px rgba(0, 0, 0, 0.3),
+    inset -2px -2px 5px rgba(0, 0, 0, 0.1),
+    inset 2px 2px 5px rgba(255, 255, 255, 0.2);
 `;
 
 const CheckBox = styled.input.attrs({ type: 'checkbox' })`
@@ -54,7 +58,7 @@ const CheckBox = styled.input.attrs({ type: 'checkbox' })`
 `;
 
 const Text = styled.div<Props>`
-  font-size: 1.1rem;
+  font-size: 0.9rem;
   font-weight: 500;
   color: ${(props) => (props.$overall ? 'white' : '#5a4e6a;')};
   transition: all 0.2s ease-in;

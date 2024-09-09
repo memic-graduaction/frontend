@@ -1,7 +1,7 @@
 import React, { Ref, forwardRef, useEffect, useState } from 'react';
-import { getTagColor } from 'src/utils/getTagColor';
 import { useRecoilValue } from 'recoil';
 import { selectedHighLight, sideBarOpenState } from 'src/recoil/states';
+import { Close, Index } from 'src/assets/Icons';
 import * as S from './Styles';
 
 interface Props {
@@ -28,13 +28,17 @@ const PhraseCard = forwardRef(({ sentenceId, phrase, meaning, TagIds }: Props, r
 
   return (
     <S.Layout $isselected={isHighLighted} ref={ref}>
-      <S.PhraseBox $isselected={isHighLighted}>{phrase}</S.PhraseBox>
-      <S.MeaningBox>{meaning}</S.MeaningBox>
+      <S.IconBox>
+        <Index />
+        <Close />
+      </S.IconBox>
       <S.HashTagBox>
         {TagIds.map((v) => (
-          <S.HashTag style={{ background: getTagColor() }}>{v}</S.HashTag>
+          <S.HashTag>#{v}</S.HashTag>
         ))}
       </S.HashTagBox>
+      <S.PhraseBox $isselected={isHighLighted}>{phrase}</S.PhraseBox>
+      <S.MeaningBox>{meaning}</S.MeaningBox>
     </S.Layout>
   );
 });

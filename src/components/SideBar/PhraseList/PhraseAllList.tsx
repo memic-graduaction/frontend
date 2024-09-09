@@ -60,7 +60,6 @@ const Layout = styled.div`
   width: 100%;
   height: 85%;
   overflow-y: auto;
-  padding-top: 1rem;
   &::-webkit-scrollbar {
     width: 4px;
     height: 4px;
@@ -73,10 +72,11 @@ const Layout = styled.div`
 `;
 
 const CardLayout = styled.div`
-  width: 90%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 1rem;
 `;
 
 const NullLayout = styled.div`
@@ -100,8 +100,11 @@ const UrlButton = styled.button`
   font-size: 0.8rem;
   font-weight: 600;
   border-radius: 10px;
-  background: #cfcfcf;
+  background: #d7d7d7;
   margin: 0.5rem 0;
+  box-shadow:
+    inset -2px -2px 2px rgba(0, 0, 0, 0.1),
+    inset 2px 2px 2px rgba(255, 255, 255, 0.2);
 `;
 
 const Border = styled.div`

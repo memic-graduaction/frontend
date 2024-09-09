@@ -74,10 +74,11 @@ export default PhraseList;
 const Layout = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
+  align-items: center;
+  width: 80%;
   height: 85%;
-  padding-top: 1rem;
   overflow-y: auto;
+  gap: 1rem;
   &::-webkit-scrollbar {
     width: 4px;
     height: 4px;

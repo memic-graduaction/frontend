@@ -7,51 +7,58 @@ interface Props {
 export const Layout = styled.div<Props>`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  width: 23rem;
+  gap: 0.8rem;
+  width: 20rem;
   border-radius: 0.625rem;
   background: white;
   position: relative;
-  margin: 1rem;
   padding: 1rem;
+  padding-top: 2rem;
+  border-radius: 0.3125rem;
+  border: 1.5px solid #d7d7d7;
+  background: #fcfcfc;
   box-shadow: ${(props) =>
-    props.$isselected ? '1px 1px 15px rgba(100 0 50 / 40%);' : '1px 1px 10px rgba(0 0 0 / 15%);'};
+    props.$isselected ? '1px 1px 10px rgba(180 50 100 / 50%);' : '1px 1px 5px rgba(0 0 0 / 15%);'};
 `;
 
 export const IconBox = styled.button`
   position: absolute;
-  top: 1rem;
-  right: 1rem;
+  top: 0.5rem;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
 `;
 
 export const PhraseBox = styled.div<Props>`
   color: ${(props) => (props.$isselected ? '#ff5c5c' : '#4f4957')};
-  font-size: 1.25rem;
-  font-weight: 600;
+  font-size: 1.1rem;
+  font-weight: 500;
 `;
 
 export const MeaningBox = styled.div`
-  color: #4f4957;
+  color: #72214b;
   font-size: 1rem;
-  font-weight: 400;
+  font-weight: 600;
 `;
 
 export const HashTagBox = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
+  font-size: 0.9rem;
+  align-items: center;
 `;
 
 export const HashTag = styled.div`
   display: flex;
-  height: 1.6875rem;
-  padding: 0.5rem 0.6rem;
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
   border-radius: 3rem;
-  background: #b8a0ff;
-  color: white;
+  font-size: 0.9rem;
+  color: #3b2172;
 `;
 
 export const ButtonBox = styled.div`
@@ -61,24 +68,23 @@ export const ButtonBox = styled.div`
   padding-right: 0.5rem;
 `;
 
-export const CancelBtn = styled.button`
+export const Button = styled.button`
   display: flex;
-  width: 5rem;
-  height: 1.5rem;
+  width: 4rem;
+  height: 1.3rem;
   padding: 0.5rem 0.75rem;
   justify-content: center;
   align-items: center;
   border-radius: 0.5rem;
   border: 1px solid #5a4e6a;
-  color: #5a4e6a;
-  font-size: 1rem;
-  font-weight: 500;
-  box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.25);
-`;
-
-export const SubmitBtn = styled(CancelBtn)`
   color: white;
-  background: #5a4e6a;
+  background: #4f4957;
+  font-size: 0.8rem;
+  font-weight: 500;
+  box-shadow:
+    2px 2px 5px rgba(0, 0, 0, 0.3),
+    inset -2px -2px 5px rgba(0, 0, 0, 0.3),
+    inset 2px 2px 5px rgba(255, 255, 255, 0.2);
 `;
 
 export const InputBox = styled.div`
@@ -90,5 +96,10 @@ export const InputBox = styled.div`
 export const Input = styled.input`
   width: 90%;
   height: 2rem;
-  font-size: 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #72214b;
+  border: 1.5px solid #d7d7d7;
+  border-radius: 1rem;
+  background: white;
 `;
