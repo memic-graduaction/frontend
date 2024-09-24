@@ -10,7 +10,7 @@ function StopSpeechBtn({ onClick }: Props) {
   return (
     <S.RecordBtn onClick={() => onClick()}>
       STOP
-      <Stop />
+      <Stop width="10" />
     </S.RecordBtn>
   );
 }

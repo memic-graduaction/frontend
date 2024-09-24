@@ -24,6 +24,7 @@ function Script() {
   const [isSelected, setIsSelected] = useState(false);
   const [isSideBarOpen, setIsSideBarOpen] = useRecoilState(state.sideBarOpenState);
   const setPhrase = useSetRecoilState(state.selectedPhrase);
+  const setScapedPhrases = useSetRecoilState(state.highLightPhrase);
   const [loading, setLoading] = useState(false);
   const url = useRecoilValue(state.youtubeLinkState);
   const urlId = useRecoilValue(youtubeIDSelector);
@@ -44,7 +45,6 @@ function Script() {
       let response;
       if (urlId !== null) {
         response = await axios.get(`/v1/transcriptions/${urlId}`);
-        console.log(response.data);
       } else {
         response = await axios.post('/v1/transcriptions', formData, {
           headers: {
@@ -59,6 +59,24 @@ function Script() {
       setLoading(false);
     } catch (e) {
       console.log(e);
+    }
+  };
+
+  const handleGetPhrases = async () => {
+    if (urlId) {
+      try {
+        const serverUrl = `/v1/phrases/transcriptions/${urlId}`;
+        const response = await axios.get(serverUrl, {
+          headers: {
+            Authorization: user.accessToken,
+          },
+        });
+        const newPhrases = response.data.map((v) => ({ id: v.sentenceId, phrase: v.phrase }));
+        setScapedPhrases(newPhrases);
+        console.log(newPhrases);
+      } catch (e) {
+        console.log(e);
+      }
     }
   };
 
@@ -106,7 +124,7 @@ function Script() {
 
   useEffect(() => {
     handleGetScript();
-    console.log('useEffect - URL:', url);
+    handleGetPhrases();
     const videoId = extractVideoIdFromLink(url);
     if (videoId) {
       fetchVideoDuration(videoId)

@@ -10,7 +10,7 @@ function SpeechBtn({ onClick }: Props) {
   return (
     <S.RecordBtn onClick={() => onClick()}>
       REC
-      <Microphone />
+      <Microphone width="17" />
     </S.RecordBtn>
   );
 }

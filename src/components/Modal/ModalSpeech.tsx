@@ -62,19 +62,21 @@ const Layout = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
-  gap: 2rem;
+  gap: 2.5rem;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-bottom: 2rem;
 `;
 
 const TextLayout = styled.div`
   width: 100%;
   font-size: 1.5rem;
   font-style: normal;
-  font-weight: 350;
+  font-weight: 400;
   line-height: 1.5;
-  margin-top: 1rem;
   text-align: center;
+  text-decoration-line: underline;
+  text-decoration-thickness: 0.5px;
+  text-decoration-color: #d7d7d7;
+  text-underline-offset: 5px;
 `;

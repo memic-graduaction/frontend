@@ -174,5 +174,14 @@ export const amountState = atom<UserAmount>({
 
 export const wordColorPalette = atom<string[]>({
   key: 'wordColorPalette',
-  default: ['#FFF6C6', '#FBF0FF', '#EFFFD5', '#DAFFF6', '#E0EAFF', '#FFE8BC', '#D4F7FF', '#FFD9DB'],
+  default: [
+    'rgba(197, 102, 151, 0.72)',
+    'rgba(197, 102, 151, 0.40)',
+    'rgba(197, 102, 151, 0.18)',
+    'rgba(191, 127, 160, 0.65)',
+    'rgba(197, 102, 151, 0.40)',
+    'rgba(186, 165, 176, 0.72)',
+    'rgba(237, 143, 192, 0.54)',
+    'rgba(204, 193, 198, 0.72)',
+  ],
 });

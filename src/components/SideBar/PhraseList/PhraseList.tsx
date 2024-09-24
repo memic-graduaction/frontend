@@ -1,15 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { userToken, youtubeIDSelector } from 'src/recoil/selectors';
-import { forceRefresh, highLightPhrase, selectedHighLight } from 'src/recoil/states';
+import { forceRefresh, selectedHighLight } from 'src/recoil/states';
 import axios from 'axios';
 import PhraseCard from '../PhraseCard/PhraseCard';
 
 const PhraseList = () => {
   const [list, setList] = useState([]);
   const youtubeId = useRecoilValue(youtubeIDSelector);
-  const setPhrase = useSetRecoilState(highLightPhrase);
   const cardRefs = useRef<HTMLDivElement[]>([]);
   const selectedPhrase = useRecoilValue(selectedHighLight);
   const token = useRecoilValue(userToken);
@@ -24,10 +23,7 @@ const PhraseList = () => {
             Authorization: token,
           },
         });
-        console.log('api 호출');
         setList(response.data);
-        const newPhrases = response.data.map((v) => ({ id: v.sentenceId, phrase: v.phrase }));
-        setPhrase(newPhrases);
       } catch (e) {
         console.log(e);
       }

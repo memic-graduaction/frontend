@@ -3,7 +3,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { scrapedList } from 'src/recoil/selectors';
 import _ from 'lodash';
-import { youtubeLinkState } from 'src/recoil/states';
+import { showOverall, youtubeLinkState } from 'src/recoil/states';
 import { Logo } from 'src/assets/Icons';
 import PhraseCard from '../PhraseCard/PhraseCard';
 
@@ -12,6 +12,7 @@ const PhraseAllList = () => {
   const getScrap = useRecoilValue(scrapedList);
   const [loading, setLoading] = useState(true);
   const setYoutubeUrl = useSetRecoilState(youtubeLinkState);
+  const setSidebar = useSetRecoilState(showOverall);
 
   const handleGetPhrases = async () => {
     getScrap().then((data) => {
@@ -33,7 +34,12 @@ const PhraseAllList = () => {
     <Layout>
       {Object.keys(urlMap).map((url) => (
         <CardLayout key={url}>
-          <UrlButton onClick={() => handleButtonClick(url)}>
+          <UrlButton
+            onClick={() => {
+              handleButtonClick(url);
+              setSidebar(false);
+            }}
+          >
             <Logo width="17px" />
             유튜브 보기
           </UrlButton>

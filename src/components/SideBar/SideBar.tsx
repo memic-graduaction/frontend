@@ -42,7 +42,8 @@ const SideBar = () => {
               </>
             ) : (
               <S.NullLayout>
-                표현을 저장 하려면 로그인 하세요!<S.LoginBtn onClick={() => navigate('/login')}>로그인 하기</S.LoginBtn>
+                표현을 저장 하려면 로그인 하세요!
+                <S.LoginBtn onClick={() => navigate('/login')}>로그인 하기</S.LoginBtn>
               </S.NullLayout>
             )}
           </>

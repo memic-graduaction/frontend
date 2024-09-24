@@ -30,11 +30,11 @@ export const Container = styled.div`
   background: white;
   gap: 5rem;
   margin-top: 3rem;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   box-shadow:
-    1px 1px 10px rgba(0, 0, 0, 0.3),
-    inset -1px -1px 10px rgba(0, 0, 0, 0.3),
-    inset 1px 1px 10px rgba(255, 255, 255, 0.2);
+    1px 1px 5px rgba(0, 0, 0, 0.3),
+    inset -1px -1px 5px rgba(0, 0, 0, 0.1),
+    inset 1px 1px 5px rgba(255, 255, 255, 0.2);
 `;
 
 export const Title = styled.div`

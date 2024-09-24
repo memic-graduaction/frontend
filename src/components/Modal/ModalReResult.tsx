@@ -28,10 +28,12 @@ function ModalReResult({ word, isMatched }: Prop) {
       {isMatched ? (
         <>
           <TitleBox>* 단어를 완벽하게 발음했어요!</TitleBox>
-          <IconLayout>
-            <Checkmark size="large" color="#0AC78E" />
-          </IconLayout>
-          <MatchedText>{word}</MatchedText>
+          <TextBox>
+            <IconLayout>
+              <Checkmark size="large" color="#1FD199" />
+            </IconLayout>
+            <MatchedText>{word}</MatchedText>
+          </TextBox>
         </>
       ) : (
         <Layout>
@@ -59,27 +61,33 @@ const Layout = styled.div`
   gap: 1.5rem;
 `;
 
+const TextBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+`;
+
 const MatchedText = styled.div`
   word-break: break-all;
   font-size: 3rem;
   font-style: normal;
   font-weight: 600;
-  color: #0ac78e;
+  color: #1fd199;
   gap: 1.5rem;
-  margin-bottom: 1rem;
 `;
 
 const MisMatchText = styled(MatchedText)`
-  color: #ff5c5c;
+  color: #ea4e4e;
 `;
 
 const IconLayout = styled.div`
-  padding-top: 1.5rem;
+  margin-top: 1rem;
 `;
 
 const BtnLayout = styled.div`
   width: 100%;
   justify-content: center;
   display: flex;
-  gap: 2rem;
+  gap: 1.5rem;
 `;

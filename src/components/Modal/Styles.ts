@@ -15,16 +15,19 @@ export const ModalLayout = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 48rem;
-  height: 27rem;
+  width: 42rem;
+  height: 25rem;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 0 2rem;
   background: white;
-  border-radius: 1.5rem;
+  border-radius: 1rem;
   z-index: 3;
-  box-shadow: 10px 20px 20px rgba(0, 0, 0, 0.25);
+  box-shadow:
+    2px 2px 5px rgba(0, 0, 0, 0.3),
+    inset -2px -2px 5px rgba(0, 0, 0, 0.3),
+    inset 2px 2px 5px rgba(255, 255, 255, 0.2);
 `;
 
 export const ModalBody = styled.div`
@@ -39,53 +42,53 @@ export const ExitBtn = styled.button`
 
 export const RecordBtn = styled.button`
   width: 10rem;
-  height: 3.3rem;
-  border-radius: 2rem;
-  box-shadow: 1px 4px 4px 2px rgba(0, 0, 0, 0.25);
+  height: 2.6rem;
+  border-radius: 1.1rem;
   display: flex;
-  gap: 0.5rem;
+  gap: 0.3rem;
   padding-left: 1rem;
   justify-content: center;
   align-items: center;
-  background: #ff5c5c;
-  font-size: 2rem;
+  background: #5a4e6a;
+  font-size: 1.5rem;
   color: white;
+  box-shadow:
+    2px 2px 5px rgba(0, 0, 0, 0.3),
+    inset -2px -2px 5px rgba(0, 0, 0, 0.3),
+    inset 2px 2px 5px rgba(255, 255, 255, 0.2);
 `;
 
 export const ResultBtnLayout = styled.div`
   width: 100%;
   justify-content: center;
   display: flex;
-  gap: 2rem;
+  gap: 1.5rem;
 `;
 
 export const ResultBtnBox = styled.button`
-  width: 11.25rem;
+  width: 9.5rem;
   height: 2.25rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 1.875rem;
-  border: 0.5px solid #ff5c5c;
-  background: #fff;
-  box-shadow: 2px 2px 5px 0px rgba(246, 0, 0, 0.1);
-  gap: 0.5rem;
-  font-size: 1.125rem;
-  font-style: normal;
-  font-weight: 350;
+  border-radius: 1.2rem;
+  background: #5a4e6a;
+  box-shadow:
+    2px 2px 5px rgba(0, 0, 0, 0.3),
+    inset -2px -2px 5px rgba(0, 0, 0, 0.3),
+    inset 2px 2px 5px rgba(255, 255, 255, 0.2);
+  gap: 0.3rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: white;
   margin-top: 1rem;
 `;
 
 export const TitleBox = styled.div`
-  width: 21rem;
-  height: 2.6rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #ff5c5c;
-  background: #f6f6f6;
-  border-radius: 0.625rem;
+  color: #c56697;
   font-size: 1.2rem;
-  font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
 `;

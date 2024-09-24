@@ -24,8 +24,8 @@ function PlaySpeechBtn({ url }: Props) {
     <>
       <audio ref={myRef} src={url} />
       <S.ResultBtnBox onClick={() => setIsClicked(true)}>
-        <PlayBtn />
         나의 발음 듣기
+        <PlayBtn width={15} />
       </S.ResultBtnBox>
     </>
   );

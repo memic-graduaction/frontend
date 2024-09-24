@@ -13,14 +13,9 @@ import * as S from './Styles';
 
 interface Prop {
   word: string;
-  color: string;
 }
 
-interface TextProp {
-  $color?: string;
-}
-
-function ModalReSpeech({ word, color }: Prop) {
+function ModalReSpeech({ word }: Prop) {
   const [recordingStatus, setRecordingStatus] = useRecoilState(recordingState);
   const [recorder, setRecorder] = useState(null);
   const setAudioUrl = useSetRecoilState(secondAudioUrl);
@@ -59,7 +54,7 @@ function ModalReSpeech({ word, color }: Prop) {
   return (
     <Layout>
       <S.TitleBox>* 단어를 다시 한 번 발음해 보세요</S.TitleBox>
-      <TextLayout $color={color}>{word}</TextLayout>
+      <TextLayout>{word}</TextLayout>
       {recordingStatus === 'inactive' ? <SpeechBtn onClick={() => startRecording(setRecorder)} /> : null}
       {recordingStatus === 'recording' ? <StopSpeechBtn onClick={handleStopBtnClick} /> : null}
     </Layout>
@@ -75,18 +70,21 @@ const Layout = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2.5rem;
+  gap: 1.5rem;
 `;
 
-const TextLayout = styled.div<TextProp>`
+const TextLayout = styled.div`
   height: 4rem;
   width: 21rem;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 0.625rem;
-  background: ${(props) => props.$color};
   font-size: 2rem;
   font-style: normal;
   font-weight: 700;
+  text-decoration-line: underline;
+  text-decoration-thickness: 0.5px;
+  text-decoration-color: #d7d7d7;
+  text-underline-offset: 8px;
 `;

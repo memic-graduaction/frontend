@@ -15,6 +15,7 @@ export const getRandomVideos = () => {
     'https://www.youtube.com/watch?v=s4HHvDYsVnc',
     'https://www.youtube.com/watch?v=rxUm-2x-2dM',
     'https://www.youtube.com/watch?v=MaolIxfz7NE',
+    'https://www.youtube.com/watch?v=VqrP4-FSvfU',
   ];
 
   // eslint-disable-next-line no-plusplus

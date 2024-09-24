@@ -77,17 +77,21 @@ export const NullLayout = styled.div`
   gap: 3rem;
   margin-top: 10rem;
   color: #5a4e6a;
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   font-weight: 500;
 `;
 
 export const LoginBtn = styled.button`
-  width: 10rem;
-  height: 2.4rem;
+  width: 8rem;
+  height: 2.2rem;
   border-radius: 3rem;
   background: white;
   color: #5a4e6a;
-  font-size: 1.2rem;
-  font-weight: 400;
-  box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.25);
+  border: 0.5px solid #d7d7d7;
+  font-size: 1rem;
+  font-weight: 700;
+  box-shadow:
+    2px 2px 5px rgba(0, 0, 0, 0.2),
+    inset -2px -2px 5px rgba(0, 0, 0, 0.1),
+    inset 2px 2px 5px rgba(255, 255, 255, 0.2);
 `;

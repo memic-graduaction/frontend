@@ -32,9 +32,9 @@ function ModalResult() {
     pop();
   };
 
-  const handleClickWrongText = (i: number, color: string) => {
+  const handleClickWrongText = (i: number) => {
     const word = originalWords[i];
-    push({ key: 'modal-respeech', Component: ModalReSpeech, Props: { word, color }, popOnce: true });
+    push({ key: 'modal-respeech', Component: ModalReSpeech, Props: { word }, popOnce: true });
   };
 
   return (
@@ -68,10 +68,7 @@ function ModalResult() {
             {wordList.map(
               (v, i) =>
                 !v.isMatchedWithTranscription && (
-                  <WordBox
-                    style={{ background: `${colors[i % 7]}` }}
-                    onClick={() => handleClickWrongText(i, colors[i % 7])}
-                  >
+                  <WordBox style={{ background: `${colors[i % 7]}` }} onClick={() => handleClickWrongText(i)}>
                     {originalWords[i]}
                   </WordBox>
                 ),
@@ -96,24 +93,24 @@ const Layout = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1.8rem;
+  gap: 1.2rem;
 `;
 
 const ResultText = styled.div`
-  font-size: 1.625rem;
-  font-style: normal;
-  font-weight: 500;
+  font-size: 1.2rem;
+  font-weight: 400;
   line-height: 1.5;
   color: black;
+  margin-bottom: 1rem;
 `;
 
 const WrongText = styled(ResultText)`
-  color: #ff5c5c;
+  color: #ea4e4e;
   font-weight: 500;
 `;
 
 const CorrectText = styled(ResultText)`
-  color: #0ac78e;
+  color: #1fd199;
 `;
 
 const FlexLayout = styled.div`
@@ -129,20 +126,23 @@ const IconBox = styled.div`
 `;
 
 const TitleBox = styled.div`
-  color: #ff5c5c;
+  color: #c56697;
   font-size: 1rem;
   font-style: normal;
   font-weight: 400;
+  margin-top: 1rem;
 `;
 
 const WordBox = styled.div`
-  height: 3rem;
+  height: 1.8rem;
   display: flex;
   align-items: center;
   padding: 0 1rem;
-  border-radius: 0.625rem;
-  font-size: 1.5rem;
-  font-style: normal;
-  font-weight: 700;
+  border: 1px solid #d7d7d7;
+  border-radius: 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
   cursor: pointer;
+  margin-bottom: 1rem;
 `;

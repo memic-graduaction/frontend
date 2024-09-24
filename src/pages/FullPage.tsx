@@ -42,7 +42,7 @@ function FullPage() {
       <Element name="rankPage">
         <Rankpage />
       </Element>
-      {window.scrollY > 0 && (
+      {window.scrollY >= 1000 && (
         <Link
           to="homePage"
           spy
